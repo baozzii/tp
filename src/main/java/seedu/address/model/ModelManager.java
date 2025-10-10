@@ -123,6 +123,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean isFilteredPersonListEmpty() {
+        return filteredPersons.isEmpty();
+    }
+
+    @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
