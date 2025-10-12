@@ -12,28 +12,28 @@
     "phone" : "98765432",
     "email" : "johnd@example.com",
     "address" : "311, Clementi Ave 2, #02-25",
-    "organ" : "cornea",
+    "organ" : "kidney",
     "tags" : [ "owesMoney", "friends" ]
   }, {
     "name" : "Carl Kurz",
     "phone" : "95352563",
     "email" : "heinz@example.com",
     "address" : "wall street",
-    "organ" : "liver",
+    "organ" : "cornea",
     "tags" : [ ]
   }, {
     "name" : "Daniel Meier",
     "phone" : "87652533",
     "email" : "cornelia@example.com",
     "address" : "10th street",
-    "organ" : "kidney",
+    "organ" : "liver",
     "tags" : [ "friends" ]
   }, {
     "name" : "Elle Meyer",
     "phone" : "9482224",
     "email" : "werner@example.com",
     "address" : "michegan ave",
-    "organ" : "cornea",
+    "organ" : "kidney",
     "tags" : [ ]
   }, {
     "name" : "Fiona Kunz",
