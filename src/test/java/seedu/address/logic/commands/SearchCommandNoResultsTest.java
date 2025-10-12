@@ -19,7 +19,8 @@ public class SearchCommandNoResultsTest {
     @Test
     public void execute_noMatchingKeywords_showsNoPersonsFoundMessage() {
         Model model = new ModelManager(SampleDataUtil.getSampleAddressBook(), new UserPrefs());
-        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Collections.singletonList("zzzzzz"));
+        NameContainsKeywordsPredicate predicate =
+                new NameContainsKeywordsPredicate(Collections.singletonList("zzzzzz"));
         SearchCommand command = new SearchCommand(predicate);
         String expectedMessage = String.format(Messages.MESSAGE_NO_PERSONS_FOUND, predicate.getKeywords());
         Model expectedModel = new ModelManager(SampleDataUtil.getSampleAddressBook(), new UserPrefs());
