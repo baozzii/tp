@@ -107,10 +107,10 @@ class JsonAdaptedPerson {
         final Address modelAddress = new Address(address);
 
         if (organ == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Organ.class.getSimpleName()));
         }
-        if (!Address.isValidAddress(address)) {
-            throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
+        if (!Organ.isValidOrgan(organ)) {
+            throw new IllegalValueException(Organ.MESSAGE_CONSTRAINTS);
         }
         final Organ modelOrgan = new Organ(organ);
 

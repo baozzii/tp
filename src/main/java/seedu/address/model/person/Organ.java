@@ -16,7 +16,7 @@ public class Organ {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "[A-Za-z][A-Za-z ]";
+    public static final String VALIDATION_REGEX = "[A-Za-z][A-Za-z ]*";
 
     public final String organName;
 
@@ -51,7 +51,7 @@ public class Organ {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Name)) {
+        if (!(other instanceof Organ)) {
             return false;
         }
 
