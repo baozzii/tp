@@ -10,13 +10,13 @@ public class OrganTest {
 
     @Test
     public void constructor_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new Address(null));
+        assertThrows(NullPointerException.class, () -> new Organ(null));
     }
 
     @Test
-    public void constructor_invalidAddress_throwsIllegalArgumentException() {
-        String invalidAddress = "";
-        assertThrows(IllegalArgumentException.class, () -> new Address(invalidAddress));
+    public void constructor_invalidOrgan_throwsIllegalArgumentException() {
+        String invalidOrgan = "";
+        assertThrows(IllegalArgumentException.class, () -> new Organ(invalidOrgan));
     }
 
     @Test
@@ -29,9 +29,9 @@ public class OrganTest {
         assertFalse(Organ.isValidOrgan(" ")); // spaces only
 
         // valid organs
-        assertTrue(Address.isValidAddress("kidney"));
-        assertTrue(Address.isValidAddress("l")); // one character
-        assertTrue(Address.isValidAddress("mitochondria")); // long organ
+        assertTrue(Organ.isValidOrgan("kidney"));
+        assertTrue(Organ.isValidOrgan("l")); // one character
+        assertTrue(Organ.isValidOrgan("mitochondria")); // long organ
     }
 
     @Test

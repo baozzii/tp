@@ -3,15 +3,21 @@ package seedu.address.model.person;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ORGAN_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
+
+import java.util.HashSet;
 
 import org.junit.jupiter.api.Test;
 
@@ -93,6 +99,28 @@ public class PersonTest {
         // different tags -> returns false
         editedAlice = new PersonBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(ALICE.equals(editedAlice));
+    }
+
+    @Test
+    public void constructor_invalidOrgan_throwsIllegalArgumentException() {
+        // Test invalid organs
+        assertThrows(IllegalArgumentException.class, () -> new Person(
+                new Name(VALID_NAME_AMY),
+                new Phone(VALID_PHONE_AMY),
+                new Email(VALID_EMAIL_AMY),
+                new Address(VALID_ADDRESS_AMY),
+                new Organ("123"), // Numbers not allowed
+                new HashSet<>()
+        ));
+
+        assertThrows(IllegalArgumentException.class, () -> new Person(
+                new Name(VALID_NAME_AMY),
+                new Phone(VALID_PHONE_AMY),
+                new Email(VALID_EMAIL_AMY),
+                new Address(VALID_ADDRESS_AMY),
+                new Organ("kidney!"), // Special characters not allowed
+                new HashSet<>()
+        ));
     }
 
     @Test
