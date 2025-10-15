@@ -104,7 +104,14 @@ public class Person {
                 && tags.equals(otherPerson.tags)
                 && organ.equals(otherPerson.organ);
     }
-
+    /**
+     * Returns true if donor's organ matches the person's organ.
+     * @param organAvailable available organ from donor.
+     * @return boolean to indicate if organs match.
+     */
+    public boolean isMatch(Organ organAvailable) {
+        return organ.equals(organAvailable);
+    }
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
