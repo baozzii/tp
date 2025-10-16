@@ -64,11 +64,8 @@ public class PriorityTest {
             Priority priority1 = new Priority(i);
             for (int j = 1; j <= 5; j++) {
                 Priority priority2 = new Priority(j);
-                if (i < j) {
-                    assertTrue(priority1.compareTo(priority2) < 0);
-                } else {
-                    assertTrue(priority1.compareTo(priority2) >= 0);
-                }
+                if (i < j) assertTrue(priority1.compareTo(priority2) < 0);
+                else assertTrue(priority1.compareTo(priority2) >= 0);
             }
         }
     }
