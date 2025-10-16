@@ -21,16 +21,16 @@ public class PriorityTest {
 
     @Test
     public void isValidPriority() {
-        // null Priority 
+        // null Priority
         assertThrows(NullPointerException.class, () -> Priority.isValidPriority(null));
 
-        // invalid Priority 
+        // invalid Priority
         assertFalse(Priority.isValidPriority(-1)); // negative
         assertFalse(Priority.isValidPriority(0)); // zero
         assertFalse(Priority.isValidPriority(6)); // too large
         assertFalse(Priority.isValidPriority(10)); 
 
-        // valid Priority 
+        // valid Priority
         assertTrue(Priority.isValidPriority(1));
         assertTrue(Priority.isValidPriority(2));
         assertTrue(Priority.isValidPriority(3));
