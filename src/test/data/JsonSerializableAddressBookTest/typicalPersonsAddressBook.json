@@ -7,6 +7,7 @@
       "email": "alice@example.com",
       "address": "123, Jurong West Ave 6, #08-111",
       "organ": "kidney",
+      "priority": "1",
       "tags": ["friends"]
     },
     {
@@ -15,6 +16,7 @@
       "email": "johnd@example.com",
       "address": "311, Clementi Ave 2, #02-25",
       "organ": "kidney",
+      "priority": "2",
       "tags": ["owesMoney", "friends"]
     },
     {
@@ -23,6 +25,7 @@
       "email": "heinz@example.com",
       "address": "wall street",
       "organ": "cornea",
+      "priority": "3",
       "tags": []
     },
     {
@@ -31,6 +34,7 @@
       "email": "cornelia@example.com",
       "address": "10th street",
       "organ": "liver",
+      "priority": "4",
       "tags": ["friends"]
     },
     {
@@ -39,6 +43,7 @@
       "email": "werner@example.com",
       "address": "michegan ave",
       "organ": "heart",
+      "priority": "5",
       "tags": []
     },
     {
@@ -47,6 +52,7 @@
       "email": "lydia@example.com",
       "address": "little tokyo",
       "organ": "cornea",
+      "priority": "5",
       "tags": []
     },
     {
@@ -55,6 +61,7 @@
       "email": "anna@example.com",
       "address": "4th street",
       "organ": "kidney",
+      "priority": "5",
       "tags": []
     }
   ]

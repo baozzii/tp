@@ -121,7 +121,14 @@ class JsonAdaptedPerson {
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
+        if (priority == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Priority.class.getSimpleName()));
+        }
+        if (!Priority.isValidPriority(priority)) {
+            throw new IllegalValueException(Priority.MESSAGE_CONSTRAINTS);
+        }
         final Priority modelPriority = new Priority(priority);
+
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelOrgan, modelTags, modelPriority);
     }
 
