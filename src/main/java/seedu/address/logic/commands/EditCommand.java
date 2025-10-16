@@ -29,8 +29,8 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Organ;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
 import seedu.address.model.person.Priority;
+import seedu.address.model.tag.Tag;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -109,7 +109,8 @@ public class EditCommand extends Command {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Priority updatedPriority = editPersonDescriptor.getPriority().orElse(personToEdit.getPriority());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedOrgan, updatedTags, updatedPriority);
+        return new Person(updatedName,
+                updatedPhone, updatedEmail, updatedAddress, updatedOrgan, updatedTags, updatedPriority);
     }
 
     @Override
