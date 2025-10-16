@@ -13,6 +13,9 @@ We are a team based in the [School of Computing, National University of Singapor
 
 <img src="images/baozzii.png" width="200px">
 
+* Role: Developer
+* Responsibilities: Editing existing fields
+
 [[github](https://github.com/baozzii)]
 ### Yang Iiyu
 
@@ -21,7 +24,7 @@ We are a team based in the [School of Computing, National University of Singapor
 [[github](http://github.com/POeticPotatoes)]
 
 * Role: Developer
-* Responsibilities: Funky
+* Responsibilities: Fields and Testing
 
 ### Tan Chien Hao
 
@@ -30,7 +33,7 @@ We are a team based in the [School of Computing, National University of Singapor
 [[github](https://github.com/tch1001)]
 
 * Role: Developer
-* Responsibilities: UI
+* Responsibilities: Search Feature
 
 ### Isaiah Toh
 
@@ -50,3 +53,4 @@ We are a team based in the [School of Computing, National University of Singapor
 
 
 * Role: Developer
+* Responsibilities: Editing existing fields
