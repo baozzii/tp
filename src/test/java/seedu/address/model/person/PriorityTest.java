@@ -46,7 +46,7 @@ public class PriorityTest {
         assertTrue(priority.equals(new Priority(5)));
 
         // same object -> returns true
-        assertTrue(priority.equals(Priority));
+        assertTrue(priority.equals(priority));
 
         // null -> returns false
         assertFalse(priority.equals(null));
@@ -60,14 +60,14 @@ public class PriorityTest {
 
     @Test
     public void compareTo() {
-        for (Integer i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 5; i++) {
             Priority priority1 = new Priority(i);
-            for (Integer j = 1; j <= 5; j++) {
+            for (int j = 1; j <= 5; j++) {
                 Priority priority2 = new Priority(j);
                 if (i < j) {
-                    assertTrue(priority1.compareTo(priority2));
+                    assertTrue(priority1.compareTo(priority2) < 0);
                 } else {
-                    assertFalse(priority1.compareTo(priority2));
+                    assertFalse(priority1.compareTo(priority2) >= 0);
                 }
             }
         }

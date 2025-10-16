@@ -9,11 +9,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Organ;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -108,6 +104,25 @@ public class ParserUtil {
             throw new ParseException(Organ.MESSAGE_CONSTRAINTS);
         }
         return new Organ(trimmedOrgan);
+    }
+
+    /**
+     * Parses a {@code String priority} into an {@code Priority}.
+     *
+     * @throws ParseException if the given {@code priority} is invalid.
+     */
+    public static Priority parsePriority(String priority) throws ParseException {
+        requireNonNull(priority);
+        Integer integerPriority;
+        try {
+            integerPriority = Integer.parseInt(priority);
+        } catch (NumberFormatException e) {
+            throw new ParseException(Priority.MESSAGE_CONSTRAINTS);
+        }
+        if (!Priority.isValidPriority(integerPriority)) {
+            throw new ParseException(Priority.MESSAGE_CONSTRAINTS);
+        }
+        return new Priority(integerPriority);
     }
 
     /**
