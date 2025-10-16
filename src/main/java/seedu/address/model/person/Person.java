@@ -25,19 +25,21 @@ public class Person {
     private final Address address;
     private final Organ organ;
     private final Set<Tag> tags = new HashSet<>();
+    private final Priority priority;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Organ organ,
-                  Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, organ, tags);
+                  Set<Tag> tags, Priority priority) {
+        requireAllNonNull(name, phone, email, address, organ, tags, priority);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
         this.organ = organ;
+        this.priority = priority;
     }
 
     public Name getName() {
@@ -58,6 +60,10 @@ public class Person {
 
     public Organ getOrgan() {
         return organ;
+    }
+
+    public Priority getPriority() {
+        return priority;
     }
 
     /**
@@ -102,7 +108,8 @@ public class Person {
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
                 && tags.equals(otherPerson.tags)
-                && organ.equals(otherPerson.organ);
+                && organ.equals(otherPerson.organ)
+                && priority.equals(otherPerson.priority);
     }
     /**
      * Returns true if donor's organ matches the person's organ.
@@ -115,7 +122,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, organ, tags);
+        return Objects.hash(name, phone, email, address, organ, tags, priority);
     }
 
     @Override
@@ -126,6 +133,7 @@ public class Person {
                 .add("email", email)
                 .add("address", address)
                 .add("organ", organ)
+                .add("priority", priority)
                 .add("tags", tags)
                 .toString();
     }

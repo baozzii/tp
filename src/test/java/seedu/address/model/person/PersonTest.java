@@ -110,7 +110,8 @@ public class PersonTest {
                 new Email(VALID_EMAIL_AMY),
                 new Address(VALID_ADDRESS_AMY),
                 new Organ("123"), // Numbers not allowed
-                new HashSet<>()
+                new HashSet<>(),
+                new Priority(6)
         ));
 
         assertThrows(IllegalArgumentException.class, () -> new Person(
@@ -119,7 +120,8 @@ public class PersonTest {
                 new Email(VALID_EMAIL_AMY),
                 new Address(VALID_ADDRESS_AMY),
                 new Organ("kidney!"), // Special characters not allowed
-                new HashSet<>()
+                new HashSet<>(),
+                new Priority(-1)
         ));
     }
 
@@ -127,6 +129,7 @@ public class PersonTest {
     public void toStringMethod() {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
                 + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", organ=" + ALICE.getOrgan()
+                + ", priority=" + ALICE.getPriority()
                 + ", tags=" + ALICE.getTags() + "}";
         assertEquals(expected, ALICE.toString());
     }

@@ -9,6 +9,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Organ;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Priority;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -22,6 +23,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_ORGAN = "kidney";
+    public static final Integer DEFAULT_PRIORITY = 1;
 
     private Name name;
     private Phone phone;
@@ -29,6 +31,7 @@ public class PersonBuilder {
     private Address address;
     private Organ organ;
     private Set<Tag> tags;
+    private Priority priority;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -40,6 +43,7 @@ public class PersonBuilder {
         address = new Address(DEFAULT_ADDRESS);
         organ = new Organ(DEFAULT_ORGAN);
         tags = new HashSet<>();
+        priority = new Priority(DEFAULT_PRIORITY);
     }
 
     /**
@@ -52,6 +56,7 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         organ = personToCopy.getOrgan();
         tags = new HashSet<>(personToCopy.getTags());
+        priority = personToCopy.getPriority();
     }
 
     /**
@@ -102,8 +107,16 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Priority} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withPriority(Integer priority) {
+        this.priority = new Priority(priority);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, organ, tags);
+        return new Person(name, phone, email, address, organ, tags, priority);
     }
 
 }
