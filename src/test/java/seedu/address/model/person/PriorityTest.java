@@ -28,7 +28,7 @@ public class PriorityTest {
         assertFalse(Priority.isValidPriority(-1)); // negative
         assertFalse(Priority.isValidPriority(0)); // zero
         assertFalse(Priority.isValidPriority(6)); // too large
-        assertFalse(Priority.isValidPriority(10)); 
+        assertFalse(Priority.isValidPriority(10));
 
         // valid Priority
         assertTrue(Priority.isValidPriority(1));
@@ -64,8 +64,11 @@ public class PriorityTest {
             Priority priority1 = new Priority(i);
             for (int j = 1; j <= 5; j++) {
                 Priority priority2 = new Priority(j);
-                if (i < j) assertTrue(priority1.compareTo(priority2) < 0);
-                else assertTrue(priority1.compareTo(priority2) >= 0);
+                if (i < j) {
+                    assertTrue(priority1.compareTo(priority2) < 0);
+                } else {
+                    assertTrue(priority1.compareTo(priority2) >= 0);
+                }
             }
         }
     }
