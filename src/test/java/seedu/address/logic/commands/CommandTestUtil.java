@@ -76,7 +76,8 @@ public class CommandTestUtil {
                 .withOrgan(VALID_ORGAN_AMY).withPriority(VALID_PRIORITY_LOW).withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withOrgan(VALID_ORGAN_BOB).withPriority(VALID_PRIORITY_HIGH).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+                .withOrgan(VALID_ORGAN_BOB).withPriority(VALID_PRIORITY_HIGH)
+                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
                 .build();
     }
 
