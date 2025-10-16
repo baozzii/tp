@@ -67,7 +67,7 @@ public class PriorityTest {
                 if (i < j) {
                     assertTrue(priority1.compareTo(priority2) < 0);
                 } else {
-                    assertFalse(priority1.compareTo(priority2) >= 0);
+                    assertTrue(priority1.compareTo(priority2) >= 0);
                 }
             }
         }
