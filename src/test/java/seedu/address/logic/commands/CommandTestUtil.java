@@ -39,6 +39,9 @@ public class CommandTestUtil {
     public static final String VALID_ORGAN_BOB = "kidney";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final Integer VALID_PRIORITY_HIGH = 1;
+    public static final Integer VALID_PRIORITY_MEDIUM = 3;
+    public static final Integer VALID_PRIORITY_LOW = 5;
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -70,10 +73,10 @@ public class CommandTestUtil {
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withOrgan(VALID_ORGAN_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withOrgan(VALID_ORGAN_AMY).withPriority(VALID_PRIORITY_LOW).withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withOrgan(VALID_ORGAN_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+                .withOrgan(VALID_ORGAN_BOB).withPriority(VALID_PRIORITY_HIGH).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
                 .build();
     }
 
