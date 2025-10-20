@@ -2,6 +2,8 @@ package seedu.address;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -18,6 +20,7 @@ import seedu.address.logic.LogicManager;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
@@ -172,6 +175,17 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
         ui.start(primaryStage);
+
+        String lastFilter = model.getUserPrefs().getLastFilterKeywords();
+        if (!lastFilter.isEmpty()) {
+            String[] keywords = lastFilter.split("\\s+");
+            List<String> keywordList = Arrays.asList(keywords);
+            model.updateFilteredPersonList(new NameContainsKeywordsPredicate(keywordList));
+            
+            String message = String.format("Filter restored: showing persons with names containing \"%s\" (%d persons listed)", 
+                    lastFilter, model.getFilteredPersonList().size());
+            ((UiManager) ui).getMainWindow().getResultDisplay().setFeedbackToUser(message);
+        }
     }
 
     @Override
