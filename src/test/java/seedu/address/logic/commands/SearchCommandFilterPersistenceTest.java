@@ -30,7 +30,7 @@ public class SearchCommandFilterPersistenceTest {
 
         String expectedMessage = String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), model.getUserPrefs());
         expectedModel.updateFilteredPersonList(predicate);
 
         assertCommandSuccess(searchCommand, model, expectedMessage, expectedModel);
@@ -46,7 +46,8 @@ public class SearchCommandFilterPersistenceTest {
         ListCommand listCommand = new ListCommand();
         String expectedMessage = ListCommand.MESSAGE_SUCCESS;
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), model.getUserPrefs());
+        expectedModel.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
 
         assertCommandSuccess(listCommand, model, expectedMessage, expectedModel);
         assertEquals("", model.getUserPrefs().getLastFilterKeywords());
@@ -60,7 +61,7 @@ public class SearchCommandFilterPersistenceTest {
 
         String expectedMessage = String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), model.getUserPrefs());
         expectedModel.updateFilteredPersonList(predicate);
 
         assertCommandSuccess(searchCommand, model, expectedMessage, expectedModel);
