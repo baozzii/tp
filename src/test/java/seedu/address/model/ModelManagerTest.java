@@ -11,6 +11,7 @@ import static seedu.address.testutil.TypicalPersons.BENSON;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -91,6 +92,25 @@ public class ModelManagerTest {
     @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredPersonList().remove(0));
+    }
+
+    @Test
+    public void updateFilteredPersonList_nameContainsKeywordsPredicate_savesFilterKeywords() {
+        ModelManager modelManager = new ModelManager();
+        List<String> keywords = Arrays.asList("alice", "bob");
+        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(keywords);
+        modelManager.updateFilteredPersonList(predicate);
+        assertEquals("alice bob", modelManager.getUserPrefs().getLastFilterKeywords());
+    }
+
+    @Test
+    public void updateFilteredPersonList_showAllPredicate_clearsFilterKeywords() {
+        ModelManager modelManager = new ModelManager();
+        List<String> keywords = Arrays.asList("alice");
+        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(keywords);
+        modelManager.updateFilteredPersonList(predicate);
+        modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        assertEquals("", modelManager.getUserPrefs().getLastFilterKeywords());
     }
 
     @Test
