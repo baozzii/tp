@@ -20,10 +20,10 @@ import seedu.address.logic.LogicManager;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonAddressBookStorage;
@@ -181,9 +181,11 @@ public class MainApp extends Application {
             String[] keywords = lastFilter.split("\\s+");
             List<String> keywordList = Arrays.asList(keywords);
             model.updateFilteredPersonList(new NameContainsKeywordsPredicate(keywordList));
-            String message = String.format("Filter restored: showing persons with names containing \"%s\" (%d persons listed)",
-                    lastFilter, model.getFilteredPersonList().size());
-            ((UiManager) ui).getMainWindow().getResultDisplay().setFeedbackToUser(message);
+            String message = String.format(
+                "Filter restored: showing persons with names containing \"%s\" (%d persons listed)",
+                lastFilter, model.getFilteredPersonList().size());
+            UiManager uiManager = (UiManager) ui;
+            uiManager.getMainWindow().getResultDisplay().setFeedbackToUser(message);
         }
     }
 
