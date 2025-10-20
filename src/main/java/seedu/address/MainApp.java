@@ -181,8 +181,7 @@ public class MainApp extends Application {
             String[] keywords = lastFilter.split("\\s+");
             List<String> keywordList = Arrays.asList(keywords);
             model.updateFilteredPersonList(new NameContainsKeywordsPredicate(keywordList));
-            
-            String message = String.format("Filter restored: showing persons with names containing \"%s\" (%d persons listed)", 
+            String message = String.format("Filter restored: showing persons with names containing \"%s\" (%d persons listed)",
                     lastFilter, model.getFilteredPersonList().size());
             ((UiManager) ui).getMainWindow().getResultDisplay().setFeedbackToUser(message);
         }
