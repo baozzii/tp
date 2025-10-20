@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 
 /**
@@ -131,6 +132,14 @@ public class ModelManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+
+        if (predicate instanceof NameContainsKeywordsPredicate) {
+            NameContainsKeywordsPredicate namePredicate = (NameContainsKeywordsPredicate) predicate;
+            String keywords = namePredicate.getKeywords();
+            userPrefs.setLastFilterKeywords(keywords);
+        } else if (predicate == PREDICATE_SHOW_ALL_PERSONS) {
+            userPrefs.setLastFilterKeywords("");
+        }
     }
 
     @Override

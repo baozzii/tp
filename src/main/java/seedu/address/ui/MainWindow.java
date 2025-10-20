@@ -72,6 +72,10 @@ public class MainWindow extends UiPart<Stage> {
         return primaryStage;
     }
 
+    public ResultDisplay getResultDisplay() {
+        return resultDisplay;
+    }
+
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
     }
