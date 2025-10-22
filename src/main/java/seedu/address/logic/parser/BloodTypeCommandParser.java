@@ -1,14 +1,14 @@
 package seedu.address.logic.parser;
 
-import seedu.address.logic.commands.BloodTypeCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.BloodType;
-import seedu.address.model.person.BloodTypeMatchesPredicate;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import seedu.address.logic.commands.BloodTypeCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.BloodType;
+import seedu.address.model.person.BloodTypeMatchesPredicate;
 
 /**
  * Parses input arguments and creates a new BloodTypeCommand object

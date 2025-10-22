@@ -1,13 +1,11 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
-import seedu.address.model.person.BloodType;
 import seedu.address.model.person.BloodTypeMatchesPredicate;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Finds and lists all persons in an address book whose blood type matches the specified blood type
