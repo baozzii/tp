@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.BloodType;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Organ;
@@ -38,6 +39,8 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setOrgan(person.getOrgan());
+        descriptor.setBloodType(person.getBloodType());
         descriptor.setTags(person.getTags());
         descriptor.setPriority(person.getPriority());
     }
@@ -78,6 +81,13 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withOrgan(String organ) {
         descriptor.setOrgan(new Organ(organ));
+        return this;
+    }
+    /**
+     * Sets the {@code BloodType} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withBloodType(String bloodType) {
+        descriptor.setBloodType(new BloodType(bloodType));
         return this;
     }
     /**

@@ -7,6 +7,7 @@
       "email": "alice@example.com",
       "address": "123, Jurong West Ave 6, #08-111",
       "organ": "kidney",
+      "blood type": "O+",
       "priority": "1",
       "tags": ["friends"]
     },
@@ -16,6 +17,7 @@
       "email": "johnd@example.com",
       "address": "311, Clementi Ave 2, #02-25",
       "organ": "kidney",
+      "blood type": "O-",
       "priority": "2",
       "tags": ["owesMoney", "friends"]
     },
@@ -25,6 +27,7 @@
       "email": "heinz@example.com",
       "address": "wall street",
       "organ": "cornea",
+      "blood type": "A-",
       "priority": "3",
       "tags": []
     },
@@ -34,6 +37,7 @@
       "email": "cornelia@example.com",
       "address": "10th street",
       "organ": "liver",
+      "blood type": "AB-",
       "priority": "4",
       "tags": ["friends"]
     },
@@ -43,6 +47,7 @@
       "email": "werner@example.com",
       "address": "michegan ave",
       "organ": "heart",
+      "blood type": "AB-",
       "priority": "5",
       "tags": []
     },
@@ -52,6 +57,7 @@
       "email": "lydia@example.com",
       "address": "little tokyo",
       "organ": "cornea",
+      "blood type": "B-",
       "priority": "5",
       "tags": []
     },
@@ -61,6 +67,7 @@
       "email": "anna@example.com",
       "address": "4th street",
       "organ": "kidney",
+      "blood type": "B-",
       "priority": "5",
       "tags": []
     }

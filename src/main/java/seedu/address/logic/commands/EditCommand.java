@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ORGAN;
@@ -24,6 +25,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.BloodType;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Organ;
@@ -48,6 +50,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_ORGAN + "ORGAN] "
+            + "[" + PREFIX_BLOODTYPE + "BLOOD TYPE] "
             + "[" + PREFIX_PRIORITY + "PRIORITY] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -106,11 +109,13 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Organ updatedOrgan = editPersonDescriptor.getOrgan().orElse(personToEdit.getOrgan());
+        BloodType updatedBloodType = editPersonDescriptor.getBloodType().orElse(personToEdit.getBloodType());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Priority updatedPriority = editPersonDescriptor.getPriority().orElse(personToEdit.getPriority());
 
         return new Person(updatedName,
-                updatedPhone, updatedEmail, updatedAddress, updatedOrgan, updatedTags, updatedPriority);
+                updatedPhone, updatedEmail, updatedAddress, updatedOrgan, updatedBloodType,
+                updatedPriority, updatedTags);
     }
 
     @Override
@@ -147,6 +152,7 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Organ organ;
+        private BloodType bloodType;
         private Set<Tag> tags;
         private Priority priority;
 
@@ -162,6 +168,7 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setOrgan(toCopy.organ);
+            setBloodType(toCopy.bloodType);
             setTags(toCopy.tags);
             setPriority(toCopy.priority);
         }
@@ -170,7 +177,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, organ, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, organ, bloodType, priority, tags);
         }
 
         public void setName(Name name) {
@@ -211,6 +218,14 @@ public class EditCommand extends Command {
 
         public Optional<Organ> getOrgan() {
             return Optional.ofNullable(organ);
+        }
+
+        public void setBloodType(BloodType bloodType) {
+            this.bloodType = bloodType;
+        }
+
+        public Optional<BloodType> getBloodType() {
+            return Optional.ofNullable(bloodType);
         }
 
         /**
@@ -256,7 +271,8 @@ public class EditCommand extends Command {
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(organ, otherEditPersonDescriptor.organ)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags)
-                    && Objects.equals(priority, otherEditPersonDescriptor.priority);
+                    && Objects.equals(priority, otherEditPersonDescriptor.priority)
+                    && Objects.equals(bloodType, otherEditPersonDescriptor.bloodType);
         }
 
         @Override
@@ -267,6 +283,7 @@ public class EditCommand extends Command {
                     .add("email", email)
                     .add("address", address)
                     .add("organ", organ)
+                    .add("blood type", bloodType)
                     .add("priority", priority)
                     .add("tags", tags)
                     .toString();
