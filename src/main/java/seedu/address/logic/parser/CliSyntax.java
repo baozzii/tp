@@ -13,5 +13,8 @@ public class CliSyntax {
     public static final Prefix PREFIX_ORGAN = new Prefix("o/");
     public static final Prefix PREFIX_BLOODTYPE = new Prefix("b/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
+    public static final Prefix PREFIX_EMERGENCY_NAME = new Prefix("en/");
+    public static final Prefix PREFIX_EMERGENCY_PHONE = new Prefix("ep/");
+    public static final Prefix PREFIX_EMERGENCY_RELATION = new Prefix("er/");
     public static final Prefix PREFIX_PRIORITY = new Prefix("r/");
 }

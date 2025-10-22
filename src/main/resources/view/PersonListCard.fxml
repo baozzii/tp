@@ -34,6 +34,7 @@
       <Label fx:id="organ" styleClass="cell_small_label" text="\$organ" />
       <Label fx:id="bloodType" styleClass="cell_small_label" text="\$blood type" />
       <Label fx:id="priority" styleClass="cell_small_label" text="\$priority" />
+      <Label fx:id="emergencyContact" styleClass="cell_small_label" text="\$emergencyContact" />
     </VBox>
   </GridPane>
 </HBox>

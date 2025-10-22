@@ -4,6 +4,9 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMERGENCY_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMERGENCY_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMERGENCY_RELATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ORGAN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -18,13 +21,13 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.BloodType;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.EmergencyContact;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Organ;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Priority;
 import seedu.address.model.tag.Tag;
-
 
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -39,7 +42,8 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_ORGAN, PREFIX_BLOODTYPE, PREFIX_PRIORITY, PREFIX_TAG);
+                        PREFIX_ADDRESS, PREFIX_ORGAN, PREFIX_BLOODTYPE, PREFIX_PRIORITY, PREFIX_TAG, 
+                        PREFIX_EMERGENCY_NAME, PREFIX_EMERGENCY_PHONE, PREFIX_EMERGENCY_RELATION);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
                 PREFIX_ADDRESS, PREFIX_ORGAN, PREFIX_BLOODTYPE, PREFIX_PRIORITY)
@@ -57,9 +61,23 @@ public class AddCommandParser implements Parser<AddCommand> {
         Organ organ = ParserUtil.parseOrgan(argMultimap.getValue(PREFIX_ORGAN).get());
         BloodType bloodType = ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+
+        EmergencyContact emergencyContact = null;
+        boolean hasEcName = argMultimap.getValue(PREFIX_EMERGENCY_NAME).isPresent();
+        boolean hasEcPhone = argMultimap.getValue(PREFIX_EMERGENCY_PHONE).isPresent();
+
+        if (hasEcName || hasEcPhone || argMultimap.getValue(PREFIX_EMERGENCY_RELATION).isPresent()) {
+            if (!hasEcName || !hasEcPhone) {
+                throw new ParseException(EmergencyContact.MESSAGE_CONSTRAINTS);
+            }
+            Name ecName = ParserUtil.parseName(argMultimap.getValue(PREFIX_EMERGENCY_NAME).get());
+            Phone ecPhone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_EMERGENCY_PHONE).get());
+            String ecRelation = argMultimap.getValue(PREFIX_EMERGENCY_RELATION).orElse("");
+            emergencyContact = new EmergencyContact(ecName, ecPhone, ecRelation);
+        }
         Priority priority = ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY).get());
 
-        Person person = new Person(name, phone, email, address, organ, bloodType, priority, tagList);
+        Person person = new Person(name, phone, email, address, organ, bloodType, priority, tagList, emergencyContact);
 
         return new AddCommand(person);
     }
