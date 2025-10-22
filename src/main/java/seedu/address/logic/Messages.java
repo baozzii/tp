@@ -46,6 +46,10 @@ public class Messages {
                 .append(person.getAddress())
                 .append("; Organ: ")
                 .append(person.getOrgan())
+                .append("; Blood Type: ")
+                .append(person.getBloodType())
+                .append("; Priority: ")
+                .append(person.getPriority())
                 .append("; Tags: ");
         person.getTags().forEach(builder::append);
         return builder.toString();

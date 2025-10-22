@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ORGAN;
@@ -36,6 +37,7 @@ public class PersonUtil {
         sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
         sb.append(PREFIX_ORGAN + person.getOrgan().organName + " ");
+        sb.append(PREFIX_BLOODTYPE + person.getBloodType().bloodType + " ");
         sb.append(PREFIX_PRIORITY + person.getPriority().priority.toString() + " ");
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
@@ -54,6 +56,8 @@ public class PersonUtil {
         descriptor.getAddress()
                 .ifPresent(address -> sb.append(PREFIX_ADDRESS).append(address.value).append(" "));
         descriptor.getOrgan().ifPresent(organ -> sb.append(PREFIX_ORGAN).append(organ.organName).append(" "));
+        descriptor.getBloodType()
+                .ifPresent(bloodType -> sb.append(PREFIX_BLOODTYPE).append(bloodType.bloodType).append(" "));
         descriptor.getPriority().ifPresent(priority -> sb.append(PREFIX_PRIORITY)
                 .append(priority.priority).append(" "));
         if (descriptor.getTags().isPresent()) {

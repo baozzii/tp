@@ -15,10 +15,13 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.BloodType;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Organ;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
@@ -26,11 +29,14 @@ public class ParserUtilTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
-
+    private static final String INVALID_BLOODTYPE = "Z+";
+    private static final String INVALID_ORGAN = "1kidney";
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_BLOODTYPE = "B+";
+    private static final String VALID_ORGAN = "kidney";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -146,6 +152,51 @@ public class ParserUtilTest {
         String emailWithWhitespace = WHITESPACE + VALID_EMAIL + WHITESPACE;
         Email expectedEmail = new Email(VALID_EMAIL);
         assertEquals(expectedEmail, ParserUtil.parseEmail(emailWithWhitespace));
+    }
+
+    @Test
+    public void parseOrgan_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseOrgan((String) null));
+    }
+
+    @Test
+    public void parseOrgan_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseOrgan(INVALID_ORGAN));
+    }
+
+    @Test
+    public void parseOrgan_validValueWithoutWhitespace_returnsOrgan() throws Exception {
+        Email expectedOrgan = new Email(VALID_ORGAN);
+        assertEquals(expectedOrgan, ParserUtil.parseOrgan(VALID_ORGAN));
+    }
+
+    @Test
+    public void parseOrgan_validValueWithWhitespace_returnsTrimmedOrgan() throws Exception {
+        String organWithWhitespace = WHITESPACE + VALID_ORGAN + WHITESPACE;
+        Organ expectedOrgan = new Organ(VALID_ORGAN);
+        assertEquals(expectedOrgan, ParserUtil.parseOrgan(organWithWhitespace));
+    }
+    @Test
+    public void parseBloodType_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseBloodType((String) null));
+    }
+
+    @Test
+    public void parseBloodType_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseBloodType(INVALID_BLOODTYPE));
+    }
+
+    @Test
+    public void parseBloodType_validValueWithoutWhitespace_returnsBloodType() throws Exception {
+        BloodType expectedBloodType = new BloodType(VALID_BLOODTYPE);
+        assertEquals(expectedBloodType, ParserUtil.parseBloodType(VALID_BLOODTYPE));
+    }
+
+    @Test
+    public void parseBloodType_validValueWithWhitespace_returnsTrimmedBloodType() throws Exception {
+        String bloodTypeWithWhitespace = WHITESPACE + VALID_BLOODTYPE + WHITESPACE;
+        BloodType expectedBloodType = new BloodType(VALID_BLOODTYPE);
+        assertEquals(expectedBloodType, ParserUtil.parseBloodType(bloodTypeWithWhitespace));
     }
 
     @Test

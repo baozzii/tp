@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
+import seedu.address.model.person.BloodType;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Organ;
@@ -23,6 +24,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_ORGAN = "kidney";
+    public static final String DEFAULT_BLOODTYPE = "O+";
     public static final Integer DEFAULT_PRIORITY = 1;
 
     private Name name;
@@ -30,6 +32,7 @@ public class PersonBuilder {
     private Email email;
     private Address address;
     private Organ organ;
+    private BloodType bloodType;
     private Set<Tag> tags;
     private Priority priority;
 
@@ -42,6 +45,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         organ = new Organ(DEFAULT_ORGAN);
+        bloodType = new BloodType(DEFAULT_BLOODTYPE);
         tags = new HashSet<>();
         priority = new Priority(DEFAULT_PRIORITY);
     }
@@ -55,6 +59,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         organ = personToCopy.getOrgan();
+        bloodType = personToCopy.getBloodType();
         tags = new HashSet<>(personToCopy.getTags());
         priority = personToCopy.getPriority();
     }
@@ -106,6 +111,13 @@ public class PersonBuilder {
         this.organ = new Organ(organ);
         return this;
     }
+    /**
+     * Sets the {@code BloodType} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withBloodType(String bloodType) {
+        this.bloodType = new BloodType(bloodType);
+        return this;
+    }
 
     /**
      * Sets the {@code Priority} of the {@code Person} that we are building.
@@ -116,7 +128,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, organ, tags, priority);
+        return new Person(name, phone, email, address, organ, bloodType, priority, tags);
     }
 
 }

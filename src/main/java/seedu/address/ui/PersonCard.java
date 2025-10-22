@@ -41,6 +41,10 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label organ;
     @FXML
+    private Label bloodType;
+    @FXML
+    private Label priority;
+    @FXML
     private FlowPane tags;
 
     /**
@@ -55,6 +59,7 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         organ.setText(person.getOrgan().organName);
+        bloodType.setText(person.getBloodType().bloodType);
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));

@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ORGAN;
@@ -44,6 +45,8 @@ public class CommandTestUtil {
     public static final Integer VALID_PRIORITY_BOB = 3;
     public static final Integer VALID_PRIORITY_HIGH = 1;
     public static final Integer VALID_PRIORITY_LOW = 5;
+    public static final String VALID_BLOODTYPE_AMY = "O+";
+    public static final String VALID_BLOODTYPE_BOB = "O-";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -59,6 +62,8 @@ public class CommandTestUtil {
     public static final String PRIORITY_DESC_BOB = " " + PREFIX_PRIORITY + VALID_PRIORITY_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String BLOODTYPE_DESC_AMY = " " + PREFIX_BLOODTYPE + VALID_BLOODTYPE_AMY;
+    public static final String BLOODTYPE_DESC_BOB = " " + PREFIX_BLOODTYPE + VALID_BLOODTYPE_BOB;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -67,7 +72,7 @@ public class CommandTestUtil {
     public static final String INVALID_ORGAN_DESC = " "
             + PREFIX_ORGAN + "21"; // numeric characters not allowed for organ
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
-
+    public static final String INVALID_BLOODTYPE_DESC = "Z+";
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
@@ -77,10 +82,11 @@ public class CommandTestUtil {
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withOrgan(VALID_ORGAN_AMY).withPriority(VALID_PRIORITY_LOW).withTags(VALID_TAG_FRIEND).build();
+                .withOrgan(VALID_ORGAN_AMY).withBloodType(VALID_BLOODTYPE_AMY).withPriority(VALID_PRIORITY_LOW)
+                .withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withOrgan(VALID_ORGAN_BOB).withPriority(VALID_PRIORITY_HIGH)
+                .withOrgan(VALID_ORGAN_BOB).withBloodType(VALID_BLOODTYPE_AMY).withPriority(VALID_PRIORITY_HIGH)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
                 .build();
     }

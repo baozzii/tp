@@ -24,14 +24,14 @@ public class Person {
     // Data fields
     private final Address address;
     private final Organ organ;
-    private final Set<Tag> tags = new HashSet<>();
+    private final BloodType bloodType;
     private final Priority priority;
-
+    private final Set<Tag> tags = new HashSet<>();
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Organ organ,
-                  Set<Tag> tags, Priority priority) {
+    public Person(Name name, Phone phone, Email email, Address address, Organ organ, BloodType bloodType,
+                  Priority priority, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, organ, tags, priority);
         this.name = name;
         this.phone = phone;
@@ -39,6 +39,7 @@ public class Person {
         this.address = address;
         this.tags.addAll(tags);
         this.organ = organ;
+        this.bloodType = bloodType;
         this.priority = priority;
     }
 
@@ -60,6 +61,10 @@ public class Person {
 
     public Organ getOrgan() {
         return organ;
+    }
+
+    public BloodType getBloodType() {
+        return bloodType;
     }
 
     public Priority getPriority() {
@@ -109,6 +114,7 @@ public class Person {
                 && address.equals(otherPerson.address)
                 && tags.equals(otherPerson.tags)
                 && organ.equals(otherPerson.organ)
+                && bloodType.equals(otherPerson.bloodType)
                 && priority.equals(otherPerson.priority);
     }
     /**
@@ -122,7 +128,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, organ, tags, priority);
+        return Objects.hash(name, phone, email, address, organ, bloodType, tags, priority);
     }
 
     @Override
@@ -133,6 +139,7 @@ public class Person {
                 .add("email", email)
                 .add("address", address)
                 .add("organ", organ)
+                .add("blood type", bloodType)
                 .add("priority", priority)
                 .add("tags", tags)
                 .toString();
