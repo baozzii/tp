@@ -72,7 +72,7 @@ public class CommandTestUtil {
     public static final String INVALID_ORGAN_DESC = " "
             + PREFIX_ORGAN + "21"; // numeric characters not allowed for organ
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
-    public static final String INVALID_BLOODTYPE_DESC = "Z+";
+    public static final String INVALID_BLOODTYPE_DESC = " " + PREFIX_BLOODTYPE + "Z-";
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
@@ -86,7 +86,7 @@ public class CommandTestUtil {
                 .withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withOrgan(VALID_ORGAN_BOB).withBloodType(VALID_BLOODTYPE_AMY).withPriority(VALID_PRIORITY_HIGH)
+                .withOrgan(VALID_ORGAN_BOB).withBloodType(VALID_BLOODTYPE_BOB).withPriority(VALID_PRIORITY_HIGH)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
                 .build();
     }
