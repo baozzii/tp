@@ -28,7 +28,7 @@ public enum BloodTypeEnum {
         // Loop through all enum constants
         for (BloodTypeEnum type : BloodTypeEnum.values()) {
             // Check if the input value matches the label of any enum constant
-            if (type.getLabel().equals(bloodType)) {
+            if (type.getLabel().equalsIgnoreCase(bloodType)) {
                 return true;
             }
         }

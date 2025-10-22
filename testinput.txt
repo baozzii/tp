@@ -1,0 +1,7 @@
+add n/Alice Pauline p/94351253 e/alice@example.com a/123, Jurong West Ave 6, #08-111 o/kidney b/O+ r/1 t/friends
+add n/Benson Meier p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 o/kidney b/O- r/2 t/friends t/owesMoney
+add n/Carl Kurz p/95352563 e/heinz@example.com a/wall street o/cornea b/A- r/3
+add n/Daniel Meier p/87652533 e/cornelia@example.com a/10th street o/liver b/AB- t/friends r/4
+add n/Elle Meyer p/94822224 e/werner@example.com a/michegan ave o/heart b/AB- r/5
+add n/Fiona Kunz p/94824425 e/lydia@example.com a/little tokyo o/corena b/B- r/5
+add n/George Best p/94824242 e/anna@example.com a/4th street o/kidney b/B- r/5

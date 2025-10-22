@@ -10,7 +10,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class BloodType {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "BloodType should be A, B, AB, O only";
+            "BloodType should be A+, A- B+, B- AB+, AB-, O+ or O- only";
 
     public final String bloodType;
 
