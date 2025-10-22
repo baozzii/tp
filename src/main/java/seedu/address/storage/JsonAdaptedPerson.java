@@ -130,7 +130,7 @@ class JsonAdaptedPerson {
         if (!BloodType.isValidBloodType(bloodType)) {
             throw new IllegalValueException(BloodType.MESSAGE_CONSTRAINTS);
         }
-        final BloodType modelBloodType = new BloodType(organ);
+        final BloodType modelBloodType = new BloodType(bloodType);
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
         if (priority == null) {

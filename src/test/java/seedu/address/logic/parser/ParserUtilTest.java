@@ -166,7 +166,7 @@ public class ParserUtilTest {
 
     @Test
     public void parseOrgan_validValueWithoutWhitespace_returnsOrgan() throws Exception {
-        Email expectedOrgan = new Email(VALID_ORGAN);
+        Organ expectedOrgan = new Organ(VALID_ORGAN);
         assertEquals(expectedOrgan, ParserUtil.parseOrgan(VALID_ORGAN));
     }
 

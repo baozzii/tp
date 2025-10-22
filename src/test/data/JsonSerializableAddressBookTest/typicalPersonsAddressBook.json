@@ -8,7 +8,7 @@
       "address": "123, Jurong West Ave 6, #08-111",
       "organ": "kidney",
       "blood type": "O+",
-      "priority": "1",
+      "priority": 1,
       "tags": ["friends"]
     },
     {
@@ -18,7 +18,7 @@
       "address": "311, Clementi Ave 2, #02-25",
       "organ": "kidney",
       "blood type": "O-",
-      "priority": "2",
+      "priority": 2,
       "tags": ["owesMoney", "friends"]
     },
     {
@@ -28,7 +28,7 @@
       "address": "wall street",
       "organ": "cornea",
       "blood type": "A-",
-      "priority": "3",
+      "priority": 3,
       "tags": []
     },
     {
@@ -38,7 +38,7 @@
       "address": "10th street",
       "organ": "liver",
       "blood type": "AB-",
-      "priority": "4",
+      "priority": 4,
       "tags": ["friends"]
     },
     {
@@ -48,7 +48,7 @@
       "address": "michegan ave",
       "organ": "heart",
       "blood type": "AB-",
-      "priority": "5",
+      "priority": 5,
       "tags": []
     },
     {
@@ -58,7 +58,7 @@
       "address": "little tokyo",
       "organ": "cornea",
       "blood type": "B-",
-      "priority": "5",
+      "priority": 5,
       "tags": []
     },
     {
@@ -68,7 +68,7 @@
       "address": "4th street",
       "organ": "kidney",
       "blood type": "B-",
-      "priority": "5",
+      "priority": 5,
       "tags": []
     }
   ]
