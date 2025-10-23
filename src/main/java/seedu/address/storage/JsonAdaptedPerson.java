@@ -13,6 +13,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.BloodType;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.EmergencyContact;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Organ;
 import seedu.address.model.person.Person;
@@ -33,6 +34,9 @@ class JsonAdaptedPerson {
     private final String address;
     private final String organ;
     private final String bloodType;
+    private final String emergencyContactName;
+    private final String emergencyContactPhone;
+    private final String emergencyContactRelationship;
     private final Integer priority;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
@@ -43,7 +47,10 @@ class JsonAdaptedPerson {
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
             @JsonProperty("organ") String organ, @JsonProperty("blood type") String bloodType,
-            @JsonProperty("priority") Integer priority, @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+            @JsonProperty("priority") Integer priority, @JsonProperty("tags") List<JsonAdaptedTag> tags,
+            @JsonProperty("emergencyContactName") String emergencyContactName,
+            @JsonProperty("emergencyContactPhone") String emergencyContactPhone,
+            @JsonProperty("emergencyContactRelationship") String emergencyContactRelationship) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -54,6 +61,9 @@ class JsonAdaptedPerson {
         if (tags != null) {
             this.tags.addAll(tags);
         }
+        this.emergencyContactName = emergencyContactName;
+        this.emergencyContactPhone = emergencyContactPhone;
+        this.emergencyContactRelationship = emergencyContactRelationship;
     }
 
     /**
@@ -70,6 +80,10 @@ class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        EmergencyContact ec = source.getEmergencyContact();
+        this.emergencyContactName = ec == null ? null : ec.getName().fullName;
+        this.emergencyContactPhone = ec == null ? null : ec.getPhone().value;
+        this.emergencyContactRelationship = ec == null ? null : ec.getRelationship();
     }
 
     /**
@@ -82,7 +96,27 @@ class JsonAdaptedPerson {
         for (JsonAdaptedTag tag : tags) {
             personTags.add(tag.toModelType());
         }
-
+        EmergencyContact modelEmergencyContact = null;
+        if (emergencyContactName != null || emergencyContactPhone != null) {
+            if (emergencyContactName == null) {
+                throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                        EmergencyContact.class.getSimpleName() + " Name"));
+            }
+            if (emergencyContactPhone == null) {
+                throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                        EmergencyContact.class.getSimpleName() + " Phone"));
+            }
+            if (!Name.isValidName(emergencyContactName)) {
+                throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+            }
+            if (!Phone.isValidPhone(emergencyContactPhone)) {
+                throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
+            }
+            final Name modelEcName = new Name(emergencyContactName);
+            final Phone modelEcPhone = new Phone(emergencyContactPhone);
+            final String modelEcRelation = emergencyContactRelationship == null ? "" : emergencyContactRelationship;
+            modelEmergencyContact = new EmergencyContact(modelEcName, modelEcPhone, modelEcRelation);
+        }
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
         }
@@ -143,7 +177,7 @@ class JsonAdaptedPerson {
         final Priority modelPriority = new Priority(priority);
 
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelOrgan,
-                modelBloodType, modelPriority, modelTags);
+                modelBloodType, modelPriority, modelTags, modelEmergencyContact);
     }
 
 }

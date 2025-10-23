@@ -7,9 +7,17 @@ import static seedu.address.logic.commands.CommandTestUtil.BLOODTYPE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.BLOODTYPE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.EMERGENCY_NAME_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.EMERGENCY_NAME_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.EMERGENCY_PHONE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.EMERGENCY_PHONE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.EMERGENCY_RELATION_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.EMERGENCY_RELATION_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_BLOODTYPE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMERGENCY_NAME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMERGENCY_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ORGAN_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
@@ -29,6 +37,9 @@ import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_BLOODTYPE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMERGENCY_NAME_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMERGENCY_PHONE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMERGENCY_RELATION_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ORGAN_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
@@ -37,6 +48,9 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMERGENCY_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMERGENCY_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMERGENCY_RELATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ORGAN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -53,6 +67,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.BloodType;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.EmergencyContact;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Organ;
 import seedu.address.model.person.Person;
@@ -78,6 +93,15 @@ public class AddCommandParserTest {
         assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                 + ORGAN_DESC_BOB + BLOODTYPE_DESC_BOB + PRIORITY_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND,
                 new AddCommand(expectedPersonMultipleTags));
+
+        // emergency contact - all fields present
+        Person expectedPersonWithEC = new PersonBuilder(BOB).withTags(VALID_TAG_FRIEND)
+                .withEmergencyContact(VALID_EMERGENCY_NAME_AMY, VALID_EMERGENCY_PHONE_AMY, VALID_EMERGENCY_RELATION_AMY)
+                .build();
+        assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+                + ORGAN_DESC_BOB + BLOODTYPE_DESC_BOB + PRIORITY_DESC_BOB + TAG_DESC_FRIEND
+                + EMERGENCY_NAME_DESC_AMY + EMERGENCY_PHONE_DESC_AMY + EMERGENCY_RELATION_DESC_AMY,
+                new AddCommand(expectedPersonWithEC));
     }
 
     @Test
@@ -115,6 +139,19 @@ public class AddCommandParserTest {
                         + ORGAN_DESC_AMY + BLOODTYPE_DESC_AMY + PRIORITY_DESC_AMY,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ORGAN, PREFIX_NAME, PREFIX_ADDRESS,
                         PREFIX_EMAIL, PREFIX_PHONE, PREFIX_BLOODTYPE, PREFIX_PRIORITY));
+
+        // multiple emergency names
+        assertParseFailure(parser, validExpectedPersonString + EMERGENCY_NAME_DESC_AMY + EMERGENCY_NAME_DESC_BOB,
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_EMERGENCY_NAME));
+
+        // multiple emergency phones
+        assertParseFailure(parser, validExpectedPersonString + EMERGENCY_PHONE_DESC_AMY + EMERGENCY_PHONE_DESC_BOB,
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_EMERGENCY_PHONE));
+
+        // multiple emergency relationships
+        assertParseFailure(parser, validExpectedPersonString + EMERGENCY_RELATION_DESC_AMY
+                + EMERGENCY_RELATION_DESC_BOB,
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_EMERGENCY_RELATION));
 
         // invalid value followed by valid value
 
@@ -168,7 +205,7 @@ public class AddCommandParserTest {
     @Test
     public void parse_optionalFieldsMissing_success() {
         // Only tags are optional, all other fields including organ are mandatory
-        Person expectedPerson = new PersonBuilder(AMY).withTags().build();
+        Person expectedPerson = new PersonBuilder(AMY).withTags().withEmergencyContact((EmergencyContact) null).build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + ORGAN_DESC_AMY + BLOODTYPE_DESC_AMY + PRIORITY_DESC_AMY,
                 new AddCommand(expectedPerson));
@@ -204,7 +241,7 @@ public class AddCommandParserTest {
 
         // all prefixes missing
         assertParseFailure(parser, VALID_NAME_BOB + VALID_PHONE_BOB + VALID_EMAIL_BOB + VALID_ADDRESS_BOB
-                        + VALID_ORGAN_BOB + VALID_BLOODTYPE_BOB, expectedMessage);
+                + VALID_ORGAN_BOB + VALID_BLOODTYPE_BOB, expectedMessage);
     }
 
     @Test
@@ -235,12 +272,22 @@ public class AddCommandParserTest {
                 + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Organ.MESSAGE_CONSTRAINTS);
         // invalid blood type
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                        + ORGAN_DESC_BOB + INVALID_BLOODTYPE_DESC + PRIORITY_DESC_BOB
-                        + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, BloodType.MESSAGE_CONSTRAINTS);
+                + ORGAN_DESC_BOB + INVALID_BLOODTYPE_DESC + PRIORITY_DESC_BOB
+                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, BloodType.MESSAGE_CONSTRAINTS);
         // invalid tag
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                 + ORGAN_DESC_BOB + BLOODTYPE_DESC_BOB + PRIORITY_DESC_BOB + INVALID_TAG_DESC
                 + VALID_TAG_FRIEND, Tag.MESSAGE_CONSTRAINTS);
+
+        // invalid emergency contact name
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+                + ORGAN_DESC_BOB + BLOODTYPE_DESC_BOB + PRIORITY_DESC_BOB + INVALID_EMERGENCY_NAME_DESC
+                + EMERGENCY_PHONE_DESC_AMY + TAG_DESC_FRIEND, Name.MESSAGE_CONSTRAINTS);
+
+        // invalid emergency contact phone
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+                + ORGAN_DESC_BOB + BLOODTYPE_DESC_BOB + PRIORITY_DESC_BOB + EMERGENCY_NAME_DESC_AMY
+                + INVALID_EMERGENCY_PHONE_DESC + TAG_DESC_FRIEND, Phone.MESSAGE_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC
@@ -251,5 +298,34 @@ public class AddCommandParserTest {
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + ORGAN_DESC_BOB + BLOODTYPE_DESC_BOB + PRIORITY_DESC_BOB + TAG_DESC_HUSBAND
                 + TAG_DESC_FRIEND, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_emergencyContactPartialFields_failure() {
+        String validExpectedPersonString = NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+                + ORGAN_DESC_AMY + BLOODTYPE_DESC_AMY + PRIORITY_DESC_AMY;
+
+        // only emergency name provided
+        assertParseFailure(parser, validExpectedPersonString + EMERGENCY_NAME_DESC_AMY,
+                EmergencyContact.MESSAGE_CONSTRAINTS);
+
+        // only emergency phone provided
+        assertParseFailure(parser, validExpectedPersonString + EMERGENCY_PHONE_DESC_AMY,
+                EmergencyContact.MESSAGE_CONSTRAINTS);
+
+        // only emergency relationship provided
+        assertParseFailure(parser, validExpectedPersonString + EMERGENCY_RELATION_DESC_AMY,
+                EmergencyContact.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_emergencyContactWithoutRelationship_success() {
+        // Emergency contact with name and phone but no relationship should work
+        Person expectedPerson = new PersonBuilder(AMY)
+                .withEmergencyContact(VALID_EMERGENCY_NAME_AMY, VALID_EMERGENCY_PHONE_AMY, "").build();
+
+        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+                + ORGAN_DESC_AMY + BLOODTYPE_DESC_AMY + PRIORITY_DESC_AMY + TAG_DESC_FRIEND + EMERGENCY_NAME_DESC_AMY
+                + EMERGENCY_PHONE_DESC_AMY, new AddCommand(expectedPerson));
     }
 }

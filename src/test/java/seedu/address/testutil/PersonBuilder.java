@@ -6,6 +6,7 @@ import java.util.Set;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.BloodType;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.EmergencyContact;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Organ;
 import seedu.address.model.person.Person;
@@ -30,6 +31,7 @@ public class PersonBuilder {
     private Name name;
     private Phone phone;
     private Email email;
+    private EmergencyContact emergencyContact;
     private Address address;
     private Organ organ;
     private BloodType bloodType;
@@ -48,6 +50,7 @@ public class PersonBuilder {
         bloodType = new BloodType(DEFAULT_BLOODTYPE);
         tags = new HashSet<>();
         priority = new Priority(DEFAULT_PRIORITY);
+        emergencyContact = null;
     }
 
     /**
@@ -62,6 +65,7 @@ public class PersonBuilder {
         bloodType = personToCopy.getBloodType();
         tags = new HashSet<>(personToCopy.getTags());
         priority = personToCopy.getPriority();
+        emergencyContact = personToCopy.getEmergencyContact();
     }
 
     /**
@@ -127,8 +131,24 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code EmergencyContact} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withEmergencyContact(EmergencyContact emergencyContact) {
+        this.emergencyContact = emergencyContact;
+        return this;
+    }
+
+    /**
+     * Sets the {@code EmergencyContact} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withEmergencyContact(String name, String phone, String relationship) {
+        this.emergencyContact = new EmergencyContact(new Name(name), new Phone(phone), relationship);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, organ, bloodType, priority, tags);
+        return new Person(name, phone, email, address, organ, bloodType, priority, tags, emergencyContact);
     }
 
 }

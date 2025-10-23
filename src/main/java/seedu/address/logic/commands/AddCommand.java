@@ -4,6 +4,9 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMERGENCY_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMERGENCY_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMERGENCY_RELATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ORGAN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -32,6 +35,9 @@ public class AddCommand extends Command {
             + PREFIX_ORGAN + "ORGAN "
             + PREFIX_BLOODTYPE + "BLOOD TYPE "
             + PREFIX_PRIORITY + "PRIORITY "
+            + "[" + PREFIX_EMERGENCY_NAME + "EMERGENCY_NAME] "
+            + "[" + PREFIX_EMERGENCY_PHONE + "EMERGENCY_PHONE] "
+            + "[" + PREFIX_EMERGENCY_RELATION + "EMERGENCY_RELATION] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
@@ -41,6 +47,9 @@ public class AddCommand extends Command {
             + PREFIX_ORGAN + "kidney "
             + PREFIX_BLOODTYPE + "O+ "
             + PREFIX_PRIORITY + "1 "
+            + PREFIX_EMERGENCY_NAME + "Jane Doe "
+            + PREFIX_EMERGENCY_PHONE + "91234567 "
+            + PREFIX_EMERGENCY_RELATION + "spouse "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 

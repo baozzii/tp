@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.model.person.EmergencyContact;
 import seedu.address.model.person.Person;
 
 /**
@@ -46,6 +47,8 @@ public class PersonCard extends UiPart<Region> {
     private Label priority;
     @FXML
     private FlowPane tags;
+    @FXML
+    private Label emergencyContact;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -60,8 +63,11 @@ public class PersonCard extends UiPart<Region> {
         email.setText(person.getEmail().value);
         organ.setText(person.getOrgan().organName);
         bloodType.setText(person.getBloodType().bloodType);
+        priority.setText(String.valueOf(person.getPriority().priority));
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        EmergencyContact ec = person.getEmergencyContact();
+        emergencyContact.setText(ec == null ? "" : ec.toString());
     }
 }

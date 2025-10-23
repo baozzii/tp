@@ -27,17 +27,20 @@ public class Person {
     private final BloodType bloodType;
     private final Priority priority;
     private final Set<Tag> tags = new HashSet<>();
+    private final EmergencyContact emergencyContact;
+
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Organ organ, BloodType bloodType,
-                  Priority priority, Set<Tag> tags) {
+                  Priority priority, Set<Tag> tags, EmergencyContact emergencyContact) {
         requireAllNonNull(name, phone, email, address, organ, tags, priority);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+        this.emergencyContact = emergencyContact;
         this.organ = organ;
         this.bloodType = bloodType;
         this.priority = priority;
@@ -79,6 +82,10 @@ public class Person {
         return Collections.unmodifiableSet(tags);
     }
 
+    public EmergencyContact getEmergencyContact() {
+        return emergencyContact;
+    }
+
     /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
@@ -102,21 +109,24 @@ public class Person {
             return true;
         }
 
-        // instanceof handles nulls
+        // instanceof handles nulls - do this BEFORE casting
         if (!(other instanceof Person)) {
             return false;
         }
 
         Person otherPerson = (Person) other;
+
         return name.equals(otherPerson.name)
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
-                && tags.equals(otherPerson.tags)
                 && organ.equals(otherPerson.organ)
                 && bloodType.equals(otherPerson.bloodType)
-                && priority.equals(otherPerson.priority);
+                && priority.equals(otherPerson.priority)
+                && tags.equals(otherPerson.tags)
+                && Objects.equals(emergencyContact, otherPerson.emergencyContact); // Only ONE emergency contact check
     }
+
     /**
      * Returns true if donor's organ matches the person's organ.
      * @param organAvailable available organ from donor.
@@ -125,10 +135,11 @@ public class Person {
     public boolean isMatch(Organ organAvailable) {
         return organ.equals(organAvailable);
     }
+
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, organ, bloodType, tags, priority);
+        return Objects.hash(name, phone, email, address, organ, bloodType, tags, emergencyContact, priority);
     }
 
     @Override
@@ -142,6 +153,7 @@ public class Person {
                 .add("blood type", bloodType)
                 .add("priority", priority)
                 .add("tags", tags)
+                .add("emergencyContact", emergencyContact)
                 .toString();
     }
 
