@@ -100,6 +100,11 @@ public class PersonTest {
         // different tags -> returns false
         editedAlice = new PersonBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(ALICE.equals(editedAlice));
+
+        // different emergency contact -> returns false
+        editedAlice = new PersonBuilder(ALICE)
+                .withEmergencyContact("John Emergency", "91234567", "spouse").build();
+        assertFalse(ALICE.equals(editedAlice));
     }
 
     @Test
@@ -113,7 +118,8 @@ public class PersonTest {
                 new Organ("123"), // Numbers not allowed
                 new BloodType(VALID_BLOODTYPE_AMY),
                 new Priority(6),
-                new HashSet<>()
+                new HashSet<>(),
+                null
         ));
 
         assertThrows(IllegalArgumentException.class, () -> new Person(
@@ -124,7 +130,8 @@ public class PersonTest {
                 new Organ("kidney!"), // Special characters not allowed
                 new BloodType(VALID_BLOODTYPE_AMY),
                 new Priority(-1),
-                new HashSet<>()
+                new HashSet<>(),
+                null
         ));
     }
 
@@ -133,7 +140,7 @@ public class PersonTest {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
                 + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", organ=" + ALICE.getOrgan()
                 + ", blood type=" + ALICE.getBloodType() + ", priority=" + ALICE.getPriority()
-                + ", tags=" + ALICE.getTags() + "}";
+                + ", tags=" + ALICE.getTags() + ", emergencyContact=" + ALICE.getEmergencyContact() + "}";
         assertEquals(expected, ALICE.toString());
     }
 }

@@ -10,12 +10,20 @@ import java.util.Objects;
 public class EmergencyContact {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Emergency contact requires both name (en/) and phone (ep/), or none at all. Relationship (er/) is optional.";
+            "Emergency contact requires both name (en/) and phone (ep/) specified or both empty to clear."
+            + " Relationship (er/) is optional.";
 
     private final Name name;
     private final Phone phone;
     private final String relationship;
 
+    /**
+     * Constructs an {@code EmergencyContact}.
+     *
+     * @param name
+     * @param phone
+     * @param relationship
+     */
     public EmergencyContact(Name name, Phone phone, String relationship) {
         requireNonNull(name);
         requireNonNull(phone);
@@ -58,5 +66,4 @@ public class EmergencyContact {
     public String toString() {
         return name + " / " + phone + (relationship.isEmpty() ? "" : " (" + relationship + ")");
     }
-    
 }

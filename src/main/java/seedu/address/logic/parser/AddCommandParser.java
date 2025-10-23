@@ -42,7 +42,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_ORGAN, PREFIX_BLOODTYPE, PREFIX_PRIORITY, PREFIX_TAG, 
+                        PREFIX_ADDRESS, PREFIX_ORGAN, PREFIX_BLOODTYPE, PREFIX_PRIORITY, PREFIX_TAG,
                         PREFIX_EMERGENCY_NAME, PREFIX_EMERGENCY_PHONE, PREFIX_EMERGENCY_RELATION);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
@@ -53,7 +53,8 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_ORGAN,
-                PREFIX_BLOODTYPE, PREFIX_PRIORITY);
+                PREFIX_BLOODTYPE, PREFIX_PRIORITY, PREFIX_EMERGENCY_NAME, PREFIX_EMERGENCY_PHONE,
+                PREFIX_EMERGENCY_RELATION);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());

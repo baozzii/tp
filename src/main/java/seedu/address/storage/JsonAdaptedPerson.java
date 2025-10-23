@@ -99,11 +99,11 @@ class JsonAdaptedPerson {
         EmergencyContact modelEmergencyContact = null;
         if (emergencyContactName != null || emergencyContactPhone != null) {
             if (emergencyContactName == null) {
-                throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, 
+                throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                         EmergencyContact.class.getSimpleName() + " Name"));
             }
             if (emergencyContactPhone == null) {
-                throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, 
+                throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                         EmergencyContact.class.getSimpleName() + " Phone"));
             }
             if (!Name.isValidName(emergencyContactName)) {
@@ -112,7 +112,6 @@ class JsonAdaptedPerson {
             if (!Phone.isValidPhone(emergencyContactPhone)) {
                 throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
             }
-            
             final Name modelEcName = new Name(emergencyContactName);
             final Phone modelEcPhone = new Phone(emergencyContactPhone);
             final String modelEcRelation = emergencyContactRelationship == null ? "" : emergencyContactRelationship;

@@ -8,6 +8,7 @@ import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.BloodType;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.EmergencyContact;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Organ;
 import seedu.address.model.person.Person;
@@ -83,6 +84,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setOrgan(new Organ(organ));
         return this;
     }
+
     /**
      * Sets the {@code BloodType} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -90,6 +92,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setBloodType(new BloodType(bloodType));
         return this;
     }
+
     /**
      * Sets the {@code Priority} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -97,6 +100,23 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPriority(new Priority(priority));
         return this;
     }
+
+    /**
+     * Sets the {@code EmergencyContact} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withEmergencyContact(EmergencyContact emergencyContact) {
+        descriptor.setEmergencyContact(emergencyContact);
+        return this;
+    }
+
+    /**
+     * Sets the {@code EmergencyContact} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withEmergencyContact(String name, String phone, String relationship) {
+        descriptor.setEmergencyContact(new EmergencyContact(new Name(name), new Phone(phone), relationship));
+        return this;
+    }
+
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
      * that we are building.

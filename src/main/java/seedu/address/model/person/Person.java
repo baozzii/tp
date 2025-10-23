@@ -105,34 +105,28 @@ public class Person {
      */
     @Override
     public boolean equals(Object other) {
-        Person otherPerson = (Person) other;
-
         if (other == this) {
             return true;
         }
 
-        // instanceof handles nulls
+        // instanceof handles nulls - do this BEFORE casting
         if (!(other instanceof Person)) {
             return false;
         }
 
-        if (emergencyContact == null && otherPerson.emergencyContact == null) {
-            return true;
-        }
-        if (emergencyContact == null || otherPerson.emergencyContact == null) {
-            return false;
-        }
+        Person otherPerson = (Person) other;
 
         return name.equals(otherPerson.name)
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
-                && tags.equals(otherPerson.tags)
-                && emergencyContact.equals(otherPerson.emergencyContact)
                 && organ.equals(otherPerson.organ)
                 && bloodType.equals(otherPerson.bloodType)
-                && priority.equals(otherPerson.priority);
+                && priority.equals(otherPerson.priority)
+                && tags.equals(otherPerson.tags)
+                && Objects.equals(emergencyContact, otherPerson.emergencyContact); // Only ONE emergency contact check
     }
+
     /**
      * Returns true if donor's organ matches the person's organ.
      * @param organAvailable available organ from donor.
@@ -141,6 +135,7 @@ public class Person {
     public boolean isMatch(Organ organAvailable) {
         return organ.equals(organAvailable);
     }
+
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
@@ -149,7 +144,7 @@ public class Person {
 
     @Override
     public String toString() {
-        ToStringBuilder builder = new ToStringBuilder(Person.class.getCanonicalName())
+        return new ToStringBuilder(this)
                 .add("name", name)
                 .add("phone", phone)
                 .add("email", email)
@@ -157,11 +152,9 @@ public class Person {
                 .add("organ", organ)
                 .add("blood type", bloodType)
                 .add("priority", priority)
-                .add("tags", tags);
-        if (emergencyContact != null) {
-            builder.add("emergencyContact", emergencyContact.toString());
-        }
-        return builder.toString();
+                .add("tags", tags)
+                .add("emergencyContact", emergencyContact)
+                .toString();
     }
 
 }

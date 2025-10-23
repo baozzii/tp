@@ -43,5 +43,4 @@ public class OrganContainsSubstringPredicate implements Predicate<Person> {
     public String toString() {
         return new ToStringBuilder(this).add("substring", substring).toString();
     }
-    
 }

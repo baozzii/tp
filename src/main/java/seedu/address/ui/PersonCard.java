@@ -48,7 +48,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
     @FXML
-    private Label emergencyContact; 
+    private Label emergencyContact;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.

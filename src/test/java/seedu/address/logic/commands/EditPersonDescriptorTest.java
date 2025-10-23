@@ -8,6 +8,9 @@ import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_BLOODTYPE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMERGENCY_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMERGENCY_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMERGENCY_RELATION_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ORGAN_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
@@ -65,6 +68,12 @@ public class EditPersonDescriptorTest {
         // different tags -> returns false
         editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(DESC_AMY.equals(editedAmy));
+
+        // different emergency contact -> returns false
+        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY)
+                .withEmergencyContact(VALID_EMERGENCY_NAME_BOB, VALID_EMERGENCY_PHONE_BOB, VALID_EMERGENCY_RELATION_BOB)
+                .build();
+        assertFalse(DESC_AMY.equals(editedAmy));
     }
 
     @Test
@@ -77,7 +86,8 @@ public class EditPersonDescriptorTest {
                 + editPersonDescriptor.getAddress().orElse(null) + ", organ="
                 + editPersonDescriptor.getOrgan().orElse(null) + ", blood type="
                 + editPersonDescriptor.getBloodType().orElse(null) + ", priority="
-                + editPersonDescriptor.getPriority().orElse(null) + ", tags="
+                + editPersonDescriptor.getPriority().orElse(null) + ", emergency contact="
+                + editPersonDescriptor.getEmergencyContact().orElse(null) + ", tags="
                 + editPersonDescriptor.getTags().orElse(null) + "}";
         assertEquals(expected, editPersonDescriptor.toString());
     }

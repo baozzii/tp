@@ -54,7 +54,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_ORGAN,
-                PREFIX_BLOODTYPE, PREFIX_PRIORITY, PREFIX_EMERGENCY_NAME, PREFIX_EMERGENCY_PHONE, PREFIX_EMERGENCY_RELATION);
+                PREFIX_BLOODTYPE, PREFIX_PRIORITY, PREFIX_EMERGENCY_NAME, PREFIX_EMERGENCY_PHONE,
+                PREFIX_EMERGENCY_RELATION);
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
@@ -81,15 +82,12 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
-        
         boolean hasEcName = argMultimap.getValue(PREFIX_EMERGENCY_NAME).isPresent();
         boolean hasEcPhone = argMultimap.getValue(PREFIX_EMERGENCY_PHONE).isPresent();
         boolean hasEcRelation = argMultimap.getValue(PREFIX_EMERGENCY_RELATION).isPresent();
-        
         if (hasEcName || hasEcPhone || hasEcRelation) {
             String ecNameValue = argMultimap.getValue(PREFIX_EMERGENCY_NAME).orElse("");
             String ecPhoneValue = argMultimap.getValue(PREFIX_EMERGENCY_PHONE).orElse("");
-            
             if (ecNameValue.isEmpty() && ecPhoneValue.isEmpty()) {
                 editPersonDescriptor.setEmergencyContact(null);
             } else if (!ecNameValue.isEmpty() && !ecPhoneValue.isEmpty()) {
