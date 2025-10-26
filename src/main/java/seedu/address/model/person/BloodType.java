@@ -29,7 +29,8 @@ public class BloodType {
      * Returns true if a given integer is a valid blood type.
      */
     public static boolean isValidBloodType(String bloodType) {
-        return BloodTypeEnum.isValid(bloodType);
+        requireNonNull(bloodType);
+        return BloodTypeEnum.isValidBloodType(bloodType);
     }
 
     @Override

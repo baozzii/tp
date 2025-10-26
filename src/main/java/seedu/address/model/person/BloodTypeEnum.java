@@ -1,7 +1,9 @@
 package seedu.address.model.person;
 
+import static java.util.Objects.requireNonNull;
+
 /**
- * Represents possible blood types.
+ * Represents all possible blood types.
  */
 public enum BloodTypeEnum {
     A_POSITIVE("A+"),
@@ -24,7 +26,8 @@ public enum BloodTypeEnum {
     /**
      * Returns true if a given string is a valid blood type.
      */
-    public static boolean isValid(String bloodType) {
+    public static boolean isValidBloodType(String bloodType) {
+        requireNonNull(bloodType);
         // Loop through all enum constants
         for (BloodTypeEnum type : BloodTypeEnum.values()) {
             // Check if the input value matches the label of any enum constant
@@ -38,7 +41,7 @@ public enum BloodTypeEnum {
     /**
      *  Returns the label of the blood type
      */
-    public String getLabel() {
+    private String getLabel() {
         return label;
     }
     @Override
