@@ -3,6 +3,8 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.Messages.MESSAGE_NO_PERSONS_FOUND;
+import static seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -61,8 +63,7 @@ public class CombinedCommandTest {
 
     @Test
     public void execute_nameOnly_personsFound() {
-        String expectedMessage = String.format(
-                seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         CombinedPredicate predicate = new CombinedPredicate(
                 Optional.of(new NameExactMatchPredicate("Alice Pauline")),
                 Optional.empty(),
@@ -74,8 +75,7 @@ public class CombinedCommandTest {
 
     @Test
     public void execute_organOnly_personsFound() {
-        String expectedMessage = String.format(
-                seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         CombinedPredicate predicate = new CombinedPredicate(
                 Optional.empty(),
                 Optional.of(new OrganContainsSubstringPredicate("kidney")),
@@ -97,8 +97,7 @@ public class CombinedCommandTest {
         CombinedCommand command = new CombinedCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         int resultSize = expectedModel.getFilteredPersonList().size();
-        String expectedMessage = String.format(
-                seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, resultSize);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, resultSize);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
@@ -117,8 +116,8 @@ public class CombinedCommandTest {
         model.updateFilteredPersonList(predicate);
         int resultSize = model.getFilteredPersonList().size();
         String expectedMessage = resultSize == 0
-            ? String.format(seedu.address.logic.Messages.MESSAGE_NO_PERSONS_FOUND, predicate.getCriteria())
-            : String.format(seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, resultSize);
+            ? String.format(MESSAGE_NO_PERSONS_FOUND, predicate.getCriteria())
+            : String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, resultSize);
 
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
