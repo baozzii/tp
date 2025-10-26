@@ -21,7 +21,7 @@ public class OrganTest {
 
     @Test
     public void isValidOrgan() {
-        // null address
+        // null organ
         assertThrows(NullPointerException.class, () -> Organ.isValidOrgan(null));
 
         // invalid organs

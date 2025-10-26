@@ -23,6 +23,7 @@ checkstyle {
 test {
     useJUnitPlatform()
     finalizedBy jacocoTestReport
+    jvmArgs = ["-ea"] //enable asserts
 }
 
 task coverage(type: JacocoReport) {
@@ -70,3 +71,7 @@ shadowJar {
 }
 
 defaultTasks 'clean', 'test'
+
+tasks.named('run') {
+    jvmArgs = ["-ea"] //enable assert
+}
