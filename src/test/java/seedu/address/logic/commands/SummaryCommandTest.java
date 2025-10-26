@@ -22,7 +22,6 @@ public class SummaryCommandTest {
     @Test
     public void execute_summaryWithPersons_success() {
         SummaryCommand summaryCommand = new SummaryCommand();
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
         // Execute command
         CommandResult result = summaryCommand.execute(model);
