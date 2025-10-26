@@ -17,7 +17,7 @@ public class Organ {
      * otherwise " " (a blank string) becomes a valid input.
      * Subsequent characters should be alphabetical only.
      */
-    public static final String VALIDATION_REGEX = "[A-Za-z][A-Za-z]*";
+    public static final String VALIDATION_REGEX = "[A-Za-z][A-Za-z ]*";
 
     public final String organName;
 
@@ -56,7 +56,6 @@ public class Organ {
             return false;
         }
         Organ otherOrgan = (Organ) other;
-        assert otherOrgan != null : "otherOrgan is null!";
         return organName.equals(otherOrgan.organName);
     }
 
