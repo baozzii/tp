@@ -9,42 +9,42 @@ import java.util.function.Predicate;
 import seedu.address.commons.util.ToStringBuilder;
 
 /**
- * Tests that a {@code Person}'s {@code BloodType} is compatible with the specified blood type.
- * Compatibility is based on blood donation rules (who can donate to whom).
+ * Tests that a {@code Person}'s {@code BloodType} is compatible with the specified donor blood type.
+ * Finds recipients who can receive from the specified donor.
  */
 public class BloodTypeCompatibilityPredicate implements Predicate<Person> {
-    private static final Map<String, List<String>> COMPATIBLE_DONORS = new HashMap<>();
+    private static final Map<String, List<String>> COMPATIBLE_RECIPIENTS = new HashMap<>();
 
     static {
-        // Map of recipient blood type -> list of compatible donor blood types
-        COMPATIBLE_DONORS.put("O-", Arrays.asList("O-"));
-        COMPATIBLE_DONORS.put("O+", Arrays.asList("O-", "O+"));
-        COMPATIBLE_DONORS.put("A-", Arrays.asList("O-", "A-"));
-        COMPATIBLE_DONORS.put("A+", Arrays.asList("O-", "O+", "A-", "A+"));
-        COMPATIBLE_DONORS.put("B-", Arrays.asList("O-", "B-"));
-        COMPATIBLE_DONORS.put("B+", Arrays.asList("O-", "O+", "B-", "B+"));
-        COMPATIBLE_DONORS.put("AB-", Arrays.asList("O-", "A-", "B-", "AB-"));
-        COMPATIBLE_DONORS.put("AB+", Arrays.asList("O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+"));
+        // Map of donor blood type -> list of compatible recipient blood types
+        COMPATIBLE_RECIPIENTS.put("O-", Arrays.asList("O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+"));
+        COMPATIBLE_RECIPIENTS.put("O+", Arrays.asList("O+", "A+", "B+", "AB+"));
+        COMPATIBLE_RECIPIENTS.put("A-", Arrays.asList("A-", "A+", "AB-", "AB+"));
+        COMPATIBLE_RECIPIENTS.put("A+", Arrays.asList("A+", "AB+"));
+        COMPATIBLE_RECIPIENTS.put("B-", Arrays.asList("B-", "B+", "AB-", "AB+"));
+        COMPATIBLE_RECIPIENTS.put("B+", Arrays.asList("B+", "AB+"));
+        COMPATIBLE_RECIPIENTS.put("AB-", Arrays.asList("AB-", "AB+"));
+        COMPATIBLE_RECIPIENTS.put("AB+", Arrays.asList("AB+"));
     }
 
-    private final BloodType recipientBloodType;
+    private final BloodType donorBloodType;
 
     /**
      * Constructs a BloodTypeCompatibilityPredicate.
      *
-     * @param recipientBloodType The blood type of the person who needs a donation.
+     * @param donorBloodType The blood type of the donor.
      */
-    public BloodTypeCompatibilityPredicate(BloodType recipientBloodType) {
-        this.recipientBloodType = recipientBloodType;
+    public BloodTypeCompatibilityPredicate(BloodType donorBloodType) {
+        this.donorBloodType = donorBloodType;
     }
 
     @Override
     public boolean test(Person person) {
-        String recipientType = recipientBloodType.bloodType;
-        String donorType = person.getBloodType().bloodType;
+        String donorType = donorBloodType.bloodType;
+        String recipientType = person.getBloodType().bloodType;
 
-        List<String> compatibleDonors = COMPATIBLE_DONORS.get(recipientType);
-        return compatibleDonors != null && compatibleDonors.contains(donorType);
+        List<String> compatibleRecipients = COMPATIBLE_RECIPIENTS.get(donorType);
+        return compatibleRecipients != null && compatibleRecipients.contains(recipientType);
     }
 
     @Override
@@ -59,16 +59,16 @@ public class BloodTypeCompatibilityPredicate implements Predicate<Person> {
         }
 
         BloodTypeCompatibilityPredicate otherPredicate = (BloodTypeCompatibilityPredicate) other;
-        return recipientBloodType.equals(otherPredicate.recipientBloodType);
+        return donorBloodType.equals(otherPredicate.donorBloodType);
     }
 
-    public String getRecipientBloodType() {
-        return recipientBloodType.bloodType;
+    public String getDonorBloodType() {
+        return donorBloodType.bloodType;
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).add("recipientBloodType", recipientBloodType).toString();
+        return new ToStringBuilder(this).add("donorBloodType", donorBloodType).toString();
     }
 }
 

@@ -5,10 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
@@ -54,48 +52,49 @@ public class CompatibleCommandTest {
     }
 
     @Test
-    public void execute_universalRecipient_allPersonsFound() {
-        // AB+ can receive from everyone
+    public void execute_universalDonor_allPersonsFound() {
+        // O- can donate to everyone
         String expectedMessage = String.format(
                 seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, 7);
-        BloodTypeCompatibilityPredicate predicate =
-                new BloodTypeCompatibilityPredicate(new BloodType("AB+"));
-        CompatibleCommand command = new CompatibleCommand(predicate);
-        expectedModel.updateFilteredPersonList(predicate);
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_oPlusRecipient_compatibleDonorsFound() {
-        // O+ can receive from O- and O+ donors
-        // From TypicalPersons: ALICE is O+, BENSON is O-
-        String expectedMessage = String.format(
-                seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
-        BloodTypeCompatibilityPredicate predicate =
-                new BloodTypeCompatibilityPredicate(new BloodType("O+"));
-        CompatibleCommand command = new CompatibleCommand(predicate);
-        expectedModel.updateFilteredPersonList(predicate);
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ALICE, BENSON), model.getFilteredPersonList());
-    }
-
-    @Test
-    public void execute_oMinusRecipient_onlyOMinusDonorsFound() {
-        // O- can only receive from O- donors
-        // From TypicalPersons: BENSON is O-
-        String expectedMessage = String.format(
-                seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         BloodTypeCompatibilityPredicate predicate =
                 new BloodTypeCompatibilityPredicate(new BloodType("O-"));
         CompatibleCommand command = new CompatibleCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Collections.singletonList(BENSON), model.getFilteredPersonList());
     }
 
     @Test
-    public void execute_aPlusRecipient_compatibleDonorsFound() {
-        // A+ can receive from O-, O+, A-, A+
+    public void execute_oPlusDonor_compatibleRecipientsFound() {
+        // O+ can donate to O+, A+, B+, AB+
+        // From TypicalPersons: ALICE is O+
+        String expectedMessage = String.format(
+                seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        BloodTypeCompatibilityPredicate predicate =
+                new BloodTypeCompatibilityPredicate(new BloodType("O+"));
+        CompatibleCommand command = new CompatibleCommand(predicate);
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Collections.singletonList(ALICE), model.getFilteredPersonList());
+    }
+
+    @Test
+    public void execute_abPlusDonor_onlyAbPlusRecipientsFound() {
+        // AB+ can only donate to AB+ recipients
+        // From TypicalPersons: no AB+ recipients in typical persons
+        String expectedMessage = String.format(
+                seedu.address.logic.Messages.MESSAGE_NO_PERSONS_FOUND,
+                "compatible recipients for donor AB+");
+        BloodTypeCompatibilityPredicate predicate =
+                new BloodTypeCompatibilityPredicate(new BloodType("AB+"));
+        CompatibleCommand command = new CompatibleCommand(predicate);
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+    }
+
+    @Test
+    public void execute_aPlusDonor_compatibleRecipientsFound() {
+        // A+ can donate to A+, AB+
         // This will depend on what's in the typical persons
         BloodTypeCompatibilityPredicate predicate =
                 new BloodTypeCompatibilityPredicate(new BloodType("A+"));
@@ -106,25 +105,21 @@ public class CompatibleCommandTest {
         int resultSize = model.getFilteredPersonList().size();
         String expectedMessage = resultSize == 0
             ? String.format(seedu.address.logic.Messages.MESSAGE_NO_PERSONS_FOUND,
-                    "compatible donors for A+")
+                    "compatible recipients for donor A+")
             : String.format(seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, resultSize);
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void execute_noCompatibleDonors_noPersonFound() {
-        // Test a scenario where no compatible donors exist
-        // Create a model with only AB+ people, then search for O- recipients
-        // O- can only receive from O-, so if we search for AB+ recipients,
-        // they can receive from everyone, so this won't work
-        // Actually, let's just use a blood type that has fewer donors in typical persons
+    public void execute_noCompatibleRecipients_noPersonFound() {
+        // Test a scenario where no compatible recipients exist
         Model emptyModel = new ModelManager();
         Model emptyExpectedModel = new ModelManager();
 
         String expectedMessage = String.format(
                 seedu.address.logic.Messages.MESSAGE_NO_PERSONS_FOUND,
-                "compatible donors for O+");
+                "compatible recipients for donor O+");
         BloodTypeCompatibilityPredicate predicate =
                 new BloodTypeCompatibilityPredicate(new BloodType("O+"));
         CompatibleCommand command = new CompatibleCommand(predicate);

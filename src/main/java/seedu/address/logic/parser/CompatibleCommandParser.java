@@ -36,8 +36,8 @@ public class CompatibleCommandParser implements Parser<CompatibleCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, CompatibleCommand.MESSAGE_USAGE));
         }
 
-        BloodType recipientBloodType = new BloodType(trimmedArgs);
-        return new CompatibleCommand(new BloodTypeCompatibilityPredicate(recipientBloodType));
+        BloodType donorBloodType = new BloodType(trimmedArgs);
+        return new CompatibleCommand(new BloodTypeCompatibilityPredicate(donorBloodType));
     }
 }
 
