@@ -9,7 +9,7 @@ import seedu.address.model.person.CombinedPredicate;
 
 /**
  * Finds and lists all persons in address book that match all specified criteria.
- * Criteria can include name keywords, organ substring, and blood types.
+ * Criteria can include exact name match, organ substring, and compatible blood types for recipients.
  */
 public class CombinedCommand extends Command {
 
@@ -17,9 +17,10 @@ public class CombinedCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons matching ALL specified criteria "
             + "(case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: [n/NAME_KEYWORDS] [o/ORGAN_SUBSTRING] [bt/BLOOD_TYPES]\n"
+            + "Parameters: [n/EXACT_NAME] [o/ORGAN_SUBSTRING] [bt/RECIPIENT_BLOOD_TYPES]\n"
             + "At least one parameter must be provided.\n"
-            + "Example: " + COMMAND_WORD + " n/alice bob o/kidney bt/O+ A+";
+            + "Name must be exact match. Blood type finds donors compatible with the specified recipient blood types.\n"
+            + "Example: " + COMMAND_WORD + " n/Alice Pauline o/kidney bt/O+";
 
     private final CombinedPredicate predicate;
 

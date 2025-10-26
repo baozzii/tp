@@ -10,17 +10,17 @@ import seedu.address.commons.util.ToStringBuilder;
  * Combines name, organ, and blood type predicates with AND logic.
  */
 public class CombinedPredicate implements Predicate<Person> {
-    private final Optional<NameContainsKeywordsPredicate> namePredicate;
+    private final Optional<NameExactMatchPredicate> namePredicate;
     private final Optional<OrganContainsSubstringPredicate> organPredicate;
-    private final Optional<BloodTypeMatchesPredicate> bloodTypePredicate;
+    private final Optional<BloodTypeRecipientCompatiblePredicate> bloodTypePredicate;
 
     /**
      * Constructs a CombinedPredicate with the given predicates.
      * At least one predicate must be present.
      */
-    public CombinedPredicate(Optional<NameContainsKeywordsPredicate> namePredicate,
+    public CombinedPredicate(Optional<NameExactMatchPredicate> namePredicate,
                             Optional<OrganContainsSubstringPredicate> organPredicate,
-                            Optional<BloodTypeMatchesPredicate> bloodTypePredicate) {
+                            Optional<BloodTypeRecipientCompatiblePredicate> bloodTypePredicate) {
         this.namePredicate = namePredicate;
         this.organPredicate = organPredicate;
         this.bloodTypePredicate = bloodTypePredicate;
@@ -53,9 +53,9 @@ public class CombinedPredicate implements Predicate<Person> {
 
     public String getCriteria() {
         StringBuilder sb = new StringBuilder();
-        namePredicate.ifPresent(p -> sb.append("name: ").append(p.getKeywords()).append(" "));
+        namePredicate.ifPresent(p -> sb.append("name: ").append(p.getName()).append(" "));
         organPredicate.ifPresent(p -> sb.append("organ: ").append(p.getSubstring()).append(" "));
-        bloodTypePredicate.ifPresent(p -> sb.append("blood type: ").append(p.getBloodTypes()).append(" "));
+        bloodTypePredicate.ifPresent(p -> sb.append("recipient blood type: ").append(p.getBloodTypes()).append(" "));
         return sb.toString().trim();
     }
 

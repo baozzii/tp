@@ -7,7 +7,6 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,9 +16,9 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.BloodType;
-import seedu.address.model.person.BloodTypeMatchesPredicate;
+import seedu.address.model.person.BloodTypeRecipientCompatiblePredicate;
 import seedu.address.model.person.CombinedPredicate;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.NameExactMatchPredicate;
 import seedu.address.model.person.OrganContainsSubstringPredicate;
 
 /**
@@ -32,11 +31,11 @@ public class CombinedCommandTest {
     @Test
     public void equals() {
         CombinedPredicate firstPredicate = new CombinedPredicate(
-                Optional.of(new NameContainsKeywordsPredicate(Collections.singletonList("first"))),
+                Optional.of(new NameExactMatchPredicate("first")),
                 Optional.empty(),
                 Optional.empty());
         CombinedPredicate secondPredicate = new CombinedPredicate(
-                Optional.of(new NameContainsKeywordsPredicate(Collections.singletonList("second"))),
+                Optional.of(new NameExactMatchPredicate("second")),
                 Optional.empty(),
                 Optional.empty());
 
@@ -65,7 +64,7 @@ public class CombinedCommandTest {
         String expectedMessage = String.format(
                 seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         CombinedPredicate predicate = new CombinedPredicate(
-                Optional.of(new NameContainsKeywordsPredicate(Collections.singletonList("Alice"))),
+                Optional.of(new NameExactMatchPredicate("Alice Pauline")),
                 Optional.empty(),
                 Optional.empty());
         CombinedCommand command = new CombinedCommand(predicate);
@@ -88,15 +87,18 @@ public class CombinedCommandTest {
 
     @Test
     public void execute_bloodTypeOnly_personsFound() {
-        String expectedMessage = String.format(
-                seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        // Looking for donors compatible with O+ recipient
+        // O- and O+ can donate to O+
         List<BloodType> bloodTypes = Arrays.asList(new BloodType("O+"));
         CombinedPredicate predicate = new CombinedPredicate(
                 Optional.empty(),
                 Optional.empty(),
-                Optional.of(new BloodTypeMatchesPredicate(bloodTypes)));
+                Optional.of(new BloodTypeRecipientCompatiblePredicate(bloodTypes)));
         CombinedCommand command = new CombinedCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
+        int resultSize = expectedModel.getFilteredPersonList().size();
+        String expectedMessage = String.format(
+                seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, resultSize);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
@@ -105,9 +107,9 @@ public class CombinedCommandTest {
         // Test with name AND organ AND blood type
         List<BloodType> bloodTypes = Arrays.asList(new BloodType("O+"));
         CombinedPredicate predicate = new CombinedPredicate(
-                Optional.of(new NameContainsKeywordsPredicate(Collections.singletonList("Alice"))),
+                Optional.of(new NameExactMatchPredicate("Alice Pauline")),
                 Optional.of(new OrganContainsSubstringPredicate("kidney")),
-                Optional.of(new BloodTypeMatchesPredicate(bloodTypes)));
+                Optional.of(new BloodTypeRecipientCompatiblePredicate(bloodTypes)));
         CombinedCommand command = new CombinedCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
 
@@ -125,7 +127,7 @@ public class CombinedCommandTest {
     @Test
     public void toStringMethod() {
         CombinedPredicate predicate = new CombinedPredicate(
-                Optional.of(new NameContainsKeywordsPredicate(Collections.singletonList("keyword"))),
+                Optional.of(new NameExactMatchPredicate("keyword")),
                 Optional.empty(),
                 Optional.empty());
         CombinedCommand combinedCommand = new CombinedCommand(predicate);

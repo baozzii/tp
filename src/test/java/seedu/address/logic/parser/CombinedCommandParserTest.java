@@ -5,7 +5,6 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,9 +12,9 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.CombinedCommand;
 import seedu.address.model.person.BloodType;
-import seedu.address.model.person.BloodTypeMatchesPredicate;
+import seedu.address.model.person.BloodTypeRecipientCompatiblePredicate;
 import seedu.address.model.person.CombinedPredicate;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.NameExactMatchPredicate;
 import seedu.address.model.person.OrganContainsSubstringPredicate;
 
 public class CombinedCommandParserTest {
@@ -37,7 +36,7 @@ public class CombinedCommandParserTest {
     @Test
     public void parse_validNameOnly_returnsCombinedCommand() {
         CombinedPredicate expectedPredicate = new CombinedPredicate(
-                Optional.of(new NameContainsKeywordsPredicate(Collections.singletonList("Alice"))),
+                Optional.of(new NameExactMatchPredicate("Alice")),
                 Optional.empty(),
                 Optional.empty());
         CombinedCommand expectedCommand = new CombinedCommand(expectedPredicate);
@@ -60,7 +59,7 @@ public class CombinedCommandParserTest {
         CombinedPredicate expectedPredicate = new CombinedPredicate(
                 Optional.empty(),
                 Optional.empty(),
-                Optional.of(new BloodTypeMatchesPredicate(bloodTypes)));
+                Optional.of(new BloodTypeRecipientCompatiblePredicate(bloodTypes)));
         CombinedCommand expectedCommand = new CombinedCommand(expectedPredicate);
         assertParseSuccess(parser, " bt/O+", expectedCommand);
     }
@@ -71,7 +70,7 @@ public class CombinedCommandParserTest {
         CombinedPredicate expectedPredicate = new CombinedPredicate(
                 Optional.empty(),
                 Optional.empty(),
-                Optional.of(new BloodTypeMatchesPredicate(bloodTypes)));
+                Optional.of(new BloodTypeRecipientCompatiblePredicate(bloodTypes)));
         CombinedCommand expectedCommand = new CombinedCommand(expectedPredicate);
         assertParseSuccess(parser, " bt/A+ O+", expectedCommand);
     }
@@ -80,9 +79,9 @@ public class CombinedCommandParserTest {
     public void parse_allFields_returnsCombinedCommand() {
         List<BloodType> bloodTypes = Arrays.asList(new BloodType("O+"));
         CombinedPredicate expectedPredicate = new CombinedPredicate(
-                Optional.of(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob"))),
+                Optional.of(new NameExactMatchPredicate("Alice Bob")),
                 Optional.of(new OrganContainsSubstringPredicate("kidney")),
-                Optional.of(new BloodTypeMatchesPredicate(bloodTypes)));
+                Optional.of(new BloodTypeRecipientCompatiblePredicate(bloodTypes)));
         CombinedCommand expectedCommand = new CombinedCommand(expectedPredicate);
         assertParseSuccess(parser, " n/Alice Bob o/kidney bt/O+", expectedCommand);
     }

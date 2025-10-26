@@ -9,9 +9,9 @@ import java.util.Optional;
 import seedu.address.logic.commands.CombinedCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.BloodType;
-import seedu.address.model.person.BloodTypeMatchesPredicate;
+import seedu.address.model.person.BloodTypeRecipientCompatiblePredicate;
 import seedu.address.model.person.CombinedPredicate;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.NameExactMatchPredicate;
 import seedu.address.model.person.OrganContainsSubstringPredicate;
 
 /**
@@ -41,16 +41,15 @@ public class CombinedCommandParser implements Parser<CombinedCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CombinedCommand.MESSAGE_USAGE));
         }
 
-        Optional<NameContainsKeywordsPredicate> namePredicate = Optional.empty();
+        Optional<NameExactMatchPredicate> namePredicate = Optional.empty();
         Optional<OrganContainsSubstringPredicate> organPredicate = Optional.empty();
-        Optional<BloodTypeMatchesPredicate> bloodTypePredicate = Optional.empty();
+        Optional<BloodTypeRecipientCompatiblePredicate> bloodTypePredicate = Optional.empty();
 
-        // Parse name keywords
+        // Parse name for exact match
         if (hasName) {
-            String nameKeywords = argMultimap.getValue(PREFIX_NAME).get().trim();
-            if (!nameKeywords.isEmpty()) {
-                String[] keywords = nameKeywords.split("\\s+");
-                namePredicate = Optional.of(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+            String name = argMultimap.getValue(PREFIX_NAME).get().trim();
+            if (!name.isEmpty()) {
+                namePredicate = Optional.of(new NameExactMatchPredicate(name));
             }
         }
 
@@ -62,7 +61,7 @@ public class CombinedCommandParser implements Parser<CombinedCommand> {
             }
         }
 
-        // Parse blood types
+        // Parse blood types (for recipient compatibility)
         if (hasBloodType) {
             String bloodTypeString = argMultimap.getValue(PREFIX_BLOODTYPE).get().trim();
             if (!bloodTypeString.isEmpty()) {
@@ -78,7 +77,7 @@ public class CombinedCommandParser implements Parser<CombinedCommand> {
                 List<BloodType> bloodTypes = Arrays.stream(bloodTypeKeywords)
                         .map(BloodType::new)
                         .toList();
-                bloodTypePredicate = Optional.of(new BloodTypeMatchesPredicate(bloodTypes));
+                bloodTypePredicate = Optional.of(new BloodTypeRecipientCompatiblePredicate(bloodTypes));
             }
         }
 
