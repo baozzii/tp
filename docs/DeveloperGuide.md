@@ -280,7 +280,7 @@ _{Explain here how the data archiving feature will be implemented}_
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: Organ donation is time-critical and requires a recipient to be present within hours of organ availability. Organ-iser solves coordination and prioritization challenges that donor coordinators face. 
+**Value proposition**: Organ donation is time-critical and requires a recipient to be present within hours of organ availability. Organ-iser solves coordination and prioritization challenges that donor coordinators face.
 
 
 
@@ -327,16 +327,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `Organ-iser` and the **Actor** is the `Coordinator`, unless specified otherwise)
 
-**Use Case: Matching a donor to a patient**  
+**Use Case: Matching a donor to a patient**
 
 **MSS**
 1. Coordinator receives notification about a willing organ donor.
 2. Coordinator searches for patients which need that organ.
 3. Organ-iser returns a list of  suitable patients.
 4. The coordinator selects one patient to be matched to the donor.
-5. Coordinator uses the patient’s contact details stored in the app to contact the patient for transplant.  
+5. Coordinator uses the patient’s contact details stored in the app to contact the patient for transplant.
 
-   Use case ends.  
+   Use case ends.
 
 **Extensions**  
 
