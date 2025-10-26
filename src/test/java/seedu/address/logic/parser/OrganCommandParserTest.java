@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.OrganCommand;
 import seedu.address.model.person.OrganContainsSubstringPredicate;
 
-class OrganCommandParserTest {
+public class OrganCommandParserTest {
 
     private OrganCommandParser parser = new OrganCommandParser();
 
@@ -19,10 +19,14 @@ class OrganCommandParserTest {
     }
 
     @Test
-    public void parse_validArgs_returnsFindCommand() {
+    public void parse_validArgs_returnsOrganCommand() {
         // no leading and trailing whitespaces
         OrganCommand expectedOrganCommand =
-                new OrganCommand(new OrganContainsSubstringPredicate("heart kidney"));
-        assertParseSuccess(parser, "heart kidney", expectedOrganCommand);
+                new OrganCommand(new OrganContainsSubstringPredicate("kidney"));
+        assertParseSuccess(parser, "kidney", expectedOrganCommand);
+
+        // multiple whitespaces between keywords
+        assertParseSuccess(parser, " \n kidney \n \t  ", expectedOrganCommand);
     }
+
 }

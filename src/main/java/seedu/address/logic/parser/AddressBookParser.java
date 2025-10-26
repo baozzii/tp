@@ -11,7 +11,9 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BloodTypeCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.CombinedCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CompatibleCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -75,6 +77,12 @@ public class AddressBookParser {
 
         case BloodTypeCommand.COMMAND_WORD:
             return new BloodTypeCommandParser().parse(arguments);
+
+        case CombinedCommand.COMMAND_WORD:
+            return new CombinedCommandParser().parse(arguments);
+
+        case CompatibleCommand.COMMAND_WORD:
+            return new CompatibleCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
