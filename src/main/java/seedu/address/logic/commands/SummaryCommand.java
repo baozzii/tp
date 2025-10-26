@@ -5,7 +5,6 @@ import static java.util.Objects.requireNonNull;
 import java.util.Map;
 import java.util.TreeMap;
 
-import seedu.address.logic.commands.Command;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 

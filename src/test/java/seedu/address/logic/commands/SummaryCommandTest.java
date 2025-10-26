@@ -23,10 +23,10 @@ public class SummaryCommandTest {
     public void execute_summaryWithPersons_success() {
         SummaryCommand summaryCommand = new SummaryCommand();
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        
+
         // Execute command
         CommandResult result = summaryCommand.execute(model);
-        
+
         // Verify the message contains the summary header
         assertTrue(result.getFeedbackToUser().contains("Organ Requirements Summary:"));
         assertTrue(result.getFeedbackToUser().contains("Total"));
@@ -36,10 +36,10 @@ public class SummaryCommandTest {
     public void execute_emptyAddressBook_showsNoPatients() {
         Model emptyModel = new ModelManager();
         SummaryCommand summaryCommand = new SummaryCommand();
-        
+
         String expectedMessage = SummaryCommand.MESSAGE_NO_PATIENTS;
         Model expectedModel = new ModelManager();
-        
+
         assertCommandSuccess(summaryCommand, emptyModel, expectedMessage, expectedModel);
     }
 
@@ -47,10 +47,10 @@ public class SummaryCommandTest {
     public void execute_summaryCountsOrgansCorrectly() {
         Model testModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         SummaryCommand summaryCommand = new SummaryCommand();
-        
+
         CommandResult result = summaryCommand.execute(testModel);
         String output = result.getFeedbackToUser();
-        
+
         // Verify output format
         assertTrue(output.contains("Organ Requirements Summary:"));
         assertTrue(output.contains("patient(s)"));
@@ -79,10 +79,10 @@ public class SummaryCommandTest {
     public void execute_summaryShowsAllOrganTypes() {
         Model testModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         SummaryCommand summaryCommand = new SummaryCommand();
-        
+
         CommandResult result = summaryCommand.execute(testModel);
         String output = result.getFeedbackToUser();
-        
+
         // Check that summary is properly formatted
         assertTrue(output.contains(":"));
         assertTrue(output.contains("patient(s)"));
