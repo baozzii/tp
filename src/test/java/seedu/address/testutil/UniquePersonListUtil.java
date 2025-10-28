@@ -6,7 +6,9 @@ import java.util.List;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 
-
+/**
+ * A utility class for UniquePersonList
+ */
 public class UniquePersonListUtil {
 
     /**
