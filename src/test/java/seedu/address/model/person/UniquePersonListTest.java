@@ -18,10 +18,30 @@ import org.junit.jupiter.api.Test;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.TypicalPersons;
+import seedu.address.testutil.UniquePersonListUtil;
 
 public class UniquePersonListTest {
 
     private final UniquePersonList uniquePersonList = new UniquePersonList();
+
+    @Test
+    public void add_maintains_sortedList() {
+        for (Person person : UniquePersonListUtil.getShuffledTypicalPersons()) {
+            uniquePersonList.add(person);
+        }
+        uniquePersonList.add(BOB);
+        assertTrue(UniquePersonListUtil.isSorted(uniquePersonList));
+    }
+
+    @Test
+    public void delete_maintains_sortedList() {
+        for (Person person : UniquePersonListUtil.getShuffledTypicalPersons()) {
+            uniquePersonList.add(person);
+        }
+        uniquePersonList.remove(ALICE);
+        assertTrue(UniquePersonListUtil.isSorted(uniquePersonList));
+    }
 
     @Test
     public void contains_nullPerson_throwsNullPointerException() {
