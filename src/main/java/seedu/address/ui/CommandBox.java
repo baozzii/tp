@@ -23,6 +23,7 @@ public class CommandBox extends UiPart<Region> {
     private static final String FXML = "CommandBox.fxml";
 
     private final CommandExecutor commandExecutor;
+    private final HistoryNavigator navigator;
 
     @FXML
     private TextField commandTextField;
@@ -32,13 +33,31 @@ public class CommandBox extends UiPart<Region> {
      *
      * @param commandExecutor the command executor to execute user commands
      */
-    public CommandBox(CommandExecutor commandExecutor) {
+    public CommandBox(CommandExecutor commandExecutor, HistoryNavigator navigator) {
         super(FXML);
         this.commandExecutor = commandExecutor;
+        this.navigator = navigator;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
-        // key event handler for tab completion
-        commandTextField.setOnKeyPressed(this::handleKeyPress);
+        commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
+            if (navigator.isEnd()) {
+                navigator.setCurrentText(commandTextField.getText());
+            }
+            if (e.getCode() == KeyCode.UP) {
+                String command = navigator.getPreviousCommand();
+                commandTextField.setText(command);
+                commandTextField.positionCaret(command.length());
+                e.consume();
+            } else if (e.getCode() == KeyCode.DOWN) {
+                String command = navigator.getNextCommand();
+                commandTextField.setText(command);
+                commandTextField.positionCaret(command.length());
+                e.consume();
+            }
+            if (navigator.isEnd()) {
+                navigator.setCurrentText(commandTextField.getText());
+            }
+        });
     }
 
     /**
@@ -47,16 +66,19 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleCommandEntered() {
         String commandText = commandTextField.getText();
-        if (commandText.equals("")) {
+        if (commandText.isEmpty()) {
             return;
         }
 
         try {
             commandExecutor.execute(commandText);
             commandTextField.setText("");
+            navigator.clearCurrentText();
         } catch (CommandException | ParseException e) {
             setStyleToIndicateCommandFailure();
         }
+
+
     }
 
     /**
