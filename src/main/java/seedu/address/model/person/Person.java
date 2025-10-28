@@ -162,6 +162,6 @@ public class Person implements Comparable<Person> {
         if (priority.compareTo(other.priority) == 0) {
             return name.fullName.compareTo(other.name.fullName);
         }
-        return  priority.compareTo(other.priority);
+        return priority.compareTo(other.priority);
     }
 }
