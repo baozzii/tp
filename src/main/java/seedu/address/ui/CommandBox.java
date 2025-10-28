@@ -36,7 +36,6 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             if (navigator.isEnd()) {
                 navigator.setCurrentText(commandTextField.getText());
-                System.out.println("TEST");
             }
             if (e.getCode() == KeyCode.UP) {
                 String command = navigator.getPreviousCommand();
