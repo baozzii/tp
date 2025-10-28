@@ -27,6 +27,7 @@ public class PersonCard extends UiPart<Region> {
 
     public final Person person;
 
+
     @FXML
     private HBox cardPane;
     @FXML
@@ -50,12 +51,14 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label emergencyContact;
 
+
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
      */
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;
+
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
@@ -64,6 +67,7 @@ public class PersonCard extends UiPart<Region> {
         organ.setText(person.getOrgan().organName);
         bloodType.setText(person.getBloodType().bloodType);
         priority.setText(String.valueOf(person.getPriority().priority));
+
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
