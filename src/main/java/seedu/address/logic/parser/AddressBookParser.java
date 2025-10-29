@@ -19,6 +19,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.OrganCommand;
+import seedu.address.logic.commands.PriorityCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SummaryCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -77,6 +78,9 @@ public class AddressBookParser {
 
         case BloodTypeCommand.COMMAND_WORD:
             return new BloodTypeCommandParser().parse(arguments);
+
+        case PriorityCommand.COMMAND_WORD:
+            return new PriorityCommandParser().parse(arguments);
 
         case CompatibleCommand.COMMAND_WORD:
             return new CompatibleCommandParser().parse(arguments);
