@@ -18,8 +18,7 @@ public class BloodTypeMatchesPredicate implements Predicate<Person> {
 
     @Override
     public boolean test(Person person) {
-        return bloodTypes.stream()
-                .anyMatch(type -> person.getBloodType().equals(type));
+        return bloodTypes.contains(person.getBloodType());
     }
 
     @Override
