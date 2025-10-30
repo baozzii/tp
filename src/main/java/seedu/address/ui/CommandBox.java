@@ -53,6 +53,9 @@ public class CommandBox extends UiPart<Region> {
                 commandTextField.setText(command);
                 commandTextField.positionCaret(command.length());
                 e.consume();
+            } else if (e.getCode() == KeyCode.TAB) {
+                e.consume();
+                handleTabCompletion();
             }
             if (navigator.isEnd()) {
                 navigator.setCurrentText(commandTextField.getText());
@@ -79,17 +82,6 @@ public class CommandBox extends UiPart<Region> {
         }
 
 
-    }
-
-    /**
-     * Handles key press events for the command text field.
-     * @param event the key event
-     */
-    private void handleKeyPress(KeyEvent event) {
-        if (event.getCode() == KeyCode.TAB) {
-            event.consume(); // Prevent default tab behavior
-            handleTabCompletion();
-        }
     }
 
     /**
