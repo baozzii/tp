@@ -31,16 +31,42 @@ public class EmergencyContact {
         requireNonNull(name);
         requireNonNull(phone);
         requireNonNull(relationship);
+        validateEmergencyContactFields(name, phone);
         this.name = name;
         this.phone = phone;
         this.relationship = relationship;
     }
 
+    private void validateEmergencyContactFields(Name name, Phone phone) {
+        assert name != null : "Emergency contact name should not be null";
+        assert phone != null : "Emergency contact phone should not be null";
+
+        String nameStr = name.toString();
+        String phoneStr = phone.toString();
+
+        if (nameStr.isEmpty()) {
+            throw new IllegalArgumentException("Emergency contact name cannot be empty");
+        }
+        if (phoneStr.isEmpty()) {
+            throw new IllegalArgumentException("Emergency contact phone cannot be empty");
+        }
+        if (!isValidPhoneFormat(phoneStr)) {
+            throw new IllegalArgumentException("Emergency contact phone must be 8 digits");
+        }
+    }
+
+    private boolean isValidPhoneFormat(String phone) {
+        assert phone != null : "Phone should not be null";
+        return phone.matches("\\d{8}");
+    }
+
     public Name getName() {
+        assert name != null : "Emergency contact name should not be null";
         return name;
     }
 
     public Phone getPhone() {
+        assert phone != null : "Emergency contact phone should not be null";
         return phone;
     }
 
