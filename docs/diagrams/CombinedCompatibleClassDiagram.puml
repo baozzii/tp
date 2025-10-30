@@ -24,6 +24,9 @@ CombinedCommand --> CombinedPredicate : uses
 CompatibleCommand --> BloodTypeCompatibilityPredicate : uses
 
 CombinedCommandParser --> CombinedCommand : creates
+CombinedCommandParser --> CombinedPredicate : creates
+CombinedPredicate --> NameExactMatchPredicate : optionally
+CombinedPredicate --> OrganContainsSubstringPredicate : optionally
 
 @enduml
 
