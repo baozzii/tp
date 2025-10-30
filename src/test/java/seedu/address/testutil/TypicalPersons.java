@@ -56,10 +56,10 @@ public class TypicalPersons {
             .withOrgan("kidney").withBloodType("B-").withPriority(5).build();
 
     // Manually added
-    public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
+    public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("84824242")
             .withEmail("stefan@example.com").withAddress("little india").withOrgan("cornea")
             .withBloodType("O+").withEmergencyContact((EmergencyContact) null).build();
-    public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
+    public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("84821312")
             .withEmail("hans@example.com").withAddress("chicago ave")
             .withBloodType("A-").withOrgan("heart").withEmergencyContact((EmergencyContact) null).build();
 

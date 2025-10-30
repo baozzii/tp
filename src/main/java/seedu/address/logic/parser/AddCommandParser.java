@@ -73,6 +73,9 @@ public class AddCommandParser implements Parser<AddCommand> {
             String ecPhoneValue = argMultimap.getValue(PREFIX_EMERGENCY_PHONE).orElse("");
 
             if (ecNameValue.isEmpty() && ecPhoneValue.isEmpty()) {
+                if (hasEcRelation) {
+                    throw new ParseException(EmergencyContact.MESSAGE_CONSTRAINTS);
+                }
                 emergencyContact = null;
             } else if (ecNameValue.isEmpty() || ecPhoneValue.isEmpty()) {
                 throw new ParseException(EmergencyContact.MESSAGE_CONSTRAINTS);
