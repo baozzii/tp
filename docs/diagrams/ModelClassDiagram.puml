@@ -18,7 +18,11 @@ Class Address
 Class Email
 Class Name
 Class Phone
+Class Organ
+Class BloodType
+Class EmergencyContact
 Class Tag
+
 
 Class I #FFFFFF
 }
@@ -41,6 +45,9 @@ Person *--> Name
 Person *--> Phone
 Person *--> Email
 Person *--> Address
+Person *--> Organ
+Person *--> BloodType
+Person *--> EmergencyContact
 Person *--> "*" Tag
 
 Person -[hidden]up--> I
