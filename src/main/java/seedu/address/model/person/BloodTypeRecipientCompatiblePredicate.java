@@ -35,7 +35,7 @@ public class BloodTypeRecipientCompatiblePredicate implements Predicate<Person> 
 
     @Override
     public boolean test(Person person) {
-        String donorBloodType = person.getBloodType().toString();
+        String donorBloodType = person.getBloodType().toString().toUpperCase();
         List<String> compatibleRecipients = DONOR_TO_RECIPIENT_MAP.get(donorBloodType);
 
         if (compatibleRecipients == null) {
@@ -44,7 +44,8 @@ public class BloodTypeRecipientCompatiblePredicate implements Predicate<Person> 
 
         // Check if the donor can donate to any of the specified recipient blood types
         return recipientBloodTypes.stream()
-                .anyMatch(recipientType -> compatibleRecipients.contains(recipientType.toString()));
+                .map(type -> type.toString().toUpperCase())
+                .anyMatch(compatibleRecipients::contains);
     }
 
     @Override

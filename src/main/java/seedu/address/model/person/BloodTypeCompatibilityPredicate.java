@@ -40,8 +40,8 @@ public class BloodTypeCompatibilityPredicate implements Predicate<Person> {
 
     @Override
     public boolean test(Person person) {
-        String donorType = donorBloodType.bloodType;
-        String recipientType = person.getBloodType().bloodType;
+        String donorType = donorBloodType.bloodType.toUpperCase();
+        String recipientType = person.getBloodType().bloodType.toUpperCase();
 
         List<String> compatibleRecipients = COMPATIBLE_RECIPIENTS.get(donorType);
         return compatibleRecipients != null && compatibleRecipients.contains(recipientType);
