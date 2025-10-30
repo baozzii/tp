@@ -24,7 +24,6 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.EmergencyContact;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
@@ -85,18 +84,31 @@ public class EditCommandParser implements Parser<EditCommand> {
         boolean hasEcName = argMultimap.getValue(PREFIX_EMERGENCY_NAME).isPresent();
         boolean hasEcPhone = argMultimap.getValue(PREFIX_EMERGENCY_PHONE).isPresent();
         boolean hasEcRelation = argMultimap.getValue(PREFIX_EMERGENCY_RELATION).isPresent();
+
         if (hasEcName || hasEcPhone || hasEcRelation) {
             String ecNameValue = argMultimap.getValue(PREFIX_EMERGENCY_NAME).orElse("");
             String ecPhoneValue = argMultimap.getValue(PREFIX_EMERGENCY_PHONE).orElse("");
-            if (ecNameValue.isEmpty() && ecPhoneValue.isEmpty()) {
-                editPersonDescriptor.setEmergencyContact(null);
-            } else if (!ecNameValue.isEmpty() && !ecPhoneValue.isEmpty()) {
-                Name ecName = ParserUtil.parseName(ecNameValue);
-                Phone ecPhone = ParserUtil.parsePhone(ecPhoneValue);
-                String ecRelation = argMultimap.getValue(PREFIX_EMERGENCY_RELATION).orElse("");
-                editPersonDescriptor.setEmergencyContact(new EmergencyContact(ecName, ecPhone, ecRelation));
+            String ecRelationValue = argMultimap.getValue(PREFIX_EMERGENCY_RELATION).orElse("");
+
+            if (!ecNameValue.isEmpty() && !ecPhoneValue.isEmpty()) {
+                editPersonDescriptor.setEmergencyContact(
+                    new EmergencyContact(
+                        ParserUtil.parseName(ecNameValue),
+                        ParserUtil.parsePhone(ecPhoneValue),
+                        ecRelationValue
+                    )
+                );
             } else {
-                throw new ParseException(EmergencyContact.MESSAGE_CONSTRAINTS);
+                editPersonDescriptor.setEmergencyContactUpdate(ecNameValue, ecPhoneValue, ecRelationValue,
+                                                            hasEcName, hasEcPhone, hasEcRelation);
+            }
+        }
+
+        if (editPersonDescriptor.getEmergencyContact().isPresent() && editPersonDescriptor.getPhone().isPresent()) {
+            EmergencyContact ec = editPersonDescriptor.getEmergencyContact().get();
+            Phone recipientPhone = editPersonDescriptor.getPhone().get();
+            if (ec != null && ec.getPhone().equals(recipientPhone)) {
+                throw new ParseException(EmergencyContact.EMERGENCY_CONTACT_IS_RECIPIENT);
             }
         }
 

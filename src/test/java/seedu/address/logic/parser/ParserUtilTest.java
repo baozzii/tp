@@ -32,7 +32,7 @@ public class ParserUtilTest {
     private static final String INVALID_BLOODTYPE = "Z+";
     private static final String INVALID_ORGAN = "1kidney";
     private static final String VALID_NAME = "Rachel Walker";
-    private static final String VALID_PHONE = "123456";
+    private static final String VALID_PHONE = "12345678";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_BLOODTYPE = "B+";
@@ -106,6 +106,11 @@ public class ParserUtilTest {
         String phoneWithWhitespace = WHITESPACE + VALID_PHONE + WHITESPACE;
         Phone expectedPhone = new Phone(VALID_PHONE);
         assertEquals(expectedPhone, ParserUtil.parsePhone(phoneWithWhitespace));
+    }
+
+    @Test
+    public void parsePhone_nonNumeric_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parsePhone("1234abcd"));
     }
 
     @Test
