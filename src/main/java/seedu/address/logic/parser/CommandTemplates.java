@@ -24,15 +24,23 @@ public class CommandTemplates {
          * @param firstEmptyPosition the character position where the cursor should be placed after expansion
          */
         public Template(String templateText, int firstEmptyPosition) {
+            if (templateText == null) {
+                throw new NullPointerException("Template text cannot be null");
+            }
+            if (firstEmptyPosition < 0) {
+                throw new IllegalArgumentException("First empty position cannot be negative");
+            }
             this.templateText = templateText;
             this.firstEmptyPosition = firstEmptyPosition;
         }
 
         public String getTemplateText() {
+            assert templateText != null : "Template text should not be null";
             return templateText;
         }
 
         public int getFirstEmptyPosition() {
+            assert firstEmptyPosition >= 0 : "First empty position should not be negative";
             return firstEmptyPosition;
         }
     }
@@ -66,7 +74,11 @@ public class CommandTemplates {
      * @return Optional containing the template, or empty if no template exists
      */
     public static Optional<Template> getTemplate(String commandWord) {
-        return Optional.ofNullable(COMMAND_TEMPLATES.get(commandWord.toLowerCase()));
+        if (commandWord == null) {
+            return Optional.empty();
+        }
+        String normalizedCommand = normalizeCommandWord(commandWord);
+        return Optional.ofNullable(COMMAND_TEMPLATES.get(normalizedCommand));
     }
 
     /**
@@ -76,7 +88,11 @@ public class CommandTemplates {
      * @return true if template exists, false otherwise
      */
     public static boolean hasTemplate(String commandWord) {
-        return COMMAND_TEMPLATES.containsKey(commandWord.toLowerCase());
+        if (commandWord == null) {
+            return false;
+        }
+        String normalizedCommand = normalizeCommandWord(commandWord);
+        return COMMAND_TEMPLATES.containsKey(normalizedCommand);
     }
 
     /**
@@ -86,6 +102,18 @@ public class CommandTemplates {
      * @param template the template to add
      */
     public static void addTemplate(String commandWord, Template template) {
-        COMMAND_TEMPLATES.put(commandWord.toLowerCase(), template);
+        if (commandWord == null) {
+            throw new NullPointerException("Command word cannot be null");
+        }
+        if (template == null) {
+            throw new NullPointerException("Template cannot be null");
+        }
+        String normalizedCommand = normalizeCommandWord(commandWord);
+        COMMAND_TEMPLATES.put(normalizedCommand, template);
+    }
+
+    private static String normalizeCommandWord(String commandWord) {
+        assert commandWord != null : "Command word should not be null";
+        return commandWord.toLowerCase().trim();
     }
 }
