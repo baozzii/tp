@@ -24,7 +24,6 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.EmergencyContact;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
@@ -90,12 +89,11 @@ public class EditCommandParser implements Parser<EditCommand> {
             String ecNameValue = argMultimap.getValue(PREFIX_EMERGENCY_NAME).orElse("");
             String ecPhoneValue = argMultimap.getValue(PREFIX_EMERGENCY_PHONE).orElse("");
             String ecRelationValue = argMultimap.getValue(PREFIX_EMERGENCY_RELATION).orElse("");
-            editPersonDescriptor.setEmergencyContactUpdate(ecNameValue, ecPhoneValue, ecRelationValue, 
+            editPersonDescriptor.setEmergencyContactUpdate(ecNameValue, ecPhoneValue, ecRelationValue,
                                                         hasEcName, hasEcPhone, hasEcRelation);
         }
 
-        if (editPersonDescriptor.getEmergencyContact().isPresent() && 
-            editPersonDescriptor.getPhone().isPresent()) {
+        if (editPersonDescriptor.getEmergencyContact().isPresent() && editPersonDescriptor.getPhone().isPresent()) {
             EmergencyContact ec = editPersonDescriptor.getEmergencyContact().get();
             Phone recipientPhone = editPersonDescriptor.getPhone().get();
             if (ec != null && ec.getPhone().equals(recipientPhone)) {

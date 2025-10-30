@@ -45,16 +45,15 @@ public class TypicalPersons {
             .withEmail("cornelia@example.com").withAddress("10th street").withOrgan("liver")
             .withBloodType("AB-").withTags("friends").withPriority(4)
             .withEmergencyContact((EmergencyContact) null).build();
-    public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
-            .withEmail("werner@example.com").withAddress("michegan ave")
-            .withOrgan("heart").withBloodType("AB-").withPriority(5)
-            .withEmergencyContact((EmergencyContact) null).build();
-    public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
-            .withEmail("lydia@example.com").withAddress("little tokyo").withOrgan("cornea")
-            .withBloodType("B-").withPriority(5).withEmergencyContact((EmergencyContact) null).build();
-    public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
-            .withPriority(5).withEmail("anna@example.com").withAddress("4th street").withOrgan("kidney")
-            .withBloodType("B-").withEmergencyContact((EmergencyContact) null).build();
+    public static final Person ELLE = new PersonBuilder().withName("Elle Meyer")
+            .withPhone("94822244").withEmail("werner@example.com").withAddress("michegan ave")
+            .withOrgan("heart").withBloodType("AB-").withPriority(5).build();
+    public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz")
+            .withPhone("94824277").withEmail("lydia@example.com").withAddress("little tokyo")
+            .withOrgan("cornea").withBloodType("B-").withPriority(5).build();
+    public static final Person GEORGE = new PersonBuilder().withName("George Best")
+            .withPhone("94824422").withEmail("anna@example.com").withAddress("4th street")
+            .withOrgan("kidney").withBloodType("B-").withPriority(5).build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")

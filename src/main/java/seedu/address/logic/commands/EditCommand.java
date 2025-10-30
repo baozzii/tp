@@ -108,7 +108,8 @@ public class EditCommand extends Command {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) throws CommandException {
+    private static Person createEditedPerson(
+            Person personToEdit, EditPersonDescriptor editPersonDescriptor) throws CommandException {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
@@ -122,17 +123,17 @@ public class EditCommand extends Command {
         EmergencyContact updatedEmergencyContact;
         if (editPersonDescriptor.hasEmergencyContactUpdate()) {
             EmergencyContact currentEc = personToEdit.getEmergencyContact();
-            
-            String newName = editPersonDescriptor.hasEmergencyContactNameUpdate() ? 
-                            editPersonDescriptor.getEmergencyContactName() : 
-                            (currentEc != null ? currentEc.getName().toString() : "");
-            String newPhone = editPersonDescriptor.hasEmergencyContactPhoneUpdate() ? 
-                            editPersonDescriptor.getEmergencyContactPhone() : 
-                            (currentEc != null ? currentEc.getPhone().toString() : "");
-            String newRelation = editPersonDescriptor.hasEmergencyContactRelationUpdate() ? 
-                                editPersonDescriptor.getEmergencyContactRelation() : 
-                                (currentEc != null ? currentEc.getRelationship() : "");
-            
+
+            String newName = editPersonDescriptor.hasEmergencyContactNameUpdate()
+                    ? editPersonDescriptor.getEmergencyContactName() : (
+                    currentEc != null ? currentEc.getName().toString() : "");
+            String newPhone = editPersonDescriptor.hasEmergencyContactPhoneUpdate()
+                    ? editPersonDescriptor.getEmergencyContactPhone() : (
+                    currentEc != null ? currentEc.getPhone().toString() : "");
+            String newRelation = editPersonDescriptor.hasEmergencyContactRelationUpdate()
+                    ? editPersonDescriptor.getEmergencyContactRelation() : (
+                    currentEc != null ? currentEc.getRelationship() : "");
+
             if (newName.isEmpty() && newPhone.isEmpty()) {
                 updatedEmergencyContact = null;
             } else if (newName.isEmpty() || newPhone.isEmpty()) {
@@ -141,7 +142,8 @@ public class EditCommand extends Command {
                 updatedEmergencyContact = new EmergencyContact(new Name(newName), new Phone(newPhone), newRelation);
             }
         } else {
-            updatedEmergencyContact = editPersonDescriptor.getEmergencyContact().orElse(personToEdit.getEmergencyContact());
+            updatedEmergencyContact = editPersonDescriptor.getEmergencyContact()
+                    .orElse(personToEdit.getEmergencyContact());
         }
 
         if (updatedEmergencyContact != null && updatedEmergencyContact.getPhone().equals(updatedPhone)) {
@@ -229,13 +231,13 @@ public class EditCommand extends Command {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(name, phone, email, address, organ, bloodType, priority, tags,
-                    emergencyContact) 
+                    emergencyContact)
                     || hasEmergencyContactNameUpdate
                     || hasEmergencyContactPhoneUpdate
                     || hasEmergencyContactRelationUpdate;
         }
 
-        public void setEmergencyContactUpdate(String name, String phone, String relation, 
+        public void setEmergencyContactUpdate(String name, String phone, String relation,
                                     boolean hasNameUpdate, boolean hasPhoneUpdate, boolean hasRelationUpdate) {
             this.emergencyContactName = name;
             this.emergencyContactPhone = phone;
