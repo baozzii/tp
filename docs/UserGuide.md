@@ -67,3 +67,79 @@ add n/Alice Pauline p/94351253 e/alice@example.com a/123, Jurong West Ave 6, #08
 1. `Organ-izer` has many other useful commands to help with donation coordination. Details about all available commands can be found in the [Features](#features) section below.
 
 <box type="info" seamless>
+
+If you **forget the format for the `add` command**, you can always press the `tab` key after typing `add` to make use of our **autofill** feature.
+
+If you **forget how to use any command**, simply typing in the command and pressing `enter` will display information on how to use the command.
+
+</box>
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Features
+
+<box type="info" seamless>
+
+**Notes about the command format:**<br>
+
+* Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
+  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+
+* Items in square brackets are optional.<br>
+  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+
+* Items with `…`​ after them can be used multiple times including zero times.<br>
+  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+
+* Parameters can be in any order.<br>
+  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+
+* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
+  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
+
+* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+  </box>
+
+### Viewing help : `help`
+
+Shows a message explaining how to access the help page.
+
+![help message](images/helpMessage.png)
+
+Format: `help`
+
+
+### Adding a recipient: `add`
+
+Adds a recipient to the **Organ-izer**.
+
+Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS o/ORGAN b/BLOOD TYPE r/PRIORITY [en/EMERGENCY_NAME] [ep/EMERGENCY_PHONE] [er/EMERGENCY_RELATION] [t/TAG]...`
+
+<box type="tip" seamless>
+
+**Tip:** A recipient can have any number of tags (including 0)
+</box>
+
+<box type="note" seamless>
+
+**Note:**
+Names should only contain alphanumeric characters and spaces, and it should not be blank.
+
+Phone numbers should only contain numbers, and it should be at least 3 digits long.
+
+Emails should be of the format local-part@domain and adhere to the following constraints:
+1. The local-part should only contain alphanumeric characters and these special characters, excluding the parentheses, (+_.-). The local-part may not start or end with any special characters.
+2. This is followed by a '@' and then a domain name. The domain name is made up of domain labels separated by periods.
+   The domain name must:
+    - end with a domain label at least 2 characters long
+    - have each domain label start and end with alphanumeric characters
+    - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.
+
+</box>
+
+Examples:
+* `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 o/kidney b/O+ r/1 en/Jane Doe ep/91234567 er/spouse t/friends t/owesMoney`
+
+### Tab Completion for `add` command
+
+Auto creates all required and optional prefixes for the `add` command.
