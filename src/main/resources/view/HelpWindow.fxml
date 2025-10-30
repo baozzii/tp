@@ -8,142 +8,166 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.stage.Stage?>
-
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
-<fx:root title="Help" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+
+<fx:root title="Help" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17"
+         xmlns:fx="http://javafx.com/fxml/1">
+
   <icons>
     <Image url="@/images/help_icon.png" />
   </icons>
+
   <scene>
     <Scene>
-
       <ScrollPane fitToWidth="true" fitToHeight="true">
         <content>
-        <VBox  spacing="10" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-        <stylesheets>
-          <URL value="@HelpWindow.css" />
-        </stylesheets>
+          <VBox spacing="10" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17"
+                xmlns:fx="http://javafx.com/fxml/1">
 
+            <stylesheets>
+              <URL value="@HelpWindow.css" />
+            </stylesheets>
 
+            <HBox alignment="CENTER" fx:id="helpMessageContainer">
+              <children>
+                <Label fx:id="helpMessage" text="Label">
+                  <HBox.margin>
+                    <Insets right="5.0" />
+                  </HBox.margin>
+                </Label>
+                <Button fx:id="copyButton" mnemonicParsing="false"
+                        onAction="#copyUrl" text="Copy URL">
+                  <HBox.margin>
+                    <Insets left="5.0" />
+                  </HBox.margin>
+                </Button>
+              </children>
+              <opaqueInsets>
+                <Insets bottom="10.0" left="5.0" right="10.0" top="5.0" />
+              </opaqueInsets>
+              <padding>
+                <Insets bottom="10.0" left="5.0" right="10.0" top="5.0" />
+              </padding>
+            </HBox>
 
-        <HBox alignment="CENTER" fx:id="helpMessageContainer">
-          <children>
-            <Label fx:id="helpMessage" text="Label">
-              <HBox.margin>
-                <Insets right="5.0" />
-              </HBox.margin>
-            </Label>
-            <Button fx:id="copyButton" mnemonicParsing="false" onAction="#copyUrl" text="Copy URL">
-              <HBox.margin>
-                <Insets left="5.0" />
-              </HBox.margin>
-            </Button>
-          </children>
-          <opaqueInsets>
-            <Insets bottom="10.0" left="5.0" right="10.0" top="5.0" />
-          </opaqueInsets>
-          <padding>
-            <Insets bottom="10.0" left="5.0" right="10.0" top="5.0" />
-          </padding>
-        </HBox>
+            <VBox spacing="10" VBox.vgrow="ALWAYS"
+                  xmlns="http://javafx.com/javafx/21"
+                  xmlns:fx="http://javafx.com/fxml/1">
 
-        <VBox spacing="10" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-          <TitledPane text="Add" expanded="false">
-            <VBox spacing="5">
-              <Label text="Adds a person to the database."/>
-              <Label text="Syntax : Format: add n/NAME p/PHONE e/EMAIL a/ADDRESS o/ORGAN b/BLOOD TYPE r/PRIORITY [en/EMERGENCY_NAME]
-              [ep/EMERGENCY_PHONE] [er/EMERGENCY_RELATION] [t/TAG]..."/>
-              <Label text="Example : tab to Auto creates all required and optional prefixes for the `add` command."/>
-            </VBox>
-          </TitledPane>
-          <TitledPane text="Edit" expanded="false">
-            <VBox spacing="5">
-              <Label text="Age: 30" />
-              <Label text="Hobby: Guitar" />
-            </VBox>
-          </TitledPane>
-          <TitledPane text="Delete" expanded="false">
-            <VBox spacing="5">
-              <Label text="Age: 25" />
-              <Label text="Hobby: Painting" />
-            </VBox>
-          </TitledPane>
-          <TitledPane text="List" expanded="false">
-            <VBox spacing="5">
-              <Label text="Shows a list of all recipients in the Organiser." />
-              <Label text="Hobby: Painting" />
-            </VBox>
-          </TitledPane>
-          <TitledPane text="Bloodtype" expanded="false">
-            <VBox spacing="5">
-              <Label text="Age: 25" />
-              <Label text="Hobby: Painting" />
-            </VBox>
-          </TitledPane>
-          <TitledPane text="Organ" expanded="false">
-            <VBox spacing="5">
-              <Label text="Age: 25" />
-              <Label text="Hobby: Painting" />
-            </VBox>
-          </TitledPane>
-          <TitledPane text="Priority" expanded="false">
-            <VBox spacing="5">
-              <Label text="Age: 25" />
-              <Label text="Hobby: Painting" />
-            </VBox>
-          </TitledPane>
-          <TitledPane text="Search" expanded="false">
-            <VBox spacing="5">
-              <Label text="Age: 25" />
-              <Label text="Hobby: Painting" />
-            </VBox>
-          </TitledPane>
-          <TitledPane text="Combined" expanded="false">
-            <VBox spacing="5">
-              <Label text="Age: 25" />
-              <Label text="Hobby: Painting" />
-            </VBox>
-          </TitledPane>
-          <TitledPane text="Compatible" expanded="false">
-            <VBox spacing="5">
-              <Label text="Age: 25" />
-              <Label text="Hobby: Painting" />
-            </VBox>
-          </TitledPane>
-          <TitledPane text="Summary" expanded="false">
-            <VBox spacing="5">
-              <Label text="Age: 25" />
-              <Label text="Hobby: Painting" />
-            </VBox>
-          </TitledPane>
-          <TitledPane text="Last command" expanded="false">
-            <VBox spacing="5">
-              <Label text="Age: 25" />
-              <Label text="Hobby: Painting" />
-            </VBox>
-          </TitledPane>
-          <TitledPane text="Clear" expanded="false">
-            <VBox spacing="5">
-              <Label text="Age: 25" />
-              <Label text="Hobby: Painting" />
-            </VBox>
-          </TitledPane>
-          <TitledPane text="Exit" expanded="false">
-            <VBox spacing="5">
-              <Label text="Age: 25" />
-              <Label text="Hobby: Painting" />
-            </VBox>
-          </TitledPane>
-        </VBox>
+              <TitledPane text="add" expanded="false">
+                <VBox spacing="5">
+                  <Label text="Adds a recipient to the Organ-izer." />
+                  <Label text="Format: add n/NAME p/PHONE e/EMAIL a/ADDRESS o/ORGAN b/BLOOD TYPE r/PRIORITY"/>
+                  <Label text= "[en/EMERGENCY_NAME] [ep/EMERGENCY_PHONE] [er/EMERGENCY_RELATION] [t/TAG]..."/>
+                  <Label text="Tab to auto-create all required and optional prefixes for the add command." />
+                </VBox>
+              </TitledPane>
 
+              <TitledPane text="edit" expanded="false">
+                <VBox spacing="10">
+                  <Label text="Edits existing recipient at INDEX." />
+                  <Label text="Format : edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [o/ORGAN] [b/BLOOD TYPE] [r/PRIORITY]"/>
+                  <Label text= "[ep/EMERGENCY_PHONE] [er/EMERGENCY_RELATION] [t/TAG]..."/>
+                </VBox>
+              </TitledPane>
 
+              <TitledPane text="delete" expanded="false">
+                <VBox spacing="5">
+                  <Label text="Deletes existing recipient at INDEX." />
+                  <Label text="Format: delete INDEX" />
+                </VBox>
+              </TitledPane>
+
+              <TitledPane text="list" expanded="false">
+                <VBox spacing="5">
+                  <Label text="Displays a list of all recipients in the Organ-izer." />
+                  <Label text="Format: list" />
+                </VBox>
+              </TitledPane>
+
+              <TitledPane text="bloodtype" expanded="false">
+                <VBox spacing="5">
+                  <Label text="Finds and lists all recipients whose blood type matches the specified blood types." />
+                  <Label text="Format : bloodtype BLOODTYPE [BLOODTYPE]..." />
+                </VBox>
+              </TitledPane>
+
+              <TitledPane text="organ" expanded="false">
+                <VBox spacing="5">
+                  <Label text="Finds and lists all recipients whose organ contains the KEYWORD." />
+                  <Label text="Format: organ KEYWORD" />
+                </VBox>
+              </TitledPane>
+
+              <TitledPane text="priority" expanded="false">
+                <VBox spacing="5">
+                  <Label text="Finds and lists all recipients whose priority matches the specified priorities." />
+                  <Label text="Format : priority PRIORITY [PRIORITY]..." />
+                </VBox>
+              </TitledPane>
+
+              <TitledPane text="search" expanded="false">
+                <VBox spacing="5">
+                  <Label text="Finds and lists all recipients whose name contains all of the KEYWORDS"/>
+                  <Label text="Partial names will not be matched, eg. searching Joh will not match with John."/>
+                  <Label text="Order of the keywords does not matter." />
+                  <Label text="Format : search KEYWORD [KEYWORD]" />
+                </VBox>
+              </TitledPane>
+
+              <TitledPane text="combined" expanded="false">
+                <VBox spacing="5">
+                  <Label text="Finds and lists all recipients that match all specified criteria :" />
+                  <Label text="NAME, if included will find recipients with the exact NAME." />
+                  <Label text="KEYWORD, if included will find recipients with organ containing the KEYWORD ." />
+                  <Label text="BLOODTYPE, if included will find recipients who can receive the BLOODTYPE." />
+                  <Label text="Format : combined [n/EXACT_NAME] [o/ORGAN_KEYWORD] [b/BLOODTYPE]" />
+                </VBox>
+              </TitledPane>
+
+              <TitledPane text="compatible" expanded="false">
+                <VBox spacing="5">
+                  <Label text="Finds and lists all recipients that can receive BLOODTYPE." />
+                  <Label text="compatible BLOODTYPE" />
+                </VBox>
+              </TitledPane>
+
+              <TitledPane text="summary" expanded="false">
+                <VBox spacing="5">
+                  <Label text="Displays summary of number of recipients that require each organ." />
+                  <Label text="Format: summary" />
+                </VBox>
+              </TitledPane>
+
+              <TitledPane text="last command" expanded="false">
+                <VBox spacing="5">
+                  <Label text="Populate your current line with last used command." />
+                  <Label text="Format: Up arrrow key" />
+                </VBox>
+              </TitledPane>
+
+              <TitledPane text="clear" expanded="false">
+                <VBox spacing="5">
+                  <Label text="Deletes all recipients from Organ-izer." />
+                  <Label text="Format: delete" />
+                </VBox>
+              </TitledPane>
+
+              <TitledPane text="exit" expanded="false">
+                <VBox spacing="5">
+                  <Label text="Exits the program." />
+                  <Label text="Format : exit" />
+                </VBox>
+              </TitledPane>
+
+            </VBox>
           </VBox>
         </content>
       </ScrollPane>
-
     </Scene>
   </scene>
 </fx:root>
+
