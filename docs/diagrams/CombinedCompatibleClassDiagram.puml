@@ -1,0 +1,25 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package "logic.commands" {
+  class CombinedCommand
+  class CompatibleCommand
+}
+
+package "logic.parser" {
+  class CombinedCommandParser
+  class CompatibleCommandParser
+  class AddressBookParser
+}
+
+package "model.person" {
+  class CombinedPredicate
+  class NameExactMatchPredicate
+  class OrganContainsSubstringPredicate
+  class BloodTypeRecipientCompatiblePredicate
+  class BloodTypeCompatibilityPredicate
+}
+
+
+@enduml
+
