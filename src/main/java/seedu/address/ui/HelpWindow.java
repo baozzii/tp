@@ -35,6 +35,8 @@ public class HelpWindow extends UiPart<Stage> {
     public HelpWindow(Stage root) {
         super(FXML, root);
         helpMessage.setText(HELP_MESSAGE);
+        root.setMinWidth(600);
+        root.setMinHeight(300);
     }
 
     /**
