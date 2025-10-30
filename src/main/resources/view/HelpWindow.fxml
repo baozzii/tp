@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <fx:root title="Help" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <icons>
     <Image url="@/images/help_icon.png" />
@@ -21,7 +22,7 @@
 
       <ScrollPane fitToWidth="true" fitToHeight="true">
         <content>
-        <VBox spacing="10" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+        <VBox  spacing="10" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
         <stylesheets>
           <URL value="@HelpWindow.css" />
         </stylesheets>
@@ -49,7 +50,7 @@
           </padding>
         </HBox>
 
-        <VBox spacing="10" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+        <VBox spacing="10" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
           <TitledPane text="Add" expanded="false">
             <VBox spacing="5">
               <Label text="Adds a person to the database."/>
@@ -105,6 +106,7 @@
           </VBox>
         </content>
       </ScrollPane>
+
     </Scene>
   </scene>
 </fx:root>
