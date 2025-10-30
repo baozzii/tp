@@ -54,8 +54,9 @@
           <TitledPane text="Add" expanded="false">
             <VBox spacing="5">
               <Label text="Adds a person to the database."/>
-              <Label text="Syntax : Add n/ [NAME] "/>
-              <Label text="Example : Add n/ John " />
+              <Label text="Syntax : Format: add n/NAME p/PHONE e/EMAIL a/ADDRESS o/ORGAN b/BLOOD TYPE r/PRIORITY [en/EMERGENCY_NAME]
+              [ep/EMERGENCY_PHONE] [er/EMERGENCY_RELATION] [t/TAG]..."/>
+              <Label text="Example : tab to Auto creates all required and optional prefixes for the `add` command."/>
             </VBox>
           </TitledPane>
           <TitledPane text="Edit" expanded="false">
@@ -72,17 +73,53 @@
           </TitledPane>
           <TitledPane text="List" expanded="false">
             <VBox spacing="5">
-              <Label text="Age: 25" />
+              <Label text="Shows a list of all recipients in the Organiser." />
               <Label text="Hobby: Painting" />
             </VBox>
           </TitledPane>
-          <TitledPane text="Blood Type Search" expanded="false">
+          <TitledPane text="Bloodtype" expanded="false">
             <VBox spacing="5">
               <Label text="Age: 25" />
               <Label text="Hobby: Painting" />
             </VBox>
           </TitledPane>
-          <TitledPane text="Organ Search" expanded="false">
+          <TitledPane text="Organ" expanded="false">
+            <VBox spacing="5">
+              <Label text="Age: 25" />
+              <Label text="Hobby: Painting" />
+            </VBox>
+          </TitledPane>
+          <TitledPane text="Priority" expanded="false">
+            <VBox spacing="5">
+              <Label text="Age: 25" />
+              <Label text="Hobby: Painting" />
+            </VBox>
+          </TitledPane>
+          <TitledPane text="Search" expanded="false">
+            <VBox spacing="5">
+              <Label text="Age: 25" />
+              <Label text="Hobby: Painting" />
+            </VBox>
+          </TitledPane>
+          <TitledPane text="Combined" expanded="false">
+            <VBox spacing="5">
+              <Label text="Age: 25" />
+              <Label text="Hobby: Painting" />
+            </VBox>
+          </TitledPane>
+          <TitledPane text="Compatible" expanded="false">
+            <VBox spacing="5">
+              <Label text="Age: 25" />
+              <Label text="Hobby: Painting" />
+            </VBox>
+          </TitledPane>
+          <TitledPane text="Summary" expanded="false">
+            <VBox spacing="5">
+              <Label text="Age: 25" />
+              <Label text="Hobby: Painting" />
+            </VBox>
+          </TitledPane>
+          <TitledPane text="Last command" expanded="false">
             <VBox spacing="5">
               <Label text="Age: 25" />
               <Label text="Hobby: Painting" />
