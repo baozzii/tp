@@ -80,7 +80,7 @@ Format: `help`
 
 Adds a person to the address book.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS o/ORGAN b/BLOOD TYPE r/PRIORITY [en/EMERGENCY_NAME] [ep/EMERGENCY_PHONE] [er/EMERGENCY_RELATION] [t/TAG]...`
 
 <box type="tip" seamless>
 
@@ -88,20 +88,66 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 </box>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-
+* `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 o/kidney b/O+ r/1 en/Jane Doe ep/91234567 er/spouse t/friends t/owesMoney`
+  
 ### Listing all persons : `list`
 
 Shows a list of all persons in the address book.
 
 Format: `list`
 
+### Finding compatible blood types : `compatible`
+
+Finds and lists all persons whose blood type is compatible with the specified donor blood type. 
+
+* Compatible means they can receive from someone with the specified blood type.
+
+Format: `compatible BLOOD_TYPE`
+
+Examples:
+* `compatible O-` Finds all persons whose blood type is compatible with O-.
+
+### Finding persons by organ : `organ`
+
+Finds and lists all persons in address book whose organ contains the specified substring. 
+
+* Substring matching is case insensitive.
+
+Format: `organ SUBSTRING`
+
+Examples:
+* `organ kidney` Finds all persons in address book whose organ contains `kidney` as a substring.
+
+### Finding persons by priority : `priority`
+
+Finds and lists all persons in address book whose priority matches the specified priorities.
+
+* Priority must be a number from 1-5.
+
+Format: `priority PRIORITY`
+
+Exmaples:
+* `priority 1 2` Finds all persons in address book whose priority is either `1` or `2`.
+
+### Finding persons by multiple criteria: `combined`
+
+Finds and lists all persons in address book that match all specified criteria. 
+
+Format: `[n/EXACT_NAME] [o/ORGAN_SUBSTRING] [bt/RECIPIENT_BLOOD_TYPES]`
+
+* Find all persons in address book that matches the exact name, whose organ contains the speified substring, and has a compatible blood type.
+* Criteria can include exact name match, organ substring, and compatible blood types for recipients.
+* At least one of the optional fields must be provided.
+* Name must be exact match. Blood type finds donors compatible with the specified recipient blood types.
+
+Examples:
+* `combines n/Alice Pauline o/kidney bt/O+` Find all persons in address book with name `Alice` or `Pauline`, whose organ contains `kidney` as a substring, and has blood type compatible with `O+`. 
+
 ### Editing a person : `edit`
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [o/ORGAN] [b/BLOOD TYPE] [r/PRIORITY] [en/EMERGENCY_NAME] [ep/EMERGENCY_PHONE] [er/EMERGENCY_RELATION] [t/TAG]...`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -114,11 +160,11 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-### Locating persons by name: `find`
+### Locating persons by name: `search`
 
 Finds persons whose names contain any of the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `search KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
