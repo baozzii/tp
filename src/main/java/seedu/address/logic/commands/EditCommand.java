@@ -108,7 +108,7 @@ public class EditCommand extends Command {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
+    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) throws CommandException {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
@@ -119,8 +119,34 @@ public class EditCommand extends Command {
         BloodType updatedBloodType = editPersonDescriptor.getBloodType().orElse(personToEdit.getBloodType());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Priority updatedPriority = editPersonDescriptor.getPriority().orElse(personToEdit.getPriority());
-        EmergencyContact updatedEmergencyContact = editPersonDescriptor.getEmergencyContact()
-                .orElse(personToEdit.getEmergencyContact());
+        EmergencyContact updatedEmergencyContact;
+        if (editPersonDescriptor.hasEmergencyContactUpdate()) {
+            EmergencyContact currentEc = personToEdit.getEmergencyContact();
+            
+            String newName = editPersonDescriptor.hasEmergencyContactNameUpdate() ? 
+                            editPersonDescriptor.getEmergencyContactName() : 
+                            (currentEc != null ? currentEc.getName().toString() : "");
+            String newPhone = editPersonDescriptor.hasEmergencyContactPhoneUpdate() ? 
+                            editPersonDescriptor.getEmergencyContactPhone() : 
+                            (currentEc != null ? currentEc.getPhone().toString() : "");
+            String newRelation = editPersonDescriptor.hasEmergencyContactRelationUpdate() ? 
+                                editPersonDescriptor.getEmergencyContactRelation() : 
+                                (currentEc != null ? currentEc.getRelationship() : "");
+            
+            if (newName.isEmpty() && newPhone.isEmpty()) {
+                updatedEmergencyContact = null;
+            } else if (newName.isEmpty() || newPhone.isEmpty()) {
+                throw new CommandException(EmergencyContact.MESSAGE_CONSTRAINTS);
+            } else {
+                updatedEmergencyContact = new EmergencyContact(new Name(newName), new Phone(newPhone), newRelation);
+            }
+        } else {
+            updatedEmergencyContact = editPersonDescriptor.getEmergencyContact().orElse(personToEdit.getEmergencyContact());
+        }
+
+        if (updatedEmergencyContact != null && updatedEmergencyContact.getPhone().equals(updatedPhone)) {
+            throw new CommandException("Emergency contact phone number cannot be the same as recipient's phone number.");
+        }
 
         return new Person(updatedName,
                 updatedPhone, updatedEmail, updatedAddress, updatedOrgan, updatedBloodType,
@@ -166,6 +192,13 @@ public class EditCommand extends Command {
         private Priority priority;
         private EmergencyContact emergencyContact;
 
+        private String emergencyContactName;
+        private String emergencyContactPhone;
+        private String emergencyContactRelation;
+        private boolean hasEmergencyContactNameUpdate;
+        private boolean hasEmergencyContactPhoneUpdate;
+        private boolean hasEmergencyContactRelationUpdate;
+
         public EditPersonDescriptor() {}
 
         /**
@@ -182,6 +215,13 @@ public class EditCommand extends Command {
             setTags(toCopy.tags);
             setPriority(toCopy.priority);
             setEmergencyContact(toCopy.emergencyContact);
+
+            this.emergencyContactName = toCopy.emergencyContactName;
+            this.emergencyContactPhone = toCopy.emergencyContactPhone;
+            this.emergencyContactRelation = toCopy.emergencyContactRelation;
+            this.hasEmergencyContactNameUpdate = toCopy.hasEmergencyContactNameUpdate;
+            this.hasEmergencyContactPhoneUpdate = toCopy.hasEmergencyContactPhoneUpdate;
+            this.hasEmergencyContactRelationUpdate = toCopy.hasEmergencyContactRelationUpdate;
         }
 
         /**
@@ -189,7 +229,45 @@ public class EditCommand extends Command {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(name, phone, email, address, organ, bloodType, priority, tags,
-                    emergencyContact);
+                    emergencyContact) || hasEmergencyContactUpdate();
+        }
+
+        public void setEmergencyContactUpdate(String name, String phone, String relation, 
+                                    boolean hasNameUpdate, boolean hasPhoneUpdate, boolean hasRelationUpdate) {
+            this.emergencyContactName = name;
+            this.emergencyContactPhone = phone;
+            this.emergencyContactRelation = relation;
+            this.hasEmergencyContactNameUpdate = hasNameUpdate;
+            this.hasEmergencyContactPhoneUpdate = hasPhoneUpdate;
+            this.hasEmergencyContactRelationUpdate = hasRelationUpdate;
+        }
+
+        public boolean hasEmergencyContactUpdate() {
+            return hasEmergencyContactNameUpdate || hasEmergencyContactPhoneUpdate || hasEmergencyContactRelationUpdate;
+        }
+
+        public boolean hasEmergencyContactNameUpdate() {
+            return hasEmergencyContactNameUpdate;
+        }
+
+        public boolean hasEmergencyContactPhoneUpdate() {
+            return hasEmergencyContactPhoneUpdate;
+        }
+
+        public boolean hasEmergencyContactRelationUpdate() {
+            return hasEmergencyContactRelationUpdate;
+        }
+
+        public String getEmergencyContactName() {
+            return emergencyContactName;
+        }
+
+        public String getEmergencyContactPhone() {
+            return emergencyContactPhone;
+        }
+
+        public String getEmergencyContactRelation() {
+            return emergencyContactRelation;
         }
 
         public void setName(Name name) {

@@ -87,6 +87,11 @@ public class AddCommandParser implements Parser<AddCommand> {
                 }
             }
         }
+
+        if (emergencyContact != null && emergencyContact.getPhone().equals(phone)) {
+            throw new ParseException(EmergencyContact.EMERGENCY_CONTACT_IS_RECIPIENT);
+        }
+
         Priority priority = ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY).get());
 
         Person person = new Person(name, phone, email, address, organ, bloodType, priority, tagList, emergencyContact);
