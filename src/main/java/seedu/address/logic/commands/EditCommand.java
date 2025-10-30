@@ -145,7 +145,7 @@ public class EditCommand extends Command {
         }
 
         if (updatedEmergencyContact != null && updatedEmergencyContact.getPhone().equals(updatedPhone)) {
-            throw new CommandException("Emergency contact phone number cannot be the same as recipient's phone number.");
+            throw new CommandException(EmergencyContact.EMERGENCY_CONTACT_IS_RECIPIENT);
         }
 
         return new Person(updatedName,
