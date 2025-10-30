@@ -229,7 +229,10 @@ public class EditCommand extends Command {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(name, phone, email, address, organ, bloodType, priority, tags,
-                    emergencyContact) || hasEmergencyContactUpdate();
+                    emergencyContact) 
+                    || hasEmergencyContactNameUpdate
+                    || hasEmergencyContactPhoneUpdate
+                    || hasEmergencyContactRelationUpdate;
         }
 
         public void setEmergencyContactUpdate(String name, String phone, String relation, 
