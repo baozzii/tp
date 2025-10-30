@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
@@ -26,11 +27,15 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.EmergencyContact;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
@@ -162,6 +167,79 @@ public class EditCommandTest {
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_editRelationshipOnlyWithoutEmergencyContact_throwsCommandException() {
+        Person personWithoutEc = new PersonBuilder().withEmergencyContact((EmergencyContact) null).build();
+        Model model = new ModelManager();
+        model.addPerson(personWithoutEc);
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withEmergencyContactRelationship("parent").build();
+        EditCommand editCommand = new EditCommand(Index.fromZeroBased(0), descriptor);
+
+        assertThrows(CommandException.class, () -> editCommand.execute(model),
+            "Cannot edit emergency contact relationship when no emergency contact exists.");
+    }
+
+    // Only name
+    @Test
+    public void execute_editEmergencyContactNameOnly_throwsCommandException() {
+        Person personWithEc = new PersonBuilder().withEmergencyContact((EmergencyContact) null).build();
+        Model model = new ModelManager();
+        model.addPerson(personWithEc);
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withEmergencyContactName("Amy Emergency").build();
+        EditCommand editCommand = new EditCommand(Index.fromZeroBased(0), descriptor);
+
+        assertThrows(CommandException.class, () -> editCommand.execute(model),
+            EmergencyContact.MESSAGE_CONSTRAINTS);
+    }
+
+    // Only phone
+    @Test
+    public void execute_editEmergencyContactPhoneOnly_throwsCommandException() {
+        Person personWithEc = new PersonBuilder().withEmergencyContact((EmergencyContact) null).build();
+        Model model = new ModelManager();
+        model.addPerson(personWithEc);
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withEmergencyContactPhone("91234567").build();
+        EditCommand editCommand = new EditCommand(Index.fromZeroBased(0), descriptor);
+
+        assertThrows(CommandException.class, () -> editCommand.execute(model),
+            EmergencyContact.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void execute_editRecipientPhoneToMatchEmergencyContactPhone_throwsCommandException() {
+        EmergencyContact ec = new EmergencyContact(new Name("Amy Emergency"), new Phone("91234567"), "spouse");
+        Person person = new PersonBuilder().withPhone("88888888").withEmergencyContact(ec).build();
+        Model model = new ModelManager();
+        model.addPerson(person);
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone("91234567").build();
+        EditCommand editCommand = new EditCommand(Index.fromZeroBased(0), descriptor);
+
+        assertThrows(CommandException.class, () -> editCommand.execute(model),
+            EmergencyContact.EMERGENCY_CONTACT_IS_RECIPIENT);
+    }
+
+    @Test
+    public void execute_editEmergencyContactPhoneToMatchRecipientPhone_throwsCommandException() {
+        EmergencyContact ec = new EmergencyContact(new Name("Amy Emergency"), new Phone("88888888"), "spouse");
+        Person person = new PersonBuilder().withPhone("88888888").withEmergencyContact(ec).build();
+        Model model = new ModelManager();
+        model.addPerson(person);
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withEmergencyContactPhone("88888888").build();
+        EditCommand editCommand = new EditCommand(Index.fromZeroBased(0), descriptor);
+
+        assertThrows(CommandException.class, () -> editCommand.execute(model),
+            EmergencyContact.EMERGENCY_CONTACT_IS_RECIPIENT);
     }
 
     @Test

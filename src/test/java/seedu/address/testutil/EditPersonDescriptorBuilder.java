@@ -118,6 +118,54 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
+     * Sets the {@code EmergencyContact} name of the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withEmergencyContactName(String name) {
+        descriptor.setEmergencyContactUpdate(
+            name, // name
+            "", // phone
+            "", // relationship
+            true, // hasNameUpdate
+            false, // hasPhoneUpdate
+            false // hasRelationUpdate
+        );
+        return this;
+    }
+
+    /**
+     * Sets the {@code EmergencyContact} phone of the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withEmergencyContactPhone(String phone) {
+        descriptor.setEmergencyContactUpdate(
+            "", // name
+            phone, // phone
+            "", // relationship
+            false, // hasNameUpdate
+            true, // hasPhoneUpdate
+            false // hasRelationUpdate
+        );
+        return this;
+    }
+
+    /**
+     * Sets the {@code EmergencyContact} relationship of the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withEmergencyContactRelationship(String relationship) {
+        descriptor.setEmergencyContactUpdate(
+            "", // name
+            "", // phone
+            relationship,
+            false, // hasNameUpdate
+            false, // hasPhoneUpdate
+            true // hasRelationUpdate
+        );
+        return this;
+    }
+
+    /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
      * that we are building.
      */

@@ -124,6 +124,15 @@ public class EditCommand extends Command {
         if (editPersonDescriptor.hasEmergencyContactUpdate()) {
             EmergencyContact currentEc = personToEdit.getEmergencyContact();
 
+            if (editPersonDescriptor.hasEmergencyContactRelationUpdate()
+                && !editPersonDescriptor.hasEmergencyContactNameUpdate()
+                && !editPersonDescriptor.hasEmergencyContactPhoneUpdate()) {
+                if (currentEc == null) {
+                    throw new CommandException(
+                            "Cannot edit emergency contact relationship when no emergency contact exists.");
+                }
+            }
+
             String newName = editPersonDescriptor.hasEmergencyContactNameUpdate()
                     ? editPersonDescriptor.getEmergencyContactName() : (
                     currentEc != null ? currentEc.getName().toString() : "");

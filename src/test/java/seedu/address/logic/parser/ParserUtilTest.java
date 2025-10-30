@@ -109,6 +109,11 @@ public class ParserUtilTest {
     }
 
     @Test
+    public void parsePhone_nonNumeric_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parsePhone("1234abcd"));
+    }
+
+    @Test
     public void parseAddress_null_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> ParserUtil.parseAddress((String) null));
     }
