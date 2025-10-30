@@ -13,6 +13,9 @@ public class EmergencyContact {
             "Emergency contact requires both name (en/) and phone (ep/) specified or both empty to clear."
             + " Relationship (er/) is optional.";
 
+    public static final String EMERGENCY_CONTACT_IS_RECIPIENT = 
+            "Emergency contact cannot be the same as the recipient's phone number.";
+
     private final Name name;
     private final Phone phone;
     private final String relationship;
