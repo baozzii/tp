@@ -66,15 +66,26 @@ public class AddCommandParser implements Parser<AddCommand> {
         EmergencyContact emergencyContact = null;
         boolean hasEcName = argMultimap.getValue(PREFIX_EMERGENCY_NAME).isPresent();
         boolean hasEcPhone = argMultimap.getValue(PREFIX_EMERGENCY_PHONE).isPresent();
+        boolean hasEcRelation = argMultimap.getValue(PREFIX_EMERGENCY_RELATION).isPresent();
 
-        if (hasEcName || hasEcPhone || argMultimap.getValue(PREFIX_EMERGENCY_RELATION).isPresent()) {
-            if (!hasEcName || !hasEcPhone) {
+        if (hasEcName || hasEcPhone || hasEcRelation) {
+            String ecNameValue = argMultimap.getValue(PREFIX_EMERGENCY_NAME).orElse("");
+            String ecPhoneValue = argMultimap.getValue(PREFIX_EMERGENCY_PHONE).orElse("");
+            
+            if (ecNameValue.isEmpty() && ecPhoneValue.isEmpty()) {
+                emergencyContact = null;
+            } else if (ecNameValue.isEmpty() || ecPhoneValue.isEmpty()) {
                 throw new ParseException(EmergencyContact.MESSAGE_CONSTRAINTS);
+            } else {
+                try {
+                    Name ecName = ParserUtil.parseName(ecNameValue);
+                    Phone ecPhone = ParserUtil.parsePhone(ecPhoneValue);
+                    String ecRelation = argMultimap.getValue(PREFIX_EMERGENCY_RELATION).orElse("");
+                    emergencyContact = new EmergencyContact(ecName, ecPhone, ecRelation);
+                } catch (ParseException e) {
+                    throw e;
+                }
             }
-            Name ecName = ParserUtil.parseName(argMultimap.getValue(PREFIX_EMERGENCY_NAME).get());
-            Phone ecPhone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_EMERGENCY_PHONE).get());
-            String ecRelation = argMultimap.getValue(PREFIX_EMERGENCY_RELATION).orElse("");
-            emergencyContact = new EmergencyContact(ecName, ecPhone, ecRelation);
         }
         Priority priority = ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY).get());
 

@@ -85,18 +85,27 @@ public class EditCommandParser implements Parser<EditCommand> {
         boolean hasEcName = argMultimap.getValue(PREFIX_EMERGENCY_NAME).isPresent();
         boolean hasEcPhone = argMultimap.getValue(PREFIX_EMERGENCY_PHONE).isPresent();
         boolean hasEcRelation = argMultimap.getValue(PREFIX_EMERGENCY_RELATION).isPresent();
+
         if (hasEcName || hasEcPhone || hasEcRelation) {
             String ecNameValue = argMultimap.getValue(PREFIX_EMERGENCY_NAME).orElse("");
             String ecPhoneValue = argMultimap.getValue(PREFIX_EMERGENCY_PHONE).orElse("");
+            
             if (ecNameValue.isEmpty() && ecPhoneValue.isEmpty()) {
+                // Both empty - clear emergency contact
                 editPersonDescriptor.setEmergencyContact(null);
-            } else if (!ecNameValue.isEmpty() && !ecPhoneValue.isEmpty()) {
-                Name ecName = ParserUtil.parseName(ecNameValue);
-                Phone ecPhone = ParserUtil.parsePhone(ecPhoneValue);
-                String ecRelation = argMultimap.getValue(PREFIX_EMERGENCY_RELATION).orElse("");
-                editPersonDescriptor.setEmergencyContact(new EmergencyContact(ecName, ecPhone, ecRelation));
-            } else {
+            } else if (ecNameValue.isEmpty() || ecPhoneValue.isEmpty()) {
+                // One empty, one not - violation
                 throw new ParseException(EmergencyContact.MESSAGE_CONSTRAINTS);
+            } else {
+                // Both non-empty - parse them
+                try {
+                    Name ecName = ParserUtil.parseName(ecNameValue);
+                    Phone ecPhone = ParserUtil.parsePhone(ecPhoneValue);
+                    String ecRelation = argMultimap.getValue(PREFIX_EMERGENCY_RELATION).orElse("");
+                    editPersonDescriptor.setEmergencyContact(new EmergencyContact(ecName, ecPhone, ecRelation));
+                } catch (ParseException e) {
+                    throw e;
+                }
             }
         }
 
