@@ -143,3 +143,88 @@ Examples:
 ### Tab Completion for `add` command
 
 Auto creates all required and optional prefixes for the `add` command.
+
+Format: `add` then press the <kbd>tab</kbd> key
+
+<box type="note" seamless>
+
+**Note:** The tab completion feature brings the cursor to the first field to be filled in
+</box>
+
+Examples:
+* `add` followed by <kbd>tab</kbd> gives `add n/ p/ e/ a/ o/ b/ r/ t/ en/ ep/ er/`
+  
+### Listing all recipients : `list`
+
+Shows a list of all recipients in the Organiser.
+
+Format: `list`
+
+### Finding compatible blood types: `compatible`
+
+Finds and lists all recipients whose blood type is compatible with the specified donor blood type. 
+
+* Compatible means they can receive from someone with the specified blood type.
+
+Format: `compatible BLOOD_TYPE`
+
+<box type="note" seamless>
+
+**Note:** Blood types must be one of A+, A-, B+, B-, AB+, AB-, O+, O-
+</box>
+
+Examples:
+* `compatible O-` Finds all recipients whose blood type is compatible with O-.
+
+### Finding recipients by organ : `organ`
+
+Finds and lists all recipients in **Organ-izer** whose organ contains the specified substring. 
+
+* Substring matching is case insensitive.
+
+Format: `organ ORGAN`
+
+<box type="note" seamless>
+
+**Note:** Organ must be all alphabetical characters or spaces, but first letter must alphabetical
+</box>
+
+Examples:
+* `organ kidney` Finds all recipients in **Organ-izer** whose organ contains `kidney` as a substring.
+
+### Finding recipients by bloodtype : `bloodtype`
+
+Finds and lists all recipients in **Organ-izer** whose blood type matches the specified blood types.
+
+Format: `bloodtype BLOODTYPE`
+
+<box type="note" seamless>
+
+**Note:** BLOODTYPE must be A+, A- B+, B- AB+, AB-, O+ or O- only
+ and can accept multiple values to find recipients of either blood type
+</box>
+
+Examples:
+* `priority 1 2` Finds all recipients in **Organ-izer** whose priority is either `1` or `2`.
+* `priority 3` Finds all recipients in **Organ-izer** whose priority is 3.
+
+### Finding recipients by priority : `priority`
+
+Finds and lists all recipients in **Organ-izer** whose priority matches the specified priorities.
+
+Format: `priority PRIORITY`
+
+<box type="note" seamless>
+
+**Note:** Priority must be a number from 1-5, and can accept multiple values to find recipients of either priority value
+</box>
+
+Examples:
+* `priority 1 2` Finds all recipients in **Organ-izer** whose priority is either `1` or `2`.
+* `priority 3` Finds all recipients in **Organ-izer** whose priority is 3.
+
+### Finding recipients by multiple criteria: `combined`
+
+Finds and lists all recipients in **Organ-izer** that match all specified criteria. 
+
+Format: `[n/EXACT_NAME] [o/ORGAN_SUBSTRING] [b/RECIPIENT_BLOOD_TYPES]`
