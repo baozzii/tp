@@ -45,13 +45,13 @@ public class EmergencyContact {
         String phoneStr = phone.toString();
 
         if (nameStr.isEmpty()) {
-            throw new IllegalArgumentException("Emergency contact name cannot be empty");
+            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
         }
         if (phoneStr.isEmpty()) {
-            throw new IllegalArgumentException("Emergency contact phone cannot be empty");
+            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
         }
         if (!isValidPhoneFormat(phoneStr)) {
-            throw new IllegalArgumentException("Emergency contact phone must be 8 digits");
+            throw new IllegalArgumentException(Phone.MESSAGE_CONSTRAINTS);
         }
     }
 
