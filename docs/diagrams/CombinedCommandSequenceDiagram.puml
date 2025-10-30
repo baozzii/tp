@@ -1,0 +1,25 @@
+@startuml
+autonumber
+
+actor User
+participant "LogicManager" as Logic
+participant "AddressBookParser" as ABP
+participant "CombinedCommandParser" as CCP
+participant "CombinedCommand" as CC
+participant "Model" as Model
+
+User -> Logic : execute("combined n/Alice o/kidney bt/O+")
+Logic -> ABP : parseCommand(userInput)
+ABP -> ABP : tokenize command word
+ABP -> CCP : parse(arguments)
+CCP -> CCP : build predicates (NameExact, OrganSubstring, RecipientCompatible)
+CCP -> CC : new CombinedCommand(predicate)
+ABP <-- CC : command
+Logic -> CC : execute(model)
+CC -> Model : updateFilteredPersonList(predicate)
+Model --> CC : filtered list
+CC --> Logic : CommandResult
+Logic --> User : result text + list size
+
+@enduml
+
