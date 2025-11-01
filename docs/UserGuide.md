@@ -6,26 +6,26 @@
 
 # Organ-izer User Guide
 
-**Organi-zer** is a **desktop application for the management of organ recipients in a hospital**.
-It is intended for **organ donation coordinators** who require easy, fast, and effective access to organ recipients
-during the time window that an organ is available for donation.
+**Organi-zer** is a desktop application that **manages a database of organ donor recipients**.
+It is intended for **organ donation coordinators** who require an **easy, fast, and efficient** way to
+**navigate a database** and find the **right recipient**, during the **short time window** that an organ is available for donation.
 
-If you are a coordinator for organ donation within a hospital or healthcare facility, **Organ-izer** allows you to:
+If you are an **organ donation coordinator** at a healthcare facility, **Organ-izer** allows you to:
 
 * **Easily** view your list of potential organ recipients, complete with emergency contact details, blood type, and priority.
 
-* **Efficiently** manage a database of potential organ recipients.
+* **Efficiently** navigate a database of potential organ recipients.
 
     * **Organ-izer** uses a **Command Line Interface** (CLI), which means that all functions of the application are accessible via typed commands.
 
     * If you can type fast, **Organ-izer** can coordinate organ donation much faster than traditional mouse-based applications.
 
-* **Securely** store information about users locally without external internet connection.
-
-**Organ-izer** is based on the existing AddressBook Level 3 (AB3) project, and is optimized for the time-critical environment under which organ donation occurs in a hospital.
+**Organ-izer** is based on the existing [AddressBook Level 3 (AB3)](https://se-education.org/addressbook-level3/UserGuide.html) project, and is optimized for the time-critical environment under which organ donation occurs in a hospital.
 
 <box type="info" seamless>
-If you wish to navigate this page quickly, feel free to use the **table of contents** on the right
+<markdown>
+If you wish to navigate this page quickly, feel free to use the **table of contents** on the right.
+</markdown>
 </box>
 
 <!-- * Table of Contents -->
@@ -36,39 +36,47 @@ If you wish to navigate this page quickly, feel free to use the **table of conte
 
 ## Quick start
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
+1. Ensure you have Java `17` or above installed in your Computer. It can be downloaded [here](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html).<br>
    <box type="info" seamless>
+   <markdown>
    You can **check your Java version** by following [this guide](#https://www.java.com/en/download/help/version_manual.html). <br>
    How to install Java `17`: [Windows](https://se-education.org/guides/tutorials/javaInstallationWindows.html) | [Mac](https://se-education.org/guides/tutorials/javaInstallationMac.html) | [Linux](https://se-education.org/guides/tutorials/javaInstallationLinux.html)
+   </markdown>
    </box>
 
-1. Download the latest version of **Organ-izer** from [here](https://github.com/AY2526S1-CS2103T-T17-3/tp/releases). You should find a file named `organ-izer.jar` in your downloads.
+2. Download the latest version of `organ-izer.jar` from [here](https://github.com/AY2526S1-CS2103T-T17-3/tp/releases).
 
-1. Make a folder and place `organ-izer.jar` into it.
+3. Make a folder and place `organ-izer.jar` into it.
 
-1. If Java `17` is correctly installed, double-clicking `organ-izer.jar` should launch the application. <br>
+4. Open a command terminal.
+
+5. Navigate to the file using cd.
+
+6. Enter `java -jar organ-izer.jar` command to run the application. <br>
+
 
    A screen similar to the one below should be visible after a few seconds. Note that the app contains some sample data.<br><br>
    ![Ui](images/Ui.png)
    <br><br>
 
-1. To start, try typing `list` in the command box at the top. **If it is your first time using the application, it will not display any data**.
+7. To start, try typing `list` in the command box at the top and press enter to execute it.<br>
+    **If it is your first time using the application, it will not display any data**.
 
-1. To add a new user, try typing `
+8. To add a new user, try typing `
 add n/Alice Pauline p/94351253 e/alice@example.com a/123, Jurong West Ave 6, #08-111 o/kidney b/O+ r/1 t/friends
 `
-1. A list of other commands you can try:
+9. A list of other commands you can try:
     * `list` : Lists all patients.
 
     * `clear` : Deletes all patients.
 
     * `exit` : Exits the app.
 
-1. `Organ-izer` has many other useful commands to help with donation coordination. Details about all available commands can be found in the [Features](#features) section below.
+10. `Organ-izer` has many other useful commands to help with organ donation coordination. Details about all available commands can be found in the [Features](#features) section below.
 
 <box type="info" seamless>
 
-If you **forget the format for the `add` command**, you can always press the `tab` key after typing `add` to make use of our **autofill** feature.
+If you want to **quickly fill in the format of the `add` command**, you can press the `tab` key after typing `add` to make use of our **autofill** feature.
 
 If you **forget how to use any command**, simply typing in the command and pressing `enter` will display information on how to use the command.
 
@@ -82,20 +90,28 @@ If you **forget how to use any command**, simply typing in the command and press
 
 **Notes about the command format:**<br>
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Words in `UPPER_CASE` represent user inputs.<br>
+  e.g. in `add n/NAME`, `NAME` is a user input, representing a recipient's **name**,<br> 
+  which the user can provide by entering `add n/John Doe`.
 
-* Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+* Words in square brackets represent optional inputs.<br>
+  e.g. in `n/NAME [t/TAG]` the user may enter `n/John Doe t/friend`,<br>
+  or enter `n/John Doe`, if they don't wish to provide a **tag** input .
 
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Words followed by `…`​ after them, can be provided **multiple times**,<br>
+  including **zero times**, if the user does not wish to provide an input.<br>
+  e.g. in `[t/TAG]…​` the user can :<br> 
+  enter `  `, if the user does not wish to provide a tag,<br>
+  or enter `t/friend`, to provide 1 tag,<br>
+  or enter `t/friend t/family`, to provide 2 tags etc.
 
-* Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Inputs can be supplied in any order.<br>
+  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, users can either, <br>
+  enter `n/John p/92316570` **or** `p/92316570 n/John`.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
+* For commands that **don't need any user inputs** (such as `help`, `list`, `exit` and `clear`),<br>
+  any user inputs after the command will be **ignored.**<br>
+  e.g. if the user entered `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
   </box>
@@ -122,18 +138,20 @@ Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS o/ORGAN b/BLOOD TYPE r/PRIORITY [e
 
 <box type="note" seamless>
 
-**Note:**
+**Note:** 
 Names should only contain alphanumeric characters and spaces, and it should not be blank.
 
-Phone numbers should only contain numbers, and it should be at least 3 digits long.
+Phone numbers should only contain numbers, and should be 8 digits only.
 
 Emails should be of the format local-part@domain and adhere to the following constraints:
 1. The local-part should only contain alphanumeric characters and these special characters, excluding the parentheses, (+_.-). The local-part may not start or end with any special characters.
 2. This is followed by a '@' and then a domain name. The domain name is made up of domain labels separated by periods.
-   The domain name must:
+The domain name must:
     - end with a domain label at least 2 characters long
     - have each domain label start and end with alphanumeric characters
     - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.
+
+Organ must be all alphabetical characters or spaces, but the first letter must be alphabetical. All characters must be in upper-case.
 
 </box>
 
@@ -148,7 +166,7 @@ Format: `add` then press the <kbd>tab</kbd> key
 
 <box type="note" seamless>
 
-**Note:** The tab completion feature brings the cursor to the first field to be filled in
+**Note:** The tab completion feature brings the cursor to the first field to be filled in.
 </box>
 
 Examples:
@@ -170,7 +188,7 @@ Format: `compatible BLOOD_TYPE`
 
 <box type="note" seamless>
 
-**Note:** Blood types must be one of A+, A-, B+, B-, AB+, AB-, O+, O-
+**Note:** Blood types must be one of A+, A-, B+, B-, AB+, AB-, O+, O-.
 </box>
 
 Examples:
@@ -186,7 +204,7 @@ Format: `organ ORGAN`
 
 <box type="note" seamless>
 
-**Note:** Organ must be all alphabetical characters or spaces, but first letter must alphabetical
+**Note:** Organ must be all alphabetical characters or spaces, but the first letter must be alphabetical. All characters must be in upper-case.
 </box>
 
 Examples:
@@ -200,13 +218,13 @@ Format: `bloodtype BLOODTYPE`
 
 <box type="note" seamless>
 
-**Note:** BLOODTYPE must be A+, A- B+, B- AB+, AB-, O+ or O- only
- and can accept multiple values to find recipients of either blood type
+**Note:** BLOODTYPE must be A+, A- B+, B- AB+, AB-, O+ or O- only (case sensitive)
+ and can accept multiple values to find recipients of either blood type.
 </box>
 
 Examples:
-* `priority 1 2` Finds all recipients in **Organ-izer** whose priority is either `1` or `2`.
-* `priority 3` Finds all recipients in **Organ-izer** whose priority is 3.
+* `bloodtype O+ A+` Finds all recipients in **Organ-izer** whose blood type is either `O+` or `A+`.
+* `bloodtype AB+` Finds all recipients in **Organ-izer** whose blood type is AB+.
 
 ### Finding recipients by priority : `priority`
 
@@ -216,7 +234,7 @@ Format: `priority PRIORITY`
 
 <box type="note" seamless>
 
-**Note:** Priority must be a number from 1-5, and can accept multiple values to find recipients of either priority value
+**Note:** Priority must be a number from 1-5, and can accept multiple values to find recipients of either priority value.
 </box>
 
 Examples:
@@ -247,30 +265,33 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [o/ORGAN] [b/BLOOD 
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the recipient will be removed i.e adding of tags is not cumulative.
-* You can remove all the recipient’s tags by typing `t/` without
+* You can remove all the recipient’s tags by typing `edit INDEX t/` without
     specifying any tags after it.
+* Emergency contact can be added onto a recipient that did not already have an emergency contact by typing `edit INDEX [en/EMERGENCY_NAME] [ep/EMERGENCY_PHONE]`.
+* Emergency contact fields of a recipient can only be edited if the recipient has an emergency contact.
+* You can remove the recipient’s emergency contact by typing `edit INDEX en/ ep/`, leaving these fields empty. Any emergency contact relationship is removed along with it. A recipient without emergency contact will leave an empty space at the bottom of the entry to allow uniformity in dimensions of entries.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st recipient to be `91234567` and `johndoe@example.com` respectively.
+*  `edit 1 p/91234567 e/johndoe@example.com en/Bobby ep/12345678` Edits the phone number and email address of the 1st recipient to be `91234567` and `johndoe@example.com` respectively. This also adds an emergency contact named “Bobby” with contact number “12345678” to the recipient’s details.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd recipient to be `Betsy Crower` and clears all existing tags.
+* `edit 1 en/ ep/` removes the emergency contact from the 1st recipient.
 
 ### Locating recipients by name: `search`
 
 Finds recipients whose names contain any of the given keywords.
 
-Format: `search KEYWORD [MORE_KEYWORDS]`
+Format: `search KEYWORD`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* If the KEYWORD includes multiple words separated by spaces, then the order of the keywords does not matter. e.g. `search Hans Bo` will match `Bo Hans`
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Recipients matching at least one keyword will be returned (i.e. `OR` search).
+* Only full words will be matched e.g. `search Han` will not match `Hans`
+* Recipients matching all words in KEYWORD will be returned (i.e. `AND` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `search John` returns `john` and `John Doe`
+* `search Doe John` returns `John Doe`
 
 ### Deleting a recipient : `delete`
 
@@ -304,6 +325,15 @@ Exits the program.
 
 Format: `exit`
 
+### Search filter retention
+
+After reopening the app, filters set from the last `search` command will be restored.
+
+<box type="note" seamless>
+
+**Note:** This filter retention only applies to the filters set from the `search` command, and does not apply to filters set from other commands such as `compatible` or `bloodtype`.
+</box>
+
 ### Saving the data
 
 Organ-izer data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
@@ -325,6 +355,14 @@ _Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
+## Duplicate handling
+
+* Recipients with the same phone number are considered as duplicates and rejected.
+* Emergency contact’s phone number cannot be the same as the recipient’s phone number. Same emergency contact name and recipient name is allowed.
+* Recipients with the same name are not considered duplicates and are accepted.
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
@@ -343,11 +381,17 @@ _Details coming soon ..._
 
 Action 	| Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**	| `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add**	   | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 **Clear**  | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List**   | `list`
-**Help**   | `help`
+**Summary**   | `summary`
+**Bloodtype**   | `bloodtpye BLOODTYPE [BLOODTYPE]...`
+**Organ**   | `organ KEYWORD`
+**Priority**   | `priority PRIORITY [PRIORITY]...`
+**Search**   | `search KEYWORD [KEYWORD]`
+**Combined**   | `combined [n/EXACT_NAME] [o/ORGAN_KEYWORD] [b/BLOODTYPE]`
+**Compatible**   | `compatible BLOODTYPE`
+**Exit**   | `exit`
 
