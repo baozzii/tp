@@ -75,11 +75,11 @@ add n/Alice Pauline p/94351253 e/alice@example.com a/123, Jurong West Ave 6, #08
 10. `Organ-izer` has many other useful commands to help with organ donation coordination. Details about all available commands can be found in the [Features](#features) section below.
 
 <box type="info" seamless>
-
+<markdown>
 If you want to **quickly fill in the format of the `add` command**, you can press the `tab` key after typing `add` to make use of our **autofill** feature.
 
-If you **forget how to use any command**, simply typing in the command and pressing `enter` will display information on how to use the command.
-
+If you **wish to see a brief explanation of any command**, simply click on the Help tab and and click `Help F1` or press <kbd>F1</kbd>.
+</markdown>
 </box>
 
 --------------------------------------------------------------------------------------------------------------------
@@ -87,7 +87,7 @@ If you **forget how to use any command**, simply typing in the command and press
 ## Features
 
 <box type="info" seamless>
-
+<markdown>
 **Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` represent user inputs.<br>
@@ -114,6 +114,7 @@ If you **forget how to use any command**, simply typing in the command and press
   e.g. if the user entered `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+</markdown>
   </box>
 
 ### Viewing help : `help`
@@ -132,12 +133,13 @@ Adds a recipient to the **Organ-izer**.
 Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS o/ORGAN b/BLOOD TYPE r/PRIORITY [en/EMERGENCY_NAME] [ep/EMERGENCY_PHONE] [er/EMERGENCY_RELATION] [t/TAG]...`
 
 <box type="tip" seamless>
-
+<markdown>
 **Tip:** A recipient can have any number of tags (including 0)
+</markdown>
 </box>
 
 <box type="note" seamless>
-
+<markdown>
 **Note:** 
 Names should only contain alphanumeric characters and spaces, and it should not be blank.
 
@@ -151,8 +153,14 @@ The domain name must:
     - have each domain label start and end with alphanumeric characters
     - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.
 
-Organ must be all alphabetical characters or spaces, but the first letter must be alphabetical. All characters must be in upper-case.
+Organ must be all alphabetical characters or spaces, but the first letter must be alphabetical.
 
+Blood type must be one of A+, A-, B+, B-, AB+, AB-, O+, O-.
+
+Priority must be a whole number from 1 to 5.
+
+Emergency contact name must only consist of alphanumeric characters
+</markdown>
 </box>
 
 Examples:
@@ -165,8 +173,9 @@ Auto creates all required and optional prefixes for the `add` command.
 Format: `add` then press the <kbd>tab</kbd> key
 
 <box type="note" seamless>
-
+<markdown>
 **Note:** The tab completion feature brings the cursor to the first field to be filled in.
+</markdown>
 </box>
 
 Examples:
@@ -187,8 +196,9 @@ Finds and lists all recipients whose blood type is compatible with the specified
 Format: `compatible BLOOD_TYPE`
 
 <box type="note" seamless>
-
+<markdown>
 **Note:** Blood types must be one of A+, A-, B+, B-, AB+, AB-, O+, O-.
+</markdown>
 </box>
 
 Examples:
@@ -203,8 +213,9 @@ Finds and lists all recipients in **Organ-izer** whose organ contains the specif
 Format: `organ ORGAN`
 
 <box type="note" seamless>
-
-**Note:** Organ must be all alphabetical characters or spaces, but the first letter must be alphabetical. All characters must be in upper-case.
+<markdown>
+**Note:** Organ must be all alphabetical characters or spaces, but the first letter must be alphabetical.
+</markdown>
 </box>
 
 Examples:
@@ -217,9 +228,10 @@ Finds and lists all recipients in **Organ-izer** whose blood type matches the sp
 Format: `bloodtype BLOODTYPE`
 
 <box type="note" seamless>
-
+<markdown>
 **Note:** BLOODTYPE must be A+, A- B+, B- AB+, AB-, O+ or O- only (case sensitive)
  and can accept multiple values to find recipients of either blood type.
+</markdown>
 </box>
 
 Examples:
@@ -233,8 +245,9 @@ Finds and lists all recipients in **Organ-izer** whose priority matches the spec
 Format: `priority PRIORITY`
 
 <box type="note" seamless>
-
+<markdown>
 **Note:** Priority must be a number from 1-5, and can accept multiple values to find recipients of either priority value.
+</markdown>
 </box>
 
 Examples:
@@ -330,8 +343,9 @@ Format: `exit`
 After reopening the app, filters set from the last `search` command will be restored.
 
 <box type="note" seamless>
-
+<markdown>
 **Note:** This filter retention only applies to the filters set from the `search` command, and does not apply to filters set from other commands such as `compatible` or `bloodtype`.
+</markdown>
 </box>
 
 ### Saving the data
@@ -343,10 +357,11 @@ Organ-izer data is saved in the hard disk automatically after any command that c
 Organ-izer data is saved automatically as a JSON file `[JAR file location]/data/organ-izer.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
-
+<markdown>
 **Caution:**
 If your changes to the data file makes its format invalid, Organ-izer will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the Organ-izer to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+</markdown>
 </box>
 
 ### Archiving data files `[coming in v2.0]`
@@ -355,11 +370,11 @@ _Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Duplicate handling
+## Duplicate entries
 
-* Recipients with the same phone number are considered as duplicates and rejected.
-* Emergency contact’s phone number cannot be the same as the recipient’s phone number. Same emergency contact name and recipient name is allowed.
-* Recipients with the same name are not considered duplicates and are accepted.
+* A new recipient with the same phone number as an existing recipient is considered to be a duplicate entry and cannot be added.
+
+* A new recipient with the same name as an existing recipient is not considered to be a duplicate entry, and can be added.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -394,4 +409,3 @@ Action 	| Format, Examples
 **Combined**   | `combined [n/EXACT_NAME] [o/ORGAN_KEYWORD] [b/BLOODTYPE]`
 **Compatible**   | `compatible BLOODTYPE`
 **Exit**   | `exit`
-
