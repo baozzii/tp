@@ -90,20 +90,28 @@ If you **forget how to use any command**, simply typing in the command and press
 
 **Notes about the command format:**<br>
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Words in `UPPER_CASE` represent user inputs.<br>
+  e.g. in `add n/NAME`, `NAME` is a user input, representing a recipient's **name**,<br> 
+  which the user can provide by entering `add n/John Doe`.
 
-* Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+* Words in square brackets represent optional inputs.<br>
+  e.g. in `n/NAME [t/TAG]` the user may enter `n/John Doe t/friend`,<br>
+  or enter `n/John Doe`, if they don't wish to provide a **tag** input .
 
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Words followed by `…`​ after them, can be provided **multiple times**,<br>
+  including **zero times**, if the user does not wish to provide an input.<br>
+  e.g. in `[t/TAG]…​` the user can :<br> 
+  enter `  `, if the user does not wish to provide a tag,<br>
+  or enter `t/friend`, to provide 1 tag,<br>
+  or enter `t/friend t/family`, to provide 2 tags etc.
 
-* Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Inputs can be supplied in any order.<br>
+  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, users can either, <br>
+  enter `n/John p/92316570` **or** `p/92316570 n/John`.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
+* For commands that **don't need any user inputs** (such as `help`, `list`, `exit` and `clear`),<br>
+  any user inputs after the command will be **ignored.**<br>
+  e.g. if the user entered `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
   </box>
@@ -351,11 +359,17 @@ _Details coming soon ..._
 
 Action 	| Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**	| `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add**	   | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 **Clear**  | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List**   | `list`
-**Help**   | `help`
+**Summary**   | `summary`
+**Bloodtype**   | `bloodtpye BLOODTYPE [BLOODTYPE]...`
+**Organ**   | `organ KEYWORD`
+**Priority**   | `priority PRIORITY [PRIORITY]...`
+**Search**   | `search KEYWORD [KEYWORD]`
+**Combined**   | `combined [n/EXACT_NAME] [o/ORGAN_KEYWORD] [b/BLOODTYPE]`
+**Compatible**   | `compatible BLOODTYPE`
+**Exit**   | `exit`
 
