@@ -367,7 +367,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 |`*`|Organ transplant coordinator|mass upload patient data even if there is overlapping patient info|old patient logs can be combined without causing issues
 |`***`|Organ transplant coordinator|add individual new patients from the command line|I can update the system for individual new patients
 |`*`|Organ transplant coordinator|see the output of the last search I previously performed when I reopen the application|I can continue my work where I left off
-
+1. Coordinator receives notification about a willing organ donor.
+2. Coordinator searches for patients which need that organ.
+3. Organ-iser returns a list of  suitable patients.
+4. The coordinator selects one patient to be matched to the donor.
+5. Coordinator uses the patient’s contact details stored in the app to contact the patient for transplant.
 *{More to be added}*
 
 ### Use cases
