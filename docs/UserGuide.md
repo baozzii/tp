@@ -138,18 +138,20 @@ Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS o/ORGAN b/BLOOD TYPE r/PRIORITY [e
 
 <box type="note" seamless>
 
-**Note:**
+**Note:** 
 Names should only contain alphanumeric characters and spaces, and it should not be blank.
 
-Phone numbers should only contain numbers, and it should be at least 3 digits long.
+Phone numbers should only contain numbers, and should be 8 digits only.
 
 Emails should be of the format local-part@domain and adhere to the following constraints:
 1. The local-part should only contain alphanumeric characters and these special characters, excluding the parentheses, (+_.-). The local-part may not start or end with any special characters.
 2. This is followed by a '@' and then a domain name. The domain name is made up of domain labels separated by periods.
-   The domain name must:
+The domain name must:
     - end with a domain label at least 2 characters long
     - have each domain label start and end with alphanumeric characters
     - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.
+
+Organ must be all alphabetical characters or spaces, but the first letter must be alphabetical. All characters must be in upper-case.
 
 </box>
 
@@ -164,7 +166,7 @@ Format: `add` then press the <kbd>tab</kbd> key
 
 <box type="note" seamless>
 
-**Note:** The tab completion feature brings the cursor to the first field to be filled in
+**Note:** The tab completion feature brings the cursor to the first field to be filled in.
 </box>
 
 Examples:
@@ -186,7 +188,7 @@ Format: `compatible BLOOD_TYPE`
 
 <box type="note" seamless>
 
-**Note:** Blood types must be one of A+, A-, B+, B-, AB+, AB-, O+, O-
+**Note:** Blood types must be one of A+, A-, B+, B-, AB+, AB-, O+, O-.
 </box>
 
 Examples:
@@ -202,7 +204,7 @@ Format: `organ ORGAN`
 
 <box type="note" seamless>
 
-**Note:** Organ must be all alphabetical characters or spaces, but first letter must alphabetical
+**Note:** Organ must be all alphabetical characters or spaces, but the first letter must be alphabetical. All characters must be in upper-case.
 </box>
 
 Examples:
@@ -216,13 +218,13 @@ Format: `bloodtype BLOODTYPE`
 
 <box type="note" seamless>
 
-**Note:** BLOODTYPE must be A+, A- B+, B- AB+, AB-, O+ or O- only
- and can accept multiple values to find recipients of either blood type
+**Note:** BLOODTYPE must be A+, A- B+, B- AB+, AB-, O+ or O- only (case sensitive)
+ and can accept multiple values to find recipients of either blood type.
 </box>
 
 Examples:
-* `priority 1 2` Finds all recipients in **Organ-izer** whose priority is either `1` or `2`.
-* `priority 3` Finds all recipients in **Organ-izer** whose priority is 3.
+* `bloodtype O+ A+` Finds all recipients in **Organ-izer** whose blood type is either `O+` or `A+`.
+* `bloodtype AB+` Finds all recipients in **Organ-izer** whose blood type is AB+.
 
 ### Finding recipients by priority : `priority`
 
@@ -232,7 +234,7 @@ Format: `priority PRIORITY`
 
 <box type="note" seamless>
 
-**Note:** Priority must be a number from 1-5, and can accept multiple values to find recipients of either priority value
+**Note:** Priority must be a number from 1-5, and can accept multiple values to find recipients of either priority value.
 </box>
 
 Examples:
@@ -263,30 +265,33 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [o/ORGAN] [b/BLOOD 
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the recipient will be removed i.e adding of tags is not cumulative.
-* You can remove all the recipient’s tags by typing `t/` without
+* You can remove all the recipient’s tags by typing `edit INDEX t/` without
     specifying any tags after it.
+* Emergency contact can be added onto a recipient that did not already have an emergency contact by typing `edit INDEX [en/EMERGENCY_NAME] [ep/EMERGENCY_PHONE]`.
+* Emergency contact fields of a recipient can only be edited if the recipient has an emergency contact.
+* You can remove the recipient’s emergency contact by typing `edit INDEX en/ ep/`, leaving these fields empty. Any emergency contact relationship is removed along with it. A recipient without emergency contact will leave an empty space at the bottom of the entry to allow uniformity in dimensions of entries.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st recipient to be `91234567` and `johndoe@example.com` respectively.
+*  `edit 1 p/91234567 e/johndoe@example.com en/Bobby ep/12345678` Edits the phone number and email address of the 1st recipient to be `91234567` and `johndoe@example.com` respectively. This also adds an emergency contact named “Bobby” with contact number “12345678” to the recipient’s details.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd recipient to be `Betsy Crower` and clears all existing tags.
+* `edit 1 en/ ep/` removes the emergency contact from the 1st recipient.
 
 ### Locating recipients by name: `search`
 
 Finds recipients whose names contain any of the given keywords.
 
-Format: `search KEYWORD [MORE_KEYWORDS]`
+Format: `search KEYWORD`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* If the KEYWORD includes multiple words separated by spaces, then the order of the keywords does not matter. e.g. `search Hans Bo` will match `Bo Hans`
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Recipients matching at least one keyword will be returned (i.e. `OR` search).
+* Only full words will be matched e.g. `search Han` will not match `Hans`
+* Recipients matching all words in KEYWORD will be returned (i.e. `AND` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `search John` returns `john` and `John Doe`
+* `search Doe John` returns `John Doe`
 
 ### Deleting a recipient : `delete`
 
@@ -320,6 +325,15 @@ Exits the program.
 
 Format: `exit`
 
+### Search filter retention
+
+After reopening the app, filters set from the last `search` command will be restored.
+
+<box type="note" seamless>
+
+**Note:** This filter retention only applies to the filters set from the `search` command, and does not apply to filters set from other commands such as `compatible` or `bloodtype`.
+</box>
+
 ### Saving the data
 
 Organ-izer data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
@@ -338,6 +352,14 @@ Furthermore, certain edits can cause the Organ-izer to behave in unexpected ways
 ### Archiving data files `[coming in v2.0]`
 
 _Details coming soon ..._
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Duplicate handling
+
+* Recipients with the same phone number are considered as duplicates and rejected.
+* Emergency contact’s phone number cannot be the same as the recipient’s phone number. Same emergency contact name and recipient name is allowed.
+* Recipients with the same name are not considered duplicates and are accepted.
 
 --------------------------------------------------------------------------------------------------------------------
 
