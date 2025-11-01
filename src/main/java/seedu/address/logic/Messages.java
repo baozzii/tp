@@ -50,6 +50,8 @@ public class Messages {
                 .append(person.getBloodType())
                 .append("; Priority: ")
                 .append(person.getPriority())
+                .append("; Emergency Contact: ")
+                .append(person.getEmergencyContact())
                 .append("; Tags: ");
         person.getTags().forEach(builder::append);
         return builder.toString();
