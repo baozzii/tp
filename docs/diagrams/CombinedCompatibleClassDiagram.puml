@@ -1,32 +1,44 @@
 @startuml
-skinparam classAttributeIconSize 0
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor LOGIC_COLOR
+skinparam classBackgroundColor LOGIC_COLOR
 
-package "logic.commands" {
-  class CombinedCommand
-  class CompatibleCommand
+package Logic as LogicPackage {
+
+package "Commands" #F4F6F6 {
+Class CombinedCommand
+Class CompatibleCommand
 }
 
-package "logic.parser" {
-  class CombinedCommandParser
-  class CompatibleCommandParser
-  class AddressBookParser
+package "Parsers" #F4F6F6 {
+Class CombinedCommandParser
+Class CompatibleCommandParser
+Class AddressBookParser
 }
 
-package "model.person" {
-  class CombinedPredicate
-  class NameExactMatchPredicate
-  class OrganContainsSubstringPredicate
-  class BloodTypeRecipientCompatiblePredicate
-  class BloodTypeCompatibilityPredicate
 }
 
-CombinedCommand --> CombinedPredicate : uses
-CompatibleCommand --> BloodTypeCompatibilityPredicate : uses
+package "Model (Person Predicates)" as ModelPackage #F4F6F6 {
+Class CombinedPredicate
+Class NameExactMatchPredicate
+Class OrganContainsSubstringPredicate
+Class BloodTypeRecipientCompatiblePredicate
+Class BloodTypeCompatibilityPredicate
+}
 
-CombinedCommandParser --> CombinedCommand : creates
-CombinedCommandParser --> CombinedPredicate : creates
-CombinedPredicate --> NameExactMatchPredicate : optionally
-CombinedPredicate --> OrganContainsSubstringPredicate : optionally
+CombinedCommandParser -down-> CombinedCommand : creates
+CompatibleCommandParser -down-> CompatibleCommand : creates
+AddressBookParser -down-> CombinedCommandParser : uses
+AddressBookParser -down-> CompatibleCommandParser : uses
+
+CombinedCommand -down-> "1" CombinedPredicate : uses
+CompatibleCommand -down-> "1" BloodTypeCompatibilityPredicate : uses
+
+CombinedCommandParser .down.> CombinedPredicate : creates
+CombinedPredicate -down-> "0..1" NameExactMatchPredicate : contains
+CombinedPredicate -down-> "0..1" OrganContainsSubstringPredicate : contains
+CombinedPredicate -down-> "0..1" BloodTypeRecipientCompatiblePredicate : contains
 
 @enduml
 
