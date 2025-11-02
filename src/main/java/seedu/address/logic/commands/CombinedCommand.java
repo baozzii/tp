@@ -19,7 +19,7 @@ public class CombinedCommand extends Command {
             + "(case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: [n/EXACT_NAME] [o/ORGAN_SUBSTRING] [b/RECIPIENT_BLOOD_TYPES]\n"
             + "At least one parameter must be provided.\n"
-            + "Name must be exact match. Blood type finds donors compatible with the specified recipient blood types.\n"
+            + "Name must be exact match. Organs are searched by substring. Blood type finds recipients compatible with the specified donor blood types.\n"
             + "Example: " + COMMAND_WORD + " n/Alice Pauline o/kidney b/O+";
 
     private final CombinedPredicate predicate;
