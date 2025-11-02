@@ -36,7 +36,8 @@ public class CompatibleCommand extends Command {
                     "compatible recipients for donor " + predicate.getDonorBloodType()));
         }
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, 
+                    "for donor " + predicate.getDonorBloodType(), model.getFilteredPersonList().size()));
     }
 
     @Override

@@ -16,15 +16,15 @@ public class BloodTypeCompatibilityPredicate implements Predicate<Person> {
     private static final Map<String, List<String>> COMPATIBLE_RECIPIENTS = new HashMap<>();
 
     static {
-        // Map of donor blood type -> list of compatible recipient blood types
-        COMPATIBLE_RECIPIENTS.put("O-", Arrays.asList("O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+"));
-        COMPATIBLE_RECIPIENTS.put("O+", Arrays.asList("O+", "A+", "B+", "AB+"));
-        COMPATIBLE_RECIPIENTS.put("A-", Arrays.asList("A-", "A+", "AB-", "AB+"));
-        COMPATIBLE_RECIPIENTS.put("A+", Arrays.asList("A+", "AB+"));
-        COMPATIBLE_RECIPIENTS.put("B-", Arrays.asList("B-", "B+", "AB-", "AB+"));
-        COMPATIBLE_RECIPIENTS.put("B+", Arrays.asList("B+", "AB+"));
-        COMPATIBLE_RECIPIENTS.put("AB-", Arrays.asList("AB-", "AB+"));
-        COMPATIBLE_RECIPIENTS.put("AB+", Arrays.asList("AB+"));
+        // Map of recipient blood type -> list of compatible donor blood types
+        COMPATIBLE_RECIPIENTS.put("O-", Arrays.asList("O-"));
+        COMPATIBLE_RECIPIENTS.put("O+", Arrays.asList("O-", "O+"));
+        COMPATIBLE_RECIPIENTS.put("A-", Arrays.asList("O-", "A-"));
+        COMPATIBLE_RECIPIENTS.put("A+", Arrays.asList("O-", "O+", "A-", "A+"));
+        COMPATIBLE_RECIPIENTS.put("B-", Arrays.asList("O-", "B-"));
+        COMPATIBLE_RECIPIENTS.put("B+", Arrays.asList("O-", "O+", "B-", "B+"));
+        COMPATIBLE_RECIPIENTS.put("AB-", Arrays.asList("O-", "A-", "B-", "AB-"));
+        COMPATIBLE_RECIPIENTS.put("AB+", Arrays.asList("O-", "O+", "A-", "A+", "B-", "B+", "AB-", "AB+"));
     }
 
     private final BloodType donorBloodType;
