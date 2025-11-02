@@ -29,7 +29,7 @@ public class Organ {
     public Organ(String organ) {
         requireNonNull(organ);
         checkArgument(isValidOrgan(organ), MESSAGE_CONSTRAINTS);
-        organName = organ;
+        organName = organ.toUpperCase();
     }
 
     /**

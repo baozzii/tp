@@ -19,7 +19,8 @@ public class BloodTypeCommand extends Command {
             + "the specified blood types and displays them as a list with index numbers. The blood types "
             + "entered must be one of A+, A- B+, B- AB+, AB-, O+ or O- only\n"
             + "Parameters: BLOODTYPE\n"
-            + "Example: " + COMMAND_WORD + "A+ B- B+";
+            + "You may specify multiple blood types separated by spaces.\n"
+            + "Example: " + COMMAND_WORD + " A+ B- B+";
 
     private final BloodTypeMatchesPredicate predicate;
 

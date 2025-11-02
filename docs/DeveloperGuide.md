@@ -315,15 +315,10 @@ Key points:
 
 #### Blood type compatibility matrices (summary)
 
-- Donor-to-recipient compatibility (used when searching donors for recipients):
-  - O− → O−, O+, A−, A+, B−, B+, AB−, AB+
-  - O+ → O+, A+, B+, AB+
-  - A− → A−, A+, AB−, AB+
-  - A+ → A+, AB+
-  - B− → B−, B+, AB−, AB+
-  - B+ → B+, AB+
-  - AB− → AB−, AB+
-  - AB+ → AB+
+- Donor-to-recipient compatibility (used in `compatible` command):<br>
+
+  ![BLOODTYPECHART](images/BLOODTYPECHART.jpg) <br>
+
 
 These rules are implemented in `BloodTypeRecipientCompatiblePredicate` and `BloodTypeCompatibilityPredicate` and compared with canonical uppercase strings.
 
@@ -554,7 +549,9 @@ Each skipped row produces a corresponding warning in the log:
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: Organ donation is time-critical and requires a recipient to be present within hours of organ availability. Organ-iser solves coordination and prioritization challenges that donor coordinators face.
+**Value proposition**: Organ donation is time-critical and requires a recipient to be present within hours of organ availability.
+ Organ-izer provides fast and efficient means to navigate the database quickly to identify a suitable recipient.
+ Thereby, solving coordination and prioritization challenges that donor coordinators face.
 
 
 
@@ -563,47 +560,122 @@ Each skipped row produces a corresponding warning in the log:
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …                                    | I want to …                 | So that I can…                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-|`***`|Organ transplant coordinator|search up patients by organ|I can quickly connect them with the available donor
-|`***`|Organ transplant coordinator|delete patients from my list|I can clear discharged patients from the database
-|`**`|Organ transplant coordinator|search up patients by compatible blood type|I can check for donor compatibility
-|`*`|Organ transplant coordinator|search up patients by address|I can filter the nearest patients that need transplant with respect to the donor
-|`**`|Organ transplant coordinator|add an excel list of patient information to the database|I can automate adding patients
-|`***`|Organ transplant coordinator|quickly navigate through the pages of the application|I can search for patients quickly
-|`**`|Organ transplant coordinator|automatically match donors to possible recipients|I can find recipients more quickly
-|`**`|Organ transplant coordinator|edit current entries of patient details|I can update old details of the patients
-|`*`|Organ transplant coordinator|receive real-time alerts when a new donor becomes available|I can act immediately without delays
-|`*`|Organ transplant coordinator|provide estimated transport times for organs|I can match donors and recipients within viable windows
-|`*`|Organ transplant coordinator|access the system from a mobile device|I can respond to urgent cases even when I’m away from my desk
-|`**`|Organ transplant coordinator|generate summaries of matching recipients|I can communicate options efficiently with medical teams
-|`*`|Organ transplant coordinator|archive (instead of permanently delete) patient records|I can maintain a history for auditing and future reference
-|`**`|Organ transplant coordinator|mark patients as “urgent priority”|I can easily identify critical cases
-|`*`|Organ transplant coordinator|track the transplant status (waiting, matched, transplanted, follow-up)|I can monitor each patient’s journey
-|`**`|Organ transplant coordinator|filter patients by multiple criteria (e.g., organ + blood type + urgency)|I can narrow down possible matches more efficiently
-|`**`|Organ transplant coordinator|automatically check donor-recipient compatibility based on medical criteria (HLA match, age, weight, etc.)|I don’t have to cross-check manually
-|`*`|Organ transplant coordinator|view ranked compatibility scores for each potential recipient|I can make more informed decisions
-|`*`|Organ transplant coordinator|send notifications to doctors and hospitals directly from the system|I can coordinate transplant logistics quickly
-|`*`|Organ transplant coordinator|set reminders for patient follow-ups|I don’t miss critical post-transplant checks
-|`**`|Organ transplant coordinator|get notified when patient details are incomplete|I can ensure accurate data for matching
-|`*`|Organ transplant coordinator|generate monthly/ weekly reports on donor-recipient matches|I can analyze system performance and outcomes
-|`**`|Organ transplant coordinator|export patient and donor data into secure formats (Excel, PDF)|I can share them with authorized stakeholders
-|`*`|Organ transplant coordinator|view a log of all action history (adding, editing, deleting patients)|I can maintain compliance and traceability
-|`**`|Organ transplant coordinator|receive command completion prompts|I can use the system without remembering all of its commands
-|`**`|Organ transplant coordinator|re-enter previous commands without needing to retype them|I can perform my patient coordination faster even if I make mistakes
-|`*`|Organ transplant coordinator|mass upload patient data even if there is overlapping patient info|old patient logs can be combined without causing issues
-|`***`|Organ transplant coordinator|add individual new patients from the command line|I can update the system for individual new patients
-|`*`|Organ transplant coordinator|see the output of the last search I previously performed when I reopen the application|I can continue my work where I left off
-1. Coordinator receives notification about a willing organ donor.
-2. Coordinator searches for patients which need that organ.
-3. Organ-iser returns a list of  suitable patients.
-4. The coordinator selects one patient to be matched to the donor.
-5. Coordinator uses the patient’s contact details stored in the app to contact the patient for transplant.
-*{More to be added}*
+| Priority | As a …                                    | I want to …                                 | So that I can…                                                        |
+|----------|--------------------------------------------|---------------------------------------------|------------------------------------------------------------------------|
+|`***`|Organ transplant coordinator| add recipients to my database               |contact them when an organ is available
+|`**`|Organ transplant coordinator|minimise typing when adding recipients|add recipients quickly
+|`**`|Organ transplant coordinator| edit recipient details                      |update old recipient details
+|`***`|Organ transplant coordinator| delete recipients from my database          |clear discharged recipients from the database
+|`***`|Organ transplant coordinator| list all recipients                   |inspect individual recipient details
+|`***`|Organ transplant coordinator| search up recipients by organ                    |contact them should that organ become available
+|`**`|Organ transplant coordinator| search up recipients by priority              |prioritise recipients whose condition is dire
+|`**`|Organ transplant coordinator| search up recipients by compatible blood type |ensure recipient is suitable to receive from donor
+|`**`|Organ transplant coordinator|search up patients by multiple criteria simultaneously(e.g., organ + blood type + urgency)|narrow down possible matches more efficiently
+|`**`|Organ transplant coordinator|re-enter previous commands without needing to retype them|I can redo commands quickly when I make mistakes
+|`**`|Organ transplant coordinator|generate summaries of organs needed|discuss treatment options efficiently with medical teams
+
+
+
 
 ### Use cases
 
-(For all use cases below, the **System** is the `Organ-iser` and the **Actor** is the `Coordinator`, unless specified otherwise)
+(For all use cases below, the **System** is the `Organ-izer` and the **Actor** is the `Coordinator`, unless specified otherwise)
+
+**Use Case UC01: Add new recipient**
+Main Success Scenario (MSS):
+
+1. Coordinator enters add command syntax and user inputs.
+2. Organ-izer validates the recipient details.
+3. Organ-izer adds recipient to the database.
+4. Organ-izer displays success message.
+Use case ends. <br><br>
+
+Extensions :
+- 1a. Coordinator enters the <kbd> tab </kbd> key.
+    1a1. Organ-izer populates command bar with the command syntax.
+    1a2. User enters recipient details.
+    Use case resumes from step 2.<br>
+- 2a. Organ-izer detects invalid recipient details.
+2a1. Organ-izer displays error message.
+Use case ends.<br>
+- 2b. Organizer detects duplicate recipient.
+  2b1. Organ-izer displays error message.
+  Use case ends.
+
+**Use Case UC02: Edit recipient details**
+Main Success Scenario (MSS):
+
+1. Coordinator enters recipient details to change.
+2. Organ-izer validates the recipient details.
+3. Organ-izer updates recipient details.
+4. Organ-izer displays success message.
+Use case ends. <br><br>
+Extensions :
+- 1a. Organ-izer detects invalid recipient details.
+- 1a1. Organ-izer displays error message.
+  Use case ends.<br>
+- 1b. Organ-izer detects invalid index.
+- 1b1. Organ-izer displays error message.
+  Use case ends.<br>
+
+**Use Case UC03: Discharge recipient**
+Main Success Scenario (MSS):
+
+1. Coordinator requests to delete recipient.
+2. Organ-izer validates the user's request.
+3. Organ-izer deletes recipient.
+4. Organ-izer displays success message.<br><br>
+Use case ends. <br><br>
+Extensions:
+- 1a User requests to delete at an invalid index
+  1a1. organ-izer displays error message.
+  Use case ends.<br>
+- 
+**Use Case UC04: View all recipients**
+Main Success Scenario (MSS):
+
+1. Coordinator requests to view all recipients.
+2. Organ-izer displays a list of all recipients.
+Use case ends. <br><br>
+
+**Use Case UC05: Find recipients by organ**
+1. Coordinator requests to find recipients by organ field.
+2. Organ-izer validates the search criteria.
+3. Organ-izer searches the system and displays recipients that match the criteria.
+
+
+**Use Case UC06: Find recipients by blood type**
+Same as UC05.<br>
+
+**Use Case UC06: Find recipients by compatible blood type**
+Same as UC05.<br>
+
+**Use Case UC07: Find recipients by priority**
+Same as UC05.<br>
+
+**Use Case UC07: Find recipients by name**
+Same as UC05.<br>
+
+**Use Case UC08: Find recipients by multiple criteria**
+Same as UC05.<br>
+
+**Use Case UC08: View statistic summary**
+Main Success Scenario (MSS):
+
+1. User requests to view a summary of all recipients.
+2. Organ-izer displays summary of recipients.
+   Use case ends. <br><br>
+
+**Use Case UC09: Delete all recipients**
+1. Coordinator requests to delete all recipients.
+2. Organ-izer deletes all recipients.
+3. Organ-izer displays success message.
+   Use case ends. <br><br>
+
+**Use Case UC10: Redo previous command**
+1. Coodinator requests for previous command.
+2. Organ-izer populates the command bar with the user's last command.
+
 
 **Use Case: Matching a donor to a patient**
 
@@ -660,29 +732,40 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-4.  All patients’, donors’, and recipients’ data should be encrypted for data privacy.
-5.  Gracefully resolve system crashes with no data loss.
-6.  Accepts multiple data formats (.csv, .xlsx, .json), and allows exports in multiple data formats (.pdf, etc.).
-7.  Should hold up at least 10000 entries without any noticeable delays.
-8.  Should be able to display at least 2 profiles at once even at minimum window size
-9.  Should be able to handle international phone numbers
-10. Must display a start screen within 5s of launching the app
-11. All available patient info must be formatted correctly to fit the profile listings page
-12. Compatible blood types must be correctly identified for a particular search
-13. Should automatically log all actions for compliance, and ensure all logs are immutable.
+1. **Platform independence**
+- The application must work on Windows, macOS and Linux and must not have OS-dependent libraries and features.
+2. **Java Version Compatibility**
+- The application must work on a computer that has version 17 of Java i.e., no other Java version installed.
+3. **Portability**
+- The application .jar file must be able to run without requiring additional installer. 
+4. **No Remote Server Dependency**
+- The software must not depend on any remote server for its core functionality.
+5. **Screen Resolution Support**
+- The GUI must work well at 1920x1080 resolution and higher (at 100% and 125% scaling), and be usable at 1280x720 and higher (at 150% scaling).
+  In addition, the GUI must be usable (i.e., all functions can be used even if the user experience is not optimal) for,
+  resolutions 1280x720 and higher, and at 150% scaling.
+6. **Single-File Distribution**
+- The application and all dependencies must be packaged into a single JAR file (or a single ZIP file if necessary).
+7. **Object-Oriented Design**
+- The application must primarily follow the object-oriented programming design.
+8. **Human-Editable File Format**
+- All data must be stored locally in a human-editable text file format.
+9. **Performance**
+- Must be able to hold up to 100 recipients without a noticeable sluggishness in performance for typical usage. 
+  The system must be able to respond to any command within 1 second under normal conditions
+10. **Reliability**
+- The application must not crash during normal operations and must recover gracefully from unexpected errors.
+11. **Usability**
+- The application must be easy to use for healthcare professionals without technical background. (<30 minutes)
+12. **Internet Independence**
+- The application must be able to be used without an internet connection. Command summary must be provided in application so 
+  that user will not have to refer to online documentation for regular use.
 
-
-*{More to be added}*
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-
 * **Private contact detail**: A contact detail that is not meant to be shared with others
-
+* **Coordinator**: A healthcare professional who is managing organ transplants
 * **Donor**: An organ donor
 
 * **Recipient**: A recipient awaiting an organ donation

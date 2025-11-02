@@ -22,7 +22,7 @@ public class BloodType {
     public BloodType(String bloodType) {
         requireNonNull(bloodType);
         checkArgument(isValidBloodType(bloodType), MESSAGE_CONSTRAINTS);
-        this.bloodType = bloodType;
+        this.bloodType = bloodType.toUpperCase();
     }
 
     /**

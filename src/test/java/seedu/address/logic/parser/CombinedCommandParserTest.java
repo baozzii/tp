@@ -61,7 +61,7 @@ public class CombinedCommandParserTest {
                 Optional.empty(),
                 Optional.of(new BloodTypeRecipientCompatiblePredicate(bloodTypes)));
         CombinedCommand expectedCommand = new CombinedCommand(expectedPredicate);
-        assertParseSuccess(parser, " bt/O+", expectedCommand);
+        assertParseSuccess(parser, " b/O+", expectedCommand);
     }
 
     @Test
@@ -72,7 +72,7 @@ public class CombinedCommandParserTest {
                 Optional.empty(),
                 Optional.of(new BloodTypeRecipientCompatiblePredicate(bloodTypes)));
         CombinedCommand expectedCommand = new CombinedCommand(expectedPredicate);
-        assertParseSuccess(parser, " bt/A+ O+", expectedCommand);
+        assertParseSuccess(parser, " b/A+ O+", expectedCommand);
     }
 
     @Test
@@ -83,18 +83,18 @@ public class CombinedCommandParserTest {
                 Optional.of(new OrganContainsSubstringPredicate("kidney")),
                 Optional.of(new BloodTypeRecipientCompatiblePredicate(bloodTypes)));
         CombinedCommand expectedCommand = new CombinedCommand(expectedPredicate);
-        assertParseSuccess(parser, " n/Alice Bob o/kidney bt/O+", expectedCommand);
+        assertParseSuccess(parser, " n/Alice Bob o/kidney b/O+", expectedCommand);
     }
 
     @Test
     public void parse_invalidBloodType_throwsParseException() {
-        assertParseFailure(parser, " bt/Z+",
+        assertParseFailure(parser, " b/Z+",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, CombinedCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_emptyPrefixValues_throwsParseException() {
-        assertParseFailure(parser, " n/ o/ bt/",
+        assertParseFailure(parser, " n/ o/ b/",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, CombinedCommand.MESSAGE_USAGE));
     }
 }
