@@ -20,6 +20,7 @@ Class Name
 Class Phone
 Class Organ
 Class BloodType
+Class Priority
 Class EmergencyContact
 Class Tag
 
@@ -43,10 +44,11 @@ AddressBook *--> "1" UniquePersonList
 UniquePersonList --> "~* all" Person
 Person *--> Name
 Person *--> Phone
-Person *--> Email
 Person *--> Address
+Person *--> Email
 Person *--> Organ
 Person *--> BloodType
+Person *--> Priority
 Person *--> EmergencyContact
 Person *--> "*" Tag
 
