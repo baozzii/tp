@@ -17,10 +17,10 @@ public class CombinedCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons matching ALL specified criteria "
             + "(case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: [n/EXACT_NAME] [o/ORGAN_SUBSTRING] [bt/RECIPIENT_BLOOD_TYPES]\n"
+            + "Parameters: [n/EXACT_NAME] [o/ORGAN_SUBSTRING] [b/RECIPIENT_BLOOD_TYPES]\n"
             + "At least one parameter must be provided.\n"
             + "Name must be exact match. Blood type finds donors compatible with the specified recipient blood types.\n"
-            + "Example: " + COMMAND_WORD + " n/Alice Pauline o/kidney bt/O+";
+            + "Example: " + COMMAND_WORD + " n/Alice Pauline o/kidney b/O+";
 
     private final CombinedPredicate predicate;
 

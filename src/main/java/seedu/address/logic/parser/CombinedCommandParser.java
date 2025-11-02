@@ -21,7 +21,7 @@ public class CombinedCommandParser implements Parser<CombinedCommand> {
 
     private static final Prefix PREFIX_NAME = new Prefix("n/");
     private static final Prefix PREFIX_ORGAN = new Prefix("o/");
-    private static final Prefix PREFIX_BLOODTYPE = new Prefix("bt/");
+    private static final Prefix PREFIX_BLOODTYPE = new Prefix("b/");
 
     /**
      * Parses the given {@code String} of arguments in the context of the CombinedCommand
