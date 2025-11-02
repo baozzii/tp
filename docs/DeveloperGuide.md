@@ -4,7 +4,7 @@
   pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# Organ-izer Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -35,7 +35,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S1-CS2103T-T17-3/tp/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2526S1-CS2103T-T17-3/tp/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -67,24 +67,60 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S1-CS2103T-T17-3/tp/tree/master/src/main/java/seedu/address/ui/Ui.java)
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
+The UI component is the stakeholder responsible for the graphical user interface seen by the user.
+
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+#### Overview
 
-The `UI` component,
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. The various components are shown in the table below:
 
-* executes user commands using the `Logic` component.
-* listens for changes to `Model` data so that the UI can be updated with the modified data.
-* keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
-* depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
+| Component | Description | FXML File |
+|------------|--------------|-----------|
+| `MainWindow` | The root container holding all components together. | `MainWindow.fxml` |
+| `StatusBarFooter` | Shows the save location at the bottom of the application window. | `StatusBarFooter.fxml` |
+| `ResultDisplay` | Shows messages for user commands for confirmation on commands being completed successfully, or errors that arose from the command. | `ResultDisplay.fxml` |
+| `CommandBox` | Receives user inputs to execute commands. | `CommandBox.fxml` |
+| `HelpWindow` | Shows a window that describes and gives examples for the commands available to the user. | `HelpWindow.fxml` |
+| `PersonListPanel` | Shows a scrollable list of all recipient entries, where each is saved as a `PersonCard`. | `PersonListPanel.fxml` |
+| `PersonCard` | Shows each field in recipient entries. | `PersonListCard.fxml` |
+
+All the components stated above inherit from the abstract `UiPart` class, which encapsulates common functionality for JavaFX UI elements.
+
+#### Error Handling & Validation
+
+The UI component handles the following error scenarios:
+
+| Rule | Description | Handling |
+|------|--------------|----------|
+| **Command Execution Failure** | `CommandException` thrown during command execution. | Display error message in `ResultDisplay`, highlight command box in red |
+| **Invalid Command Format** | `ParseException` thrown during command parsing. | Display parse error message in `ResultDisplay`, highlight command box in red |
+| **FXML Load Failure** | FXML file cannot be loaded or contains errors. | Log error and throw `AssertionError` |
+| **Help Window Already Open** | User attempts to open help window when already open. | Focus existing help window instead of creating new one |
+| **Empty Command Input** | User presses Enter with blank command box. | Ignore input, no action taken |
+| **Invalid Tab Completion** | Tab pressed but no valid command template matches. | No completion performed, retain current text |
+
+These error handling mechanisms ensure graceful degradation and provide clear feedback to users when issues occur.
+
+#### Responsibilities
+
+* **Command Execution**: Executes user commands using the `Logic` component by calling `Logic#execute(String commandText)`.
+* **Data Observation**: Listens for changes to `Model` data so that the UI can be updated with the modified data.
+* **Logic Integration**: Keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
+* **Data Display**: Depends on some classes in the `Model` component, as it displays `Person` objects residing in the `Model`.
+
+#### Design Considerations
+* Dropdown format in `HelpWindow` to reduce cluttering from other more basic commands. Allows the user to see an overview of all commands available, before zooming in on details of a specific command to be used.
+* Resizable window dimensions to accommodate varying screen sizes and side by side usage of the application and other tools such as the internet browser.
+* Horizontally scrollable `PersonListCard` and `ResultDisplay` to allow for viewing of longer entries or messages that may exceed horizontal window dimensions. Vertically scrollable `HelpWindow` and  `PersonListPanel` to accommodate viewing descriptions of commands and recipient entries that exceed the vertical window dimensions.
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S1-CS2103T-T17-3/tp/tree/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -115,8 +151,48 @@ How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
+#### Error Handling & Validation
+
+During command parsing and execution, the following checks ensure command validity:
+
+| Rule | Description | Exception |
+|------|--------------|-----------|
+| **Unknown Command** | Command word does not match any registered commands. | `ParseException(MESSAGE_UNKNOWN_COMMAND)` |
+| **Invalid Command Format** | Command arguments do not match expected format. | `ParseException(MESSAGE_INVALID_COMMAND_FORMAT)` |
+| **Invalid Person Index** | Index provided is out of bounds of the displayed person list. | `CommandException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX)` |
+| **Duplicate Person** | Attempting to add a person that already exists (same name and phone). | `CommandException(MESSAGE_DUPLICATE_PERSON)` |
+| **Missing Prefixes** | Required prefixes (n/, p/, e/, etc.) are not provided. | `ParseException("Required prefixes missing")` |
+| **Invalid Field Values** | Field values fail validation (e.g., invalid phone format, blood type). | `ParseException` with field-specific message |
+| **Incomplete Emergency Contact** | Emergency contact provided with only name or phone, not both. | `ParseException(EmergencyContact.MESSAGE_CONSTRAINTS)` |
+| **Emergency Contact Same as Recipient** | Emergency contact phone number matches the recipient's phone. | `ParseException(EmergencyContact.EMERGENCY_CONTACT_IS_RECIPIENT)` |
+
+These validations ensure that only well-formed, valid commands are executed against the model.
+
+#### Responsibilities
+
+* **Command Parsing**: Parses user input strings into executable `Command` objects using the `AddressBookParser` and the respective command parsers.
+* **Command Execution**: Executes parsed commands against the `Model` and returns a `CommandResult` containing the outcome and feedback message.
+* **Exception Handling**: Throws `CommandException` for execution errors and `ParseException` for invalid command formats, which are caught and displayed to the user.
+* **Command History Management**: Maintains a history of previously executed commands via `CommandHistory` for navigation with arrow keys.
+* **Model-UI Bridge**: Provides the UI with access to the filtered person list and address book data through the `Logic` interface, without exposing underlying `Model` implementation.
+
+#### Design Considerations
+
+The following design considerations were maintained during implementation:
+
+Command formats should be **simple and short**:
+* This reflects our [non-functional](#non-functional-requirements) requirement that a non-technical user must be able to learn how to operate the app quickly.
+* We split up our various search commands to simplify the work of remembering various abstract prefixes.
+* For the add command which was inevitably long, we provided command completion with <kbd>Tab</kbd> to circumvent the issue.
+
+Entering commands should be **fast**:
+* This reflects our [non-functional](#non-functional-requirements) requirement that a user must be able to operate Organ-izer faster than a traditional mouse-based application.
+* Adding the ability to access previously entered commands with the <kbd>Up</kbd> key saves on valuable time re-entering searches.
+* Including a full command summary with the `help` command can avoid the overhead of accessing an external browser if a user simply forgets a command.
+* Additionally, our command completion functionality also helps to speed up the process of adding users.
+
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S1-CS2103T-T17-3/tp/tree/master/src/main/java/seedu/address/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
@@ -136,10 +212,35 @@ The `Model` component,
 
 </box>
 
+#### Error Handling & Validation
+
+The Model component enforces the following constraints on person data:
+
+| Rule | Description | Exception |
+|------|--------------|-----------|
+| **Duplicate Person** | Adding a person with the same name and phone as an existing person. | `DuplicatePersonException` |
+| **Person Not Found** | Attempting to edit or delete a person that doesn't exist in the list. | `PersonNotFoundException` |
+| **Invalid Name** | Name contains non-alphanumeric characters or is blank. | `IllegalArgumentException(Name.MESSAGE_CONSTRAINTS)` |
+| **Invalid Phone** | Phone number is not exactly 8 digits. | `IllegalArgumentException(Phone.MESSAGE_CONSTRAINTS)` |
+| **Invalid Email** | Email does not follow format: local-part@domain. | `IllegalArgumentException(Email.MESSAGE_CONSTRAINTS)` |
+| **Invalid Blood Type** | Blood type is not one of: A+, A-, B+, B-, AB+, AB-, O+, O-. | `IllegalArgumentException(BloodType.MESSAGE_CONSTRAINTS)` |
+| **Invalid Organ** | Organ is not one of: kidney, liver, heart, lungs, pancreas, cornea. | `IllegalArgumentException(Organ.MESSAGE_CONSTRAINTS)` |
+| **Invalid Priority** | Priority is not an integer between 1-5. | `IllegalArgumentException(Priority.MESSAGE_CONSTRAINTS)` |
+| **Invalid Tag** | Tag name contains non-alphanumeric characters or is blank. | `IllegalArgumentException(Tag.MESSAGE_CONSTRAINTS)` |
+
+These validations maintain data integrity and prevent invalid recipient information from being stored.
+
+####Responsibilities
+
+* **Data Management**: Holds and manages all application data, including the `AddressBook` containing recipient information and `UserPrefs` for user preferences.
+* **Data Validation**: Ensures data integrity through validation of person attributes using regex patterns.
+* **Filtering and Search**: Provides predicates for filtering the person list based on various criteria such as name or organ, without exposing the underlying data structure.
+* **State Persistence**: Maintains the current filter state and user preferences set from `search` commands for restoration on application restart.
+* **Change Notification**: Exposes observable lists that automatically notify the UI of data changes to allow for reactive updates to the displayed information in the UI component.
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S1-CS2103T-T17-3/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
@@ -147,6 +248,27 @@ The `Storage` component,
 * can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
+
+#### Error Handling & Validation
+
+During file operations and deserialization (`JsonSerializableAddressBook#toModelType()`), the following checks ensure data consistency:
+
+| Rule | Description | Exception |
+|------|--------------|-----------|
+| **Duplicate Person** | A duplicate `Person` entry exists in the JSON file. | `IllegalValueException(MESSAGE_DUPLICATE_PERSON)` |
+| **Missing Required Fields** | Required JSON fields (name, phone, email, address, organ, bloodType, priority) are null or missing. | `IllegalValueException` |
+| **Corrupted JSON** | JSON file is not properly formatted or cannot be parsed. | `DataLoadingException` |
+| **File Not Found** | Address book or preferences file does not exist on first run. | Creates new file with empty/default data |
+| **Access Denied** | Insufficient permissions to read/write storage files. | `DataLoadingException` wrapping `AccessDeniedException` |
+
+These validations ensure that storage files are accessible, properly formatted, and do not contain duplicate entries.
+
+#### Responsibilities
+
+* **File Management**: Manages two separate storage files, namely `addressbook.json` for recipient data and `preferences.json` for user settings such as window size.
+* **Data Conversion**: Converts between domain objects (eg. `Person` and `Tag`) and JSON-adapted objects (eg. `JsonAdaptedPerson`, `JsonAdaptedTag`) for serialisation and deserialisation.
+* **Error Handling**: Handles file I/O exceptions (eg. missing files, access denied, corrupted data) and provides appropriate error messages to the application.
+* **Storage Coordination**: Implements the `Storage` interface through`StorageManager` to coordinate between `AddressBookStorage` and `UserPrefsStorage` operations.
 
 ### Common classes
 
@@ -158,7 +280,7 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### Added features: Combined search and blood type compatibility
+### Noteworthy features: Combined search and blood type compatibility
 
 We added two new commands to support organ transplant coordination workflows that require combining multiple criteria and reasoning about blood type compatibility.
 
@@ -296,11 +418,116 @@ The following activity diagram summarizes what happens when a user executes a ne
   * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
   * Cons: We must ensure that the implementation of each individual command are correct.
 
-_{more aspects and alternatives to be added}_
+* **Alternative 3:** Save changes to address book as a separate log.
+  * Pros: Will use less memory (e.g. for `edit`, just remember the changes to the specific person).
+  * Cons: The implementation of a `diff` and rollback operations can be complex.
 
-### \[Proposed\] Data archiving
+#### Future Extensions
 
-_{Explain here how the data archiving feature will be implemented}_
+* **Change Summary** - complement undo operations by allowing the user to view what will be undone.
+* **Accountability** - keep track of the user modifying the address book to maintain accountability
+* **Change Audits** - export a summary of all changes into an `.xlsx` file for auditing purposes
+
+### \[Proposed\] Importing of Excel Spreadsheets  
+
+#### Proposed Implementation  
+
+This feature allows users to **bulk-import contact and organ donor data from an Excel (.xlsx) file** into the application’s address book. It aims to streamline data entry workflows for organizations that maintain donor information in spreadsheet form, such as hospitals or medical coordinators.  
+
+<puml src="diagrams/ImportExcelSequenceDiagram.puml" width="700" />  
+
+The import process involves reading Excel sheets, validating their contents, and converting rows into `Person` objects that the `Model` can store.  
+
+**Key operations:**  
+
+* `ImportCommand#execute()` — handles user invocation of the `import` command, e.g. `import f/data.xlsx`  
+* `ExcelReader#readExcelFile(Path filePath)` — reads `.xlsx` files using Apache POI (or a similar library)  
+* `ExcelParser#parseRows(List<Row> rows)` — parses each row, validates format, and converts them into `Person` entities  
+* `Model#addPerson(Person person)` — adds each parsed `Person` to the in-memory `AddressBook`  
+* `Storage#saveAddressBook(ReadOnlyAddressBook)` — persists the imported data  
+
+#### Example user workflow  
+
+1. The user places an Excel file (e.g. `donors.xlsx`) in the application directory.  
+2. The user enters:  
+   ```  
+   import f/donors.xlsx  
+   ```  
+3. The app reads the spreadsheet, validates each entry, and adds new records to the address book.  
+4. The UI displays a summary message such as:  
+   ```  
+   25 entries imported successfully. 2 rows skipped due to validation errors.  
+   ```  
+
+#### Expected Excel format  
+
+The Excel file is expected to contain a header row with the following columns:  
+
+| Column | Example Value | Description |  
+|--------|----------------|-------------|  
+| Name | John Doe | Full name of the person |  
+| Phone | 91234567 | Contact number |  
+| Email | johnd@example.com | Valid email address |  
+| Address | 123 Clementi Ave 3 | Home address |  
+| Blood Type | O+ | Must match recognized types (O+, A−, etc.) |  
+| Organ | Kidney | Organ available or required |  
+| Emergency Contact | 91234567 | Contact number |
+
+**Optional extensions:**  
+* Additional columns (e.g., “Donor/Recipient” status or “Notes”) may be supported later.  
+* Missing optional fields are defaulted to empty strings.  
+
+#### Validation and error handling  
+
+The system enforces strict input validation to maintain data integrity:  
+* Rows with missing mandatory fields (e.g. Name, Blood Type) are skipped.  
+* Invalid blood types or malformed emails are logged as warnings.  
+* The command result summarizes both successful and failed imports.  
+
+Each skipped row produces a corresponding warning in the log:  
+```  
+[WARN] Row 17: Invalid blood type 'Z+' – skipped.  
+```  
+
+#### Sequence of interactions  
+
+1. `LogicManager` parses the `import` command and creates an `ImportCommand` object.  
+2. `ImportCommand#execute()` calls `ExcelReader#readExcelFile()`.  
+3. `ExcelReader` uses Apache POI to read the `.xlsx` workbook and return its rows.  
+4. `ExcelParser` validates and converts each row into a `Person`.  
+5. Valid persons are passed to `Model#addPerson()`, which updates the in-memory data.  
+6. `Storage#saveAddressBook()` persists the updated state.  
+
+<puml src="diagrams/ImportExcelDetailedSequence.puml" width="750" />  
+
+#### Design considerations  
+
+**Aspect: How data is read from Excel**  
+
+* **Alternative 1 (current choice):** Use Apache POI.  
+  * Pros: Mature library, supports `.xlsx`, handles cell types robustly.  
+  * Cons: Slightly higher memory footprint for large spreadsheets.  
+
+* **Alternative 2:** Convert `.xlsx` to `.csv` before import and use existing text parsing logic.  
+  * Pros: Simpler and lighter implementation.  
+  * Cons: Requires extra preprocessing by users and may lose formatting.  
+
+**Aspect: Handling duplicates**  
+
+* **Alternative 1 (current choice):** Skip duplicates based on identical name and phone.  
+  * Pros: Prevents accidental overwriting of existing data.  
+  * Cons: May miss legitimate updates.  
+
+* **Alternative 2:** Overwrite existing entries.  
+  * Pros: Simplifies synchronization for updated records.  
+  * Cons: Risk of unintended data loss.  
+
+#### Future extensions  
+
+* **Export to Excel** — complement import by providing a way to export all contacts back into an `.xlsx` file.  
+* **Interactive conflict resolution** — prompt the user when duplicates or data inconsistencies are detected.  
+* **Partial rollback** — implement atomic batch imports (commit all or none).  
+* **GUI integration** — allow file selection via a graphical file chooser.  
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -367,7 +594,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 |`*`|Organ transplant coordinator|mass upload patient data even if there is overlapping patient info|old patient logs can be combined without causing issues
 |`***`|Organ transplant coordinator|add individual new patients from the command line|I can update the system for individual new patients
 |`*`|Organ transplant coordinator|see the output of the last search I previously performed when I reopen the application|I can continue my work where I left off
-
+1. Coordinator receives notification about a willing organ donor.
+2. Coordinator searches for patients which need that organ.
+3. Organ-iser returns a list of  suitable patients.
+4. The coordinator selects one patient to be matched to the donor.
+5. Coordinator uses the patient’s contact details stored in the app to contact the patient for transplant.
 *{More to be added}*
 
 ### Use cases
@@ -449,9 +680,40 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
+
 * **Private contact detail**: A contact detail that is not meant to be shared with others
+
 * **Donor**: An organ donor
+
 * **Recipient**: A recipient awaiting an organ donation
+
+* **Tag**: A customizable label or keyword assigned to a person’s record to categorize or group similar entries (e.g., “Urgent”, “Pediatric”, “AB+ Donor”).
+
+* **Emergency Contact**: A secondary phone number associated with a person, typically used to reach next-of-kin or responsible medical staff in urgent situations.
+
+* **Gradle**: A build automation tool used for compiling, testing, packaging, and managing dependencies of the application.
+
+* **FXML**: An XML-based markup language used by JavaFX to define the structure of user interfaces.
+
+* **Predicate**: A condition or logical test used to filter or match entries based on specific attributes (e.g., name, organ, or blood type).
+
+* **Model**: The component responsible for managing the in-memory data of the application.
+
+* **Logic**: The component that interprets user commands and updates the model accordingly.
+
+* **UI (User Interface)**: The visible part of the application that displays information and accepts user input.
+
+* **Storage**: The component that reads from and writes to persistent storage (e.g., JSON, Excel files).
+
+* **User Preferences**: Configuration data that stores user-specific settings (e.g., GUI layout, file paths).
+
+* **Apache POI**: A Java library used for reading and writing Microsoft Excel (.xlsx) files.
+
+* **CLI (Command Line Interface)**: A text-based interface through which the user interacts with the application by typing commands.
+
+* **Compatibility Matrix**: A reference table defining valid donor-to-recipient blood type compatibility mappings.
+
+* **ObservableList**: A list that allows UI components to automatically update when data changes.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -508,3 +770,34 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
+
+### Command summary
+
+#### Viewing Recipients
+
+Action 	| Format, Examples
+-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**List all recipients**   | `list`
+**Summary of organs needed**   | `summary`
+**Filter recipients by blood type**   | `bloodtype BLOOD_TYPE [BLOOD_TYPE]...`, eg. `bloodtype A+ B+`
+**Filter recipients by organ**   | `organ KEYWORD`, eg. `organ liver`
+**Filter recipients by priority**   | `priority PRIORITY [PRIORITY]...`, eg. `priority 1 2 3`
+**Search for a recipient by name**   | `search KEYWORD [KEYWORD]`, eg. `search John`
+**Combined search using name, organ, and/or blood type**   | `combined [n/NAME] [o/ORGAN] [b/BLOOD_TYPE]`, eg. `combined n/Alice o/kidney b/O+`
+**Find recipients compatible with a blood type**   | `compatible BLOOD_TYPE`, eg. `compatible O-`
+
+#### Modifying Recipients
+
+Action 	| Format, Examples
+-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Add a recipient**   	| `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Delete a recipient** | `delete INDEX`<br> e.g., `delete 3`
+**Edit a recipient’s details**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+⚠️ **Clear all recipients**  | `clear` Note: **this will clear all recipients in the application.**
+
+#### Utility Functions
+Action 	| Format, Examples
+-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Access Last Command** | <kbd>Up</kbd> key
+**Exit the application**   | `exit`
+**View help** | `help`
