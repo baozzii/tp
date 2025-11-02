@@ -43,8 +43,8 @@ public class BloodTypeCompatibilityPredicate implements Predicate<Person> {
         String donorType = donorBloodType.bloodType.toUpperCase();
         String recipientType = person.getBloodType().bloodType.toUpperCase();
 
-        List<String> compatibleRecipients = COMPATIBLE_RECIPIENTS.get(donorType);
-        return compatibleRecipients != null && compatibleRecipients.contains(recipientType);
+        List<String> compatibleDonors = COMPATIBLE_RECIPIENTS.get(recipientType);
+        return compatibleDonors != null && compatibleDonors.contains(donorType);
     }
 
     @Override
