@@ -682,67 +682,73 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 (For all use cases below, the **System** is the `Organ-izer` and the **Actor** is the `Coordinator`, unless specified otherwise)
 
 **Use Case UC01: Add new recipient**
-Main Success Scenario (MSS):
+
+**MSS**
 
 1. Coordinator enters add command syntax and user inputs.
 2. Organ-izer validates the recipient details.
 3. Organ-izer adds recipient to the database.
-4. Organ-izer displays success message.
+4. Organ-izer displays success message.<br><br>
 Use case ends. <br><br>
 
-Extensions :
-- 1a. Coordinator enters the <kbd> tab </kbd> key.
-    1a1. Organ-izer populates command bar with the command syntax.
-    1a2. User enters recipient details.
-    Use case resumes from step 2.<br>
-- 2a. Organ-izer detects invalid recipient details.
-2a1. Organ-izer displays error message.
-Use case ends.<br>
-- 2b. Organizer detects duplicate recipient.
-  2b1. Organ-izer displays error message.
-  Use case ends.
+**Extensions**
+- 1a. Coordinator enters the <kbd> tab </kbd> key.<br>
+    - 1a1. Organ-izer populates command bar with the command syntax.
+    - 1a2. User enters recipient details.<br><br>
+    Use case resumes from step 2.<br><br>
+- 2a. Organ-izer detects invalid recipient details.<br>
+    - 2a1. Organ-izer displays error message.<br><br>
+      Use case ends.<br><br>
+- 2b. Organizer detects duplicate recipient.<br>
+    - 2b1. Organ-izer displays error message.<br><br>
+      Use case ends.<br><br>
 
 **Use Case UC02: Edit recipient details**
-Main Success Scenario (MSS):
+
+**MSS**
 
 1. Coordinator enters recipient details to change.
 2. Organ-izer validates the recipient details.
 3. Organ-izer updates recipient details.
-4. Organ-izer displays success message.
+4. Organ-izer displays success message.<br><br>
 Use case ends. <br><br>
-Extensions :
+
+**Extensions**
 - 1a. Organ-izer detects invalid recipient details.
-- 1a1. Organ-izer displays error message.
-  Use case ends.<br>
+  - 1a1. Organ-izer displays error message.<br><br>
+    Use case ends.<br><br>
 - 1b. Organ-izer detects invalid index.
-- 1b1. Organ-izer displays error message.
-  Use case ends.<br>
+  - 1b1. Organ-izer displays error message.<br><br>
+  Use case ends.<br><br>
 
 **Use Case UC03: Delete recipient**
-Main Success Scenario (MSS):
+
+**MSS**
 
 1. Coordinator requests to delete recipient.
 2. Organ-izer validates the user's request.
 3. Organ-izer deletes recipient.
 4. Organ-izer displays success message.<br><br>
 Use case ends. <br><br>
-Extensions:
-- 1a User requests to delete at an invalid index
-  1a1. organ-izer displays error message.
-  Use case ends.<br>
-- 
+
+**Extensions**
+- 1a. User requests to delete at an invalid index
+  - 1a1. organ-izer displays error message.<br><br>
+  Use case ends.<br><br>
+  
 **Use Case UC04: View all recipients**
-Main Success Scenario (MSS):
+
+**MSS**
 
 1. Coordinator requests to view all recipients.
-2. Organ-izer displays a list of all recipients.
+2. Organ-izer displays a list of all recipients.<br><br>
 Use case ends. <br><br>
 
 **Use Case UC05: Find recipients by organ**
 1. Coordinator requests to find recipients by organ field.
 2. Organ-izer validates the search criteria.
-3. Organ-izer searches the system and displays recipients that match the criteria.
-
+3. Organ-izer searches the system and displays recipients that match the criteria.<br><br>
+Use case ends.<br><br>
 
 **Use Case UC06: Find recipients by blood type**
 Same as UC05.<br>
@@ -760,22 +766,29 @@ Same as UC05.<br>
 Same as UC05.<br>
 
 **Use Case UC08: View statistic summary**
-Main Success Scenario (MSS):
+
+**MSS**
 
 1. User requests to view a summary of all recipients.
-2. Organ-izer displays summary of recipients.
+2. Organ-izer displays summary of recipients.<br><br>
    Use case ends. <br><br>
 
 **Use Case UC09: Delete all recipients**
+
+**MSS**
+
 1. Coordinator requests to delete all recipients.
 2. Organ-izer deletes all recipients.
-3. Organ-izer displays success message.
+3. Organ-izer displays success message.<br><br>
    Use case ends. <br><br>
 
 **Use Case UC10: Access previous command**
-1. Coordinator requests previous command.
-2. Organ-izer populates the command bar with the user's last command.
 
+**MSS**
+
+1. Coordinator requests previous command.
+2. Organ-izer populates the command bar with the user's last command.<br><br>
+Use case ends. <br><br>
 
 
 
