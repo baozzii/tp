@@ -1,0 +1,71 @@
+@startuml
+object "<u>AliceTan:Donor" as donorA {
+  bloodtype = "A"
+  willingOrgan = "Kidney"
+}
+
+object "<u>BenLim:Donor" as donorB {
+  bloodtype = "B"
+  willingOrgan = "Kidney"
+}
+
+object "<u>CindyKoh:Donor" as donorC {
+  bloodtype = "O"
+  willingOrgan = "Kidney"
+}
+
+object "<u>JohnLee:Recipient" as recipientA {
+  requiredOrgan = "Kidney"
+  priority = 3
+  bloodtype = "B"
+}
+
+object "<u>GraceOng:Recipient" as recipientB {
+  requiredOrgan = "Kidney"
+  priority = 2
+  bloodtype = "O"
+}
+
+object "<u>DanielWong:Recipient" as recipientC {
+  requiredOrgan = "Kidney"
+  priority = 4
+  bloodtype = "A"
+}
+
+object "<u>PairA:DonorRecipientPair" as pairA {
+  donor = "Alice Tan"
+  recipient = "John Lee"
+}
+
+object "<u>PairB:DonorRecipientPair" as pairB {
+  donor = "Ben Lim"
+  recipient = "Grace Ong"
+}
+
+object "<u>PairC:DonorRecipientPair" as pairC {
+  donor = "Cindy Koh"
+  recipient = "Daniel Wong"
+}
+
+object "<u>:MatchCycle" as match3way {
+  chainType = "CYCLE"
+  status = "APPROVED"
+  description = "3-way kidney exchange chain"
+}
+
+pairA -- donorA
+pairA -- recipientA
+pairB -- donorB
+pairB -- recipientB
+pairC -- donorC
+pairC -- recipientC
+
+match3way *-- pairA
+match3way *-- pairB
+match3way *-- pairC
+
+donorA --> recipientC : donates to
+donorB --> recipientA : donates to
+donorC --> recipientB : donates to
+
+@enduml
