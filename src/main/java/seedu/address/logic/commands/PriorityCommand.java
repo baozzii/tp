@@ -32,7 +32,7 @@ public class PriorityCommand extends Command {
         requireNonNull(model);
         model.updateFilteredPersonList(predicate);
         if (model.isFilteredPersonListEmpty()) {
-            return new CommandResult(String.format(Messages.MESSAGE_NO_PERSONS_FOUND, predicate.getPriorities()));
+            return new CommandResult(String.format(Messages.MESSAGE_NO_PRIORITIES_FOUND, predicate.getPriorities()));
         }
 
         return new CommandResult(
