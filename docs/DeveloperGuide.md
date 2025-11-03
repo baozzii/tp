@@ -280,7 +280,38 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-* CODY PORTION
+### Noteworthy features: Combined search and blood type compatibility
+
+We added two new commands to support organ transplant coordination workflows that require combining multiple criteria and reasoning about blood type compatibility.
+
+- Combined search with AND semantics across criteria:
+  - Exact name match (case-insensitive)
+  - Organ substring
+  - Blood type recipient-compatibility (find donors who can donate to specified recipient blood types)
+- Compatibility search (recipient-compatibility given a donor blood type):
+  - Finds all recipients whose blood type can receive from the specified donor blood type
+
+#### Design overview
+
+The logic flows mirror existing command parsing patterns. The `AddressBookParser` routes to dedicated parsers that build predicates and construct commands.
+
+<puml src="diagrams/CombinedCompatibleClassDiagram.puml" width="700" />
+
+Key points:
+- `CombinedCommandParser` composes a `CombinedPredicate` from optional sub-predicates:
+  - `NameExactMatchPredicate`
+  - `OrganContainsSubstringPredicate`
+  - `BloodTypeRecipientCompatiblePredicate`
+- `CompatibleCommandParser` constructs a `BloodTypeCompatibilityPredicate` using the donor blood type.
+- Both blood type compatibility predicates use a normalized, canonical matrix and compare using uppercase labels to ensure case-insensitive correctness (e.g., "b+" equals "B+").
+
+#### Sequence of parsing and execution (Combined)
+
+<puml src="diagrams/CombinedCommandSequenceDiagram.puml" width="700" />
+
+1. `AddressBookParser` identifies `combined` and delegates to `CombinedCommandParser`.
+2. Parser validates inputs, builds the appropriate sub-predicates, and constructs `CombinedCommand`.
+3. On `execute`, `CombinedCommand` applies the combined predicate to `Model#updateFilteredPersonList` and returns a result containing either the count or a no-results message.
 
 #### Blood type compatibility matrices (summary)
 
@@ -398,7 +429,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 This feature allows users to **bulk-import contact and organ donor data from an Excel (.xlsx) file** into the application’s address book. It aims to streamline data entry workflows for organizations that maintain donor information in spreadsheet form, such as hospitals or medical coordinators.
 
-<puml src="diagrams/ImportExcelSequenceDiagram.puml" width="700" />  
+<puml src="diagrams/ImportExcelObjectDiagram.puml" width="700" />  
 
 The import process involves reading Excel sheets, validating their contents, and converting rows into `Person` objects that the `Model` can store.
 
