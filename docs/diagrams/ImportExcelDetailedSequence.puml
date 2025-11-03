@@ -7,7 +7,7 @@ box Logic LOGIC_COLOR_T1
 participant "i:ImportCommand" as ImportCommand LOGIC_COLOR
 end box
 
-box IO MODEL_COLOR_T1
+box IO
 participant "eR:ExcelReader" as ExcelReader MODEL_COLOR
 participant "eP:ExcelParser" as ExcelParser MODEL_COLOR
 endbox

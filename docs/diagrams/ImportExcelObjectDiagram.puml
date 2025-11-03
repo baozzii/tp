@@ -1,31 +1,29 @@
 @startuml
 !pragma layout object
 !include style.puml
-skinparam objectBorderColor MODEL_COLOR
-skinparam objectBackgroundColor MODEL_COLOR
 skinparam ArrowFontStyle plain
 title Object Diagram — Runtime View of ImportCommand Excel Integration
 
 ' --- Logic Layer ---
-object "i:ImportCommand" as ImportCommand {
+object "<u>i:ImportCommand</u>" as ImportCommand {
   filePath = "data/import.xlsx"
 }
 
 ' --- Model Layer ---
-object "m:Model" as Model
+object "<u>m:Model</u>" as Model
 
 ' --- Excel Import Layer ---
-object "eR:ExcelReader" as ExcelReader {
+object "<u>eR:ExcelReader</u>" as ExcelReader {
   state = "Initialized"
 }
 
-object "eP:ExcelParser" as ExcelParser {
+object "<u>eP:ExcelParser</u>" as ExcelParser {
   rowCount = 250
 }
 
 ' --- Apache POI Layer (grouped) ---
-package "Apache POI Library" #EAECEE {
-  object "wb:Workbook" as Workbook {
+package "<u>Apache POI Library</u>" #EAECEE {
+  object "<u>wb:Workbook</u>" as Workbook {
     sheets = 3
   }
 }
@@ -34,7 +32,6 @@ package "Apache POI Library" #EAECEE {
 ImportCommand --> ExcelReader : creates >
 ExcelReader --> Workbook : reads from >
 ExcelReader --> ExcelParser : delegates parsing >
-ExcelParser --> Model : returns List<Person>
 ImportCommand --> Model : adds parsed persons >
 
 @enduml
