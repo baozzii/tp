@@ -27,6 +27,7 @@ public class Name {
      */
     public Name(String name) {
         requireNonNull(name);
+        name = name.replaceAll("\\s+", " "); // replaces all whitespaces with basic space character
         checkArgument(isValidName(name), MESSAGE_CONSTRAINTS);
         fullName = name;
     }
