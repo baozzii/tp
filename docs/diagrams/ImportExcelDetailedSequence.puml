@@ -1,33 +1,54 @@
 @startuml
+!include style.puml
+skinparam ArrowFontStyle plain
 title Detailed Sequence for ImportCommand Execution
 
-actor User
-participant LogicManager
-participant AddressBookParser
-participant ImportCommandParser
-participant ImportCommand
-participant ExcelReader
-participant ExcelParser
-participant Model
+box Logic LOGIC_COLOR_T1
+participant "i:ImportCommand" as ImportCommand LOGIC_COLOR
+end box
 
-User -> LogicManager : execute("import f/data.xlsx")
-LogicManager -> AddressBookParser : parseCommand("import f/data.xlsx")
-AddressBookParser -> ImportCommandParser : parse(arguments)
-ImportCommandParser --> LogicManager : ImportCommand
+box IO MODEL_COLOR_T1
+participant "eR:ExcelReader" as ExcelReader MODEL_COLOR
+participant "eP:ExcelParser" as ExcelParser MODEL_COLOR
+endbox
 
-LogicManager -> ImportCommand : execute()
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+-> ImportCommand : execute(m)
+activate ImportCommand
+
+' Create and use ExcelReader
+create ExcelReader
 ImportCommand -> ExcelReader : readExcelFile(filePath)
+activate ExcelReader
+
+' Create and use ExcelParser
+create ExcelParser
 ExcelReader -> ExcelParser : parseRows(workbook)
+activate ExcelParser
+
 ExcelParser --> ExcelReader : List<Person>
+deactivate ExcelParser
+destroy ExcelParser
+
 ExcelReader --> ImportCommand : List<Person>
+deactivate ExcelReader
+destroy ExcelReader
+
 ImportCommand -> Model : addPerson(person)
+activate Model
+
 loop for each person
     Model -> Model : validate and add
 end
+
 ImportCommand -> Model : saveAddressBook()
 Model --> ImportCommand : success
-ImportCommand --> LogicManager : CommandResult("Imported X, skipped Y")
+deactivate Model
 
-LogicManager --> User : Result displayed
+[<--ImportCommand
+deactivate ImportCommand
 
 @enduml
