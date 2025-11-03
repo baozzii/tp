@@ -176,20 +176,7 @@ These validations ensure that only well-formed, valid commands are executed agai
 * **Command History Management**: Maintains a history of previously executed commands via `CommandHistory` for navigation with arrow keys.
 * **Model-UI Bridge**: Provides the UI with access to the filtered person list and address book data through the `Logic` interface, without exposing underlying `Model` implementation.
 
-#### Design Considerations
-
-The following design considerations were maintained during implementation:
-
-Command formats should be **simple and short**:
-* This reflects our [non-functional](#non-functional-requirements) requirement that a non-technical user must be able to learn how to operate the app quickly.
-* We split up our various search commands to simplify the work of remembering various abstract prefixes.
-* For the add command which was inevitably long, we provided command completion with <kbd>Tab</kbd> to circumvent the issue.
-
-Entering commands should be **fast**:
-* This reflects our [non-functional](#non-functional-requirements) requirement that a user must be able to operate Organ-izer faster than a traditional mouse-based application.
-* Adding the ability to access previously entered commands with the <kbd>Up</kbd> key saves on valuable time re-entering searches.
-* Including a full command summary with the `help` command can avoid the overhead of accessing an external browser if a user simply forgets a command.
-* Additionally, our command completion functionality also helps to speed up the process of adding users.
+* YANG IIYU PORTION
 
 ### Model component
 **API** : [`Model.java`](https://github.com/AY2526S1-CS2103T-T17-3/tp/tree/master/src/main/java/seedu/address/model/Model.java)
@@ -280,38 +267,7 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### Noteworthy features: Combined search and blood type compatibility
-
-We added two new commands to support organ transplant coordination workflows that require combining multiple criteria and reasoning about blood type compatibility.
-
-- Combined search with AND semantics across criteria:
-  - Exact name match (case-insensitive)
-  - Organ substring
-  - Blood type recipient-compatibility (find donors who can donate to specified recipient blood types)
-- Compatibility search (recipient-compatibility given a donor blood type):
-  - Finds all recipients whose blood type can receive from the specified donor blood type
-
-#### Design overview
-
-The logic flows mirror existing command parsing patterns. The `AddressBookParser` routes to dedicated parsers that build predicates and construct commands.
-
-<puml src="diagrams/CombinedCompatibleClassDiagram.puml" width="700" />
-
-Key points:
-- `CombinedCommandParser` composes a `CombinedPredicate` from optional sub-predicates:
-  - `NameExactMatchPredicate`
-  - `OrganContainsSubstringPredicate`
-  - `BloodTypeRecipientCompatiblePredicate`
-- `CompatibleCommandParser` constructs a `BloodTypeCompatibilityPredicate` using the donor blood type.
-- Both blood type compatibility predicates use a normalized, canonical matrix and compare using uppercase labels to ensure case-insensitive correctness (e.g., "b+" equals "B+").
-
-#### Sequence of parsing and execution (Combined)
-
-<puml src="diagrams/CombinedCommandSequenceDiagram.puml" width="700" />
-
-1. `AddressBookParser` identifies `combined` and delegates to `CombinedCommandParser`.
-2. Parser validates inputs, builds the appropriate sub-predicates, and constructs `CombinedCommand`.
-3. On `execute`, `CombinedCommand` applies the combined predicate to `Model#updateFilteredPersonList` and returns a result containing either the count or a no-results message.
+* CODY PORTION
 
 #### Blood type compatibility matrices (summary)
 
@@ -423,107 +379,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 * **Accountability** - keep track of the user modifying the address book to maintain accountability
 * **Change Audits** - export a summary of all changes into an `.xlsx` file for auditing purposes
 
-### \[Proposed\] Importing of Excel Spreadsheets  
-
-#### Proposed Implementation  
-
-This feature allows users to **bulk-import contact and organ donor data from an Excel (.xlsx) file** into the application’s address book. It aims to streamline data entry workflows for organizations that maintain donor information in spreadsheet form, such as hospitals or medical coordinators.  
-
-<puml src="diagrams/ImportExcelSequenceDiagram.puml" width="700" />  
-
-The import process involves reading Excel sheets, validating their contents, and converting rows into `Person` objects that the `Model` can store.  
-
-**Key operations:**  
-
-* `ImportCommand#execute()` — handles user invocation of the `import` command, e.g. `import f/data.xlsx`  
-* `ExcelReader#readExcelFile(Path filePath)` — reads `.xlsx` files using Apache POI (or a similar library)  
-* `ExcelParser#parseRows(List<Row> rows)` — parses each row, validates format, and converts them into `Person` entities  
-* `Model#addPerson(Person person)` — adds each parsed `Person` to the in-memory `AddressBook`  
-* `Storage#saveAddressBook(ReadOnlyAddressBook)` — persists the imported data  
-
-#### Example user workflow  
-
-1. The user places an Excel file (e.g. `donors.xlsx`) in the application directory.  
-2. The user enters:  
-   ```  
-   import f/donors.xlsx  
-   ```  
-3. The app reads the spreadsheet, validates each entry, and adds new records to the address book.  
-4. The UI displays a summary message such as:  
-   ```  
-   25 entries imported successfully. 2 rows skipped due to validation errors.  
-   ```  
-
-#### Expected Excel format  
-
-The Excel file is expected to contain a header row with the following columns:  
-
-| Column | Example Value | Description |  
-|--------|----------------|-------------|  
-| Name | John Doe | Full name of the person |  
-| Phone | 91234567 | Contact number |  
-| Email | johnd@example.com | Valid email address |  
-| Address | 123 Clementi Ave 3 | Home address |  
-| Blood Type | O+ | Must match recognized types (O+, A−, etc.) |  
-| Organ | Kidney | Organ available or required |  
-| Emergency Contact | 91234567 | Contact number |
-
-**Optional extensions:**  
-* Additional columns (e.g., “Donor/Recipient” status or “Notes”) may be supported later.  
-* Missing optional fields are defaulted to empty strings.  
-
-#### Validation and error handling  
-
-The system enforces strict input validation to maintain data integrity:  
-* Rows with missing mandatory fields (e.g. Name, Blood Type) are skipped.  
-* Invalid blood types or malformed emails are logged as warnings.  
-* The command result summarizes both successful and failed imports.  
-
-Each skipped row produces a corresponding warning in the log:  
-```  
-[WARN] Row 17: Invalid blood type 'Z+' – skipped.  
-```  
-
-#### Sequence of interactions  
-
-1. `LogicManager` parses the `import` command and creates an `ImportCommand` object.  
-2. `ImportCommand#execute()` calls `ExcelReader#readExcelFile()`.  
-3. `ExcelReader` uses Apache POI to read the `.xlsx` workbook and return its rows.  
-4. `ExcelParser` validates and converts each row into a `Person`.  
-5. Valid persons are passed to `Model#addPerson()`, which updates the in-memory data.  
-6. `Storage#saveAddressBook()` persists the updated state.  
-
-<puml src="diagrams/ImportExcelDetailedSequence.puml" width="750" />  
-
-#### Design considerations  
-
-**Aspect: How data is read from Excel**  
-
-* **Alternative 1 (current choice):** Use Apache POI.  
-  * Pros: Mature library, supports `.xlsx`, handles cell types robustly.  
-  * Cons: Slightly higher memory footprint for large spreadsheets.  
-
-* **Alternative 2:** Convert `.xlsx` to `.csv` before import and use existing text parsing logic.  
-  * Pros: Simpler and lighter implementation.  
-  * Cons: Requires extra preprocessing by users and may lose formatting.  
-
-**Aspect: Handling duplicates**  
-
-* **Alternative 1 (current choice):** Skip duplicates based on identical name and phone.  
-  * Pros: Prevents accidental overwriting of existing data.  
-  * Cons: May miss legitimate updates.  
-
-* **Alternative 2:** Overwrite existing entries.  
-  * Pros: Simplifies synchronization for updated records.  
-  * Cons: Risk of unintended data loss.  
-
-#### Future extensions  
-
-* **Export to Excel** — complement import by providing a way to export all contacts back into an `.xlsx` file.  
-* **Interactive conflict resolution** — prompt the user when duplicates or data inconsistencies are detected.  
-* **Partial rollback** — implement atomic batch imports (commit all or none).  
-* **GUI integration** — allow file selection via a graphical file chooser.  
-
+* YANG IIYU PORTION 2
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -762,41 +618,7 @@ Main Success Scenario (MSS):
   that user will not have to refer to online documentation for regular use.
 
 
-### Glossary
-
-* **Private contact detail**: A contact detail that is not meant to be shared with others
-* **Coordinator**: A healthcare professional who is managing organ transplants
-* **Donor**: An organ donor
-
-* **Recipient**: A recipient awaiting an organ donation
-
-* **Tag**: A customizable label or keyword assigned to a person’s record to categorize or group similar entries (e.g., “Urgent”, “Pediatric”, “AB+ Donor”).
-
-* **Emergency Contact**: A secondary phone number associated with a person, typically used to reach next-of-kin or responsible medical staff in urgent situations.
-
-* **Gradle**: A build automation tool used for compiling, testing, packaging, and managing dependencies of the application.
-
-* **FXML**: An XML-based markup language used by JavaFX to define the structure of user interfaces.
-
-* **Predicate**: A condition or logical test used to filter or match entries based on specific attributes (e.g., name, organ, or blood type).
-
-* **Model**: The component responsible for managing the in-memory data of the application.
-
-* **Logic**: The component that interprets user commands and updates the model accordingly.
-
-* **UI (User Interface)**: The visible part of the application that displays information and accepts user input.
-
-* **Storage**: The component that reads from and writes to persistent storage (e.g., JSON, Excel files).
-
-* **User Preferences**: Configuration data that stores user-specific settings (e.g., GUI layout, file paths).
-
-* **Apache POI**: A Java library used for reading and writing Microsoft Excel (.xlsx) files.
-
-* **CLI (Command Line Interface)**: A text-based interface through which the user interacts with the application by typing commands.
-
-* **Compatibility Matrix**: A reference table defining valid donor-to-recipient blood type compatibility mappings.
-
-* **ObservableList**: A list that allows UI components to automatically update when data changes.
+* YANG IIYU PORTION 3
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -854,33 +676,4 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### Command summary
-
-#### Viewing Recipients
-
-Action 	| Format, Examples
------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**List all recipients**   | `list`
-**Summary of organs needed**   | `summary`
-**Filter recipients by blood type**   | `bloodtype BLOOD_TYPE [BLOOD_TYPE]...`, eg. `bloodtype A+ B+`
-**Filter recipients by organ**   | `organ KEYWORD`, eg. `organ liver`
-**Filter recipients by priority**   | `priority PRIORITY [PRIORITY]...`, eg. `priority 1 2 3`
-**Search for a recipient by name**   | `search KEYWORD [KEYWORD]`, eg. `search John`
-**Combined search using name, organ, and/or blood type**   | `combined [n/NAME] [o/ORGAN] [b/BLOOD_TYPE]`, eg. `combined n/Alice o/kidney b/O+`
-**Find recipients compatible with a blood type**   | `compatible BLOOD_TYPE`, eg. `compatible O-`
-
-#### Modifying Recipients
-
-Action 	| Format, Examples
------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add a recipient**   	| `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Delete a recipient** | `delete INDEX`<br> e.g., `delete 3`
-**Edit a recipient’s details**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-⚠️ **Clear all recipients**  | `clear` Note: **this will clear all recipients in the application.**
-
-#### Utility Functions
-Action 	| Format, Examples
------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Access Last Command** | <kbd>Up</kbd> key
-**Exit the application**   | `exit`
-**View help** | `help`
+* YANG IIYU PORTION 4
