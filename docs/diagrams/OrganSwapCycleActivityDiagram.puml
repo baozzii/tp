@@ -1,0 +1,19 @@
+@startuml
+start
+
+:Register donor-recipient pairs;
+:Store data in database;
+:Run compatibility algorithm;
+
+if () then ([Matches Found])
+  :Generate possible chains;
+  if () then ([Approved])
+    :Update records;
+  else ([Not Approved])
+    :Reject match;
+  endif
+else ([No Match Found])
+endif
+
+stop
+@enduml
