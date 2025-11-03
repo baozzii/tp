@@ -1,0 +1,33 @@
+@startuml
+title Detailed Sequence for ImportCommand Execution
+
+actor User
+participant LogicManager
+participant AddressBookParser
+participant ImportCommandParser
+participant ImportCommand
+participant ExcelReader
+participant ExcelParser
+participant Model
+
+User -> LogicManager : execute("import f/data.xlsx")
+LogicManager -> AddressBookParser : parseCommand("import f/data.xlsx")
+AddressBookParser -> ImportCommandParser : parse(arguments)
+ImportCommandParser --> LogicManager : ImportCommand
+
+LogicManager -> ImportCommand : execute()
+ImportCommand -> ExcelReader : readExcelFile(filePath)
+ExcelReader -> ExcelParser : parseRows(workbook)
+ExcelParser --> ExcelReader : List<Person>
+ExcelReader --> ImportCommand : List<Person>
+ImportCommand -> Model : addPerson(person)
+loop for each person
+    Model -> Model : validate and add
+end
+ImportCommand -> Model : saveAddressBook()
+Model --> ImportCommand : success
+ImportCommand --> LogicManager : CommandResult("Imported X, skipped Y")
+
+LogicManager --> User : Result displayed
+
+@enduml

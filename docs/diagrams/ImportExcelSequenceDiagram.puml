@@ -1,0 +1,27 @@
+@startuml
+title Import Command High-Level Flow
+
+actor User
+participant "UI" as UI
+participant "LogicManager" as Logic
+participant "ImportCommand" as ImportCmd
+participant "ExcelReader" as ExcelReader
+participant "ExcelParser" as ExcelParser
+participant "Model" as Model
+participant "Storage" as Storage
+
+User -> UI : enters "import f/data.xlsx"
+UI -> Logic : execute("import f/data.xlsx")
+Logic -> ImportCmd : new ImportCommand(filePath)
+ImportCmd -> ExcelReader : readExcelFile(filePath)
+ExcelReader -> ExcelParser : parseRows(rows)
+ExcelParser --> ImportCmd : List<Person>
+ImportCmd -> Model : addPerson(person) [for each valid row]
+Model -> Storage : saveAddressBook()
+Storage --> Model : confirmation
+Model --> ImportCmd : success
+ImportCmd --> Logic : CommandResult(summary)
+Logic --> UI : show "Import complete: X success, Y skipped"
+UI --> User : display summary
+
+@enduml
