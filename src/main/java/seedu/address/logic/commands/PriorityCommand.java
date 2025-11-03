@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
+import seedu.address.model.person.Priority;
 import seedu.address.model.person.PriorityMatchesPredicate;
 
 /**
@@ -14,10 +15,11 @@ import seedu.address.model.person.PriorityMatchesPredicate;
 public class PriorityCommand extends Command {
     public static final String COMMAND_WORD = "priority";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose priority matches"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose priority matches "
             + "the specified priorities and displays them as a list with index numbers. \n"
-            + "Parameters: PRIORITY\n"
-            + "Example: " + COMMAND_WORD + "1 2";
+            + Priority.MESSAGE_CONSTRAINTS
+            + "\nParameters: PRIORITY\n"
+            + "Example: " + COMMAND_WORD + " 1 2";
 
     private final PriorityMatchesPredicate predicate;
 
