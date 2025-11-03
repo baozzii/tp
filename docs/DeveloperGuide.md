@@ -73,7 +73,7 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/AY2
 
 The UI component is the stakeholder responsible for the graphical user interface seen by the user.
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts (e.g., `CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc). All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
 #### Overview
 
@@ -139,7 +139,7 @@ How the `Logic` component works:
 
 1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
 1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
-1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
+1. The command can communicate with the `Model` when it is executed (e.g., to delete a person).<br>
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
 1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
@@ -200,7 +200,7 @@ Entering commands should be **fast**:
 The `Model` component,
 
 * stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g., the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
@@ -230,7 +230,7 @@ The Model component enforces the following constraints on person data:
 
 These validations maintain data integrity and prevent invalid recipient information from being stored.
 
-####Responsibilities
+#### Responsibilities
 
 * **Data Management**: Holds and manages all application data, including the `AddressBook` containing recipient information and `UserPrefs` for user preferences.
 * **Data Validation**: Ensures data integrity through validation of person attributes using regex patterns.
@@ -266,8 +266,8 @@ These validations ensure that storage files are accessible, properly formatted, 
 #### Responsibilities
 
 * **File Management**: Manages two separate storage files, namely `addressbook.json` for recipient data and `preferences.json` for user settings such as window size.
-* **Data Conversion**: Converts between domain objects (eg. `Person` and `Tag`) and JSON-adapted objects (eg. `JsonAdaptedPerson`, `JsonAdaptedTag`) for serialisation and deserialisation.
-* **Error Handling**: Handles file I/O exceptions (eg. missing files, access denied, corrupted data) and provides appropriate error messages to the application.
+* **Data Conversion**: Converts between domain objects (e.g., `Person` and `Tag`) and JSON-adapted objects (e.g., `JsonAdaptedPerson`, `JsonAdaptedTag`) for serialisation and deserialisation.
+* **Error Handling**: Handles file I/O exceptions (e.g., missing files, access denied, corrupted data) and provides appropriate error messages to the application.
 * **Storage Coordination**: Implements the `Storage` interface through`StorageManager` to coordinate between `AddressBookStorage` and `UserPrefsStorage` operations.
 
 ### Common classes
@@ -410,11 +410,11 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 * **Alternative 2:** Individual command knows how to undo/redo by
   itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+  * Pros: Will use less memory (e.g., for `delete`, just save the person being deleted).
   * Cons: We must ensure that the implementation of each individual command are correct.
 
 * **Alternative 3:** Save changes to address book as a separate log.
-  * Pros: Will use less memory (e.g. for `edit`, just remember the changes to the specific person).
+  * Pros: Will use less memory (e.g., for `edit`, just remember the changes to the specific person).
   * Cons: The implementation of a `diff` and rollback operations can be complex.
 
 #### Future Extensions
@@ -435,7 +435,7 @@ The import process involves reading Excel sheets, validating their contents, and
 
 **Key operations:**
 
-* `ImportCommand#execute()` — handles user invocation of the `import` command, e.g. `import f/data.xlsx`
+* `ImportCommand#execute()` — handles user invocation of the `import` command, e.g., `import f/data.xlsx`
 * `ExcelReader#readExcelFile(Path filePath)` — reads `.xlsx` files using Apache POI (or a similar library)
 * `ExcelParser#parseRows(List<Row> rows)` — parses each row, validates format, and converts them into `Person` entities
 * `Model#addPerson(Person person)` — adds each parsed `Person` to the in-memory `AddressBook`
@@ -443,7 +443,7 @@ The import process involves reading Excel sheets, validating their contents, and
 
 #### Example user workflow
 
-1. The user places an Excel file (e.g. `donors.xlsx`) in the application directory.
+1. The user places an Excel file (e.g., `donors.xlsx`) in the application directory.
 2. The user enters:
    ```  
    import f/donors.xlsx  
@@ -475,7 +475,7 @@ The Excel file is expected to contain a header row with the following columns:
 #### Validation and error handling
 
 The system enforces strict input validation to maintain data integrity:
-* Rows with missing mandatory fields (e.g. Name, Blood Type) are skipped.
+* Rows with missing mandatory fields (e.g., Name, Blood Type) are skipped.
 * Invalid blood types or malformed emails are logged as warnings.
 * The command result summarizes both successful and failed imports.
 
@@ -1038,12 +1038,12 @@ Action  | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **List all recipients**   | `list`
 **Summary of organs needed**   | `summary`
-**Filter recipients by blood type**   | `bloodtype BLOOD_TYPE [MORE_BLOOD_TYPES]...`, eg. `bloodtype A+ B+`
-**Filter recipients by organ**   | `organ ORGAN`, eg. `organ liver`
-**Filter recipients by priority**   | `priority PRIORITY [MORE_PRIORITIES]...`, eg. `priority 1 2 3`
-**Search for a recipient by name**   | `search KEYWORD [MORE_KEYWORDS]...`, eg. `search John`
-**Combined search using name, organ, and/or blood type**   | `combined [n/NAME] [o/ORGAN] [b/BLOOD_TYPE]`, eg. `combined n/Alice o/kidney b/O+`
-**Find recipients compatible with a blood type**   | `compatible BLOOD_TYPE`, eg. `compatible O-`
+**Filter recipients by blood type**   | `bloodtype BLOOD_TYPE [MORE_BLOOD_TYPES]...`, e.g., `bloodtype A+ B+`
+**Filter recipients by organ**   | `organ ORGAN`, e.g., `organ liver`
+**Filter recipients by priority**   | `priority PRIORITY [MORE_PRIORITIES]...`, e.g., `priority 1 2 3`
+**Search for a recipient by name**   | `search KEYWORD [MORE_KEYWORDS]...`, e.g., `search John`
+**Combined search using name, organ, and/or blood type**   | `combined [n/NAME] [o/ORGAN] [b/BLOOD_TYPE]`, e.g., `combined n/Alice o/kidney b/O+`
+**Find recipients compatible with a blood type**   | `compatible BLOOD_TYPE`, e.g., `compatible O-`
 
 #### Modifying Recipients
 
