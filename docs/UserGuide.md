@@ -66,7 +66,7 @@ A screen similar to the one below should be visible after a few seconds. Note th
 add n/Alice Pauline p/94351253 e/alice@example.com a/123, Jurong West Ave 6, #08-111 o/kidney b/O+ r/1 t/friends
 `
 9. A list of other commands you can try:
-    * `list` : Lists all patients.
+    * `summary` : Provides a brief statistical summary of recipients.
 
     * `clear` : Deletes all patients.
 
@@ -78,7 +78,7 @@ add n/Alice Pauline p/94351253 e/alice@example.com a/123, Jurong West Ave 6, #08
 <markdown>
 If you want to **quickly fill in the format of the `add` command**, you can press the `tab` key after typing `add` to make use of our **autofill** feature.
 
-If you **wish to see a brief explanation of any command**, simply click on the Help tab and and click `Help F1` or simply press <kbd>F1</kbd>.
+If you wish to see a **brief explanation** of any command, simply click on the Help tab and click `Help F1` or simply press <kbd>F1</kbd>.
 </markdown>
 </box>
 
@@ -175,14 +175,16 @@ Restrictions: It should be a whole number from 1 to 5.
 
 </markdown>
 </box>
-##Features
+###Features
 ### Viewing help: `help`
 
-Shows a help page.<br><br>
+Shows a help page with brief command descriptions.<br><br>
 
 ![help message](images/helpGui.png)   <br><br>
 
 Format: `help`
+
+<br><br><br>
 
 ### Adding a recipient: `add`
 
@@ -198,13 +200,13 @@ Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS o/ORGAN b/BLOOD_TYPE r/PRIORITY [e
 
 <box type="note" seamless>
 <markdown>
-**Note:** Though emergency contact fields are optional, if `EMERGENCY_NAME is inputted, then `EMERGENCY_PHONE` must be inputted as well, and vice versa. This is because an emergency contact must have a name and phone number.
+**Note:** Though emergency contact fields are **optional**, if `EMERGENCY_NAME is inputted, then `EMERGENCY_PHONE` **must** be inputted as well, and vice versa. This is because an emergency contact must have a name and phone number.
 </markdown>
 </box>
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 o/kidney b/O+ r/1 en/Jane Doe ep/91234567 er/spouse t/wife t/owesMoney`
-
+<br><br>
 ### Tab Completion for `add` command
 
 Auto creates all required and optional prefixes for the `add` command.
@@ -219,8 +221,8 @@ Format: Type `add` ,then press the <kbd>tab</kbd> key
 
 Examples:
 * Typing `add` followed by pressing <kbd>tab</kbd> will populate the command box as such :<br><br>
-  ![TAB image](images/TAB.png) <br><br>
-
+  ![TAB image](images/TAB.png) <br><br><br>
+  
 ### Editing a recipient : `edit`
 
 Edits an existing recipient in **Organ-izer**.
@@ -234,14 +236,13 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [o/ORGAN] [b/BLOOD 
 
 ![TAB image](images/INDEX.png)<br><br>
 
-* At least one of the optional user inputs must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the recipient will be removed i.e adding of tags is not cumulative.
-* You can remove all the recipient’s tags by typing `edit INDEX t/` without specifying any tags after it.
-* An emergency contact can be added onto a recipient that did not already have an emergency contact by typing `edit INDEX [en/EMERGENCY_NAME] [ep/EMERGENCY_PHONE]`.
-* Emergency contact fields of a recipient can only be edited if the recipient already has an emergency contact.
-* You can remove the recipient’s emergency contact by typing `edit INDEX en/ ep/`. Any emergency contact relationship is removed along with it.
-* A recipient without emergency contact will leave an empty space at the bottom of the entry to allow for uniformity in the dimensions of entries.
+* **At least one** of the optional user inputs must be provided.
+* Existing recipient details will be updated to the new user inputs.
+* When editing **tags**, **all existing tags** of the recipient will be **removed** i.e adding of tags is not cumulative.
+* You can simply remove all the recipient’s tags by typing `edit INDEX t/` without specifying any tags after it.
+* An **emergency contact** can be added onto a recipient that **did not already have an emergency contact** by typing `edit INDEX [en/EMERGENCY_NAME] [ep/EMERGENCY_PHONE]`.
+* **Emergency contact** details of a recipient can only be edited if the recipient **already has an emergency contact**.
+* You can **remove** the recipient’s **emergency contact** by typing `edit INDEX en/ ep/`. Any emergency contact details are removed along with it.
   </markdown>
   </box>
 
@@ -249,31 +250,33 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com en/Bobby ep/12345678` Edits the phone number and email address of the 1st recipient to be `91234567` and `johndoe@example.com` respectively. This also adds an emergency contact named “Bobby” with contact number “12345678” to the recipient’s details.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd recipient to be `Betsy Crower` and clears all existing tags.
 * `edit 1 en/ ep/` removes the emergency contact from the 1st recipient.
+* <br><br><br>
 ### Listing all recipients : `list`
 
 Shows a list of all recipients in the Organ-izer.
 
 Format: `list`
+<br><br><br>
 ### Finding recipients by name: `search`
 
-Finds recipients in **Organ-izer** whose names contain all of the given keywords, in any order.
+Finds recipients in **Organ-izer** whose names contain all the given keywords, in any order.
 
 Format: `search KEYWORD [MORE_KEYWORDS]...`
 
 <box type="note" seamless>
 <markdown>
 **Note:** 
-* The search is case-insensitive. e.g `hans` will match `Hans`.
-* If the KEYWORD includes multiple words separated by spaces, then the order of the keywords does not matter. e.g. `search Hans Bo` will match `Bo Hans`.
-* Only the name can be searched.
-* Only full words will be matched e.g. `search Han` will not match `Hans`.
-* Recipients matching all words in KEYWORD will be returned.
+* The search is **case-insensitive**, e.g `hans` will match `Hans`.
+* If there are multiple keywords, the **order does not matter.** e.g. `search Hans Bo` will match `Bo Hans`.
+* Only **full words** will be matched e.g. `search Han` will not find recipient named `Hans`.
+* Only recipients matching **all keywords** will be returned. e.g. `search Hans Bo` will not find Hans, but only `Hans Bo`.
 </markdown>
 </box>
 
 Examples:
-* `search John` will match with and display recipients named `john` and `John Doe`
-* `search Doe John` will match with and display recipients named `John Doe
+* `search John` will match with and display recipients named `john` and `John Doe`.
+* `search Doe John` will match with and display recipients named `John Doe.
+<br><br><br>
 ### Finding recipients by organ : `organ`
 
 Finds and lists all recipients in **Organ-izer** whose required organ contains the ORGAN entered by the user.
@@ -283,14 +286,15 @@ Format: `organ ORGAN`
 <box type="note" seamless>
 <markdown>
 **Note:** 
-* The search will include partial matches. For instance `kidne` will match kidney. Words are case insensitive.
+* The search will include **partial matches**. For instance `kidne` will match kidney. Words are case **insensitive**.
 </markdown>
 </box>
 
 Examples:
 * `organ kidne` Finds all recipients in **Organ-izer** whose organ required contains the word “kidne”, such as recipients who require a kidney.
 * `organ large` Finds all recipients in **Organ-izer** whose organ required contains the word “large”, such as recipients who require a “large intestine”.
-* 
+
+<br><br><br>
 ### Finding recipients by priority : `priority`
 
 Finds and lists all recipients in **Organ-izer** whose priority matches the specified priorities.
@@ -308,6 +312,8 @@ Examples:
 * `priority 1 2` Finds all recipients in **Organ-izer** whose priority is either `1` or `2`.
 * `priority 3` Finds all recipients in **Organ-izer** whose priority is 3.
 
+<br><br><br>
+
 ### Finding recipients by blood type : `blood type`
 
 Finds and lists all recipients in **Organ-izer** whose blood type matches the specified blood types.
@@ -317,7 +323,7 @@ Format: `bloodtype BLOOD_TYPE [MORE_BLOOD_TYPES]...`
 <box type="note" seamless>
 <markdown>
 **Note:** 
-* The blood type is to be written in all capital letters to match medical conventions.
+* The blood type is to be written in **all capital letters** to match medical conventions.
 * This command can accept multiple blood type inputs to find recipients that match any of the given blood type inputs.
 </markdown>
 </box>
@@ -325,7 +331,9 @@ Format: `bloodtype BLOOD_TYPE [MORE_BLOOD_TYPES]...`
 Examples:
 * `bloodtype O+ A+` Finds all recipients in **Organ-izer** whose blood type is either `O+` or `A+`.
 * `bloodtype AB+` Finds all recipients in **Organ-izer** whose blood type is AB+.
-* 
+
+<br><br><br>
+
 ### Finding recipients by compatible blood types: `compatible`
 
 Finds and lists all recipients with blood types that are **compatible** with `BLOOD_TYPE`.
@@ -335,7 +343,7 @@ Format: `compatible BLOOD_TYPE`
 <box type="note" seamless>
 <markdown>
 **Note:** 
-* Compatibility refers to whether the recipient’s blood type is such that he can receive from
+* Compatibility refers to whether the recipient’s blood type is such that he can **receive from**
   the provided donor `BLOOD_TYPE`, as illustrated below: <br><br>
   ![TAB image](images/BLOODTYPECHART.jpg)<br><br>
 </markdown>
@@ -346,19 +354,19 @@ Examples:
 
 
 
-
+<br><br><br>
 
 
 ### Finding recipients by multiple criteria: `combined`
 
-Finds and lists all recipients in **Organ-izer** that match all specified criteria .
+Finds and lists all recipients in **Organ-izer** that match **all** specified criteria .
 
 Format: `combined [n/NAME] [o/ORGAN] [b/BLOOD_TYPE]`
 
 <box type="note" seamless>
 <markdown>
 **Note:** 
-* At least one of the optional user inputs must be provided, which are NAME, ORGAN, or BLOOD_TYPE.
+* **At least one** of the optional user inputs must be provided, which are `NAME`, `ORGAN`, or `BLOOD_TYPE`.
 </markdown>
 </box>
 
@@ -375,7 +383,7 @@ Examples:
 
 
 
-`
+<br><br><br>
 
 ### Deleting a recipient : `delete`
 
@@ -388,7 +396,7 @@ Format: `delete INDEX`
 **Note:** 
 * Deletes the recipient at the specified `INDEX`.
 * The index refers to the index number shown in the displayed recipient list.
-* The index **must be a positive integer** such as 1, 2, 3, …​
+* The index **must be a positive integer** such as 1, 2, 3, …
 </markdown>
 </box>
 
@@ -396,11 +404,15 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd recipient in **Organ-izer**.
 * `find Betsy` followed by `delete 1` deletes the 1st recipient in the results of the `find` command.
 
-### Deleting all recipients : `clear`
+  <br><br><br>
+
+### ⚠️Deleting all recipients : `clear`
 
 Deletes all recipients from **Organ-izer**.
 
-Format: `clear`
+Format: `clear`<br>
+
+<br><br><br>
 
 ### Statistic summary : `summary`
 
@@ -418,15 +430,20 @@ LUNG            : 1 patient(s)
 
 Total           : 3 patient(s)
 ```
+<br><br><br>
 
+### Access last command :
 
+Populates command bar with the last command executed by user.
+
+Format: Press the >kbd>Up</kbd> arrow key. 
 
 ### Exiting the program : `exit`
-
+<br><br><br>
 Exits the application.
 
 Format: `exit`
-
+<br><br><br>
 ### Restore last search
 
 After reopening the app, search results from the last search command will be shown.
@@ -438,11 +455,11 @@ After reopening the app, search results from the last search command will be sho
 * Calling `list` after `search KEYWORD` will restore the list of displayed recipients back to showing all entries, so closing and reopening the app will not restore the search result.
 </markdown>
 </box>
-
+<br><br>
 ### Saving the data
 
 Organ-izer data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
-
+<br><
 ### Editing the data file
 
 **Organ-izer** data is saved automatically as a JSON file `[JAR file location]/data/organ-izer.json`. Advanced users are welcome to update data directly by editing that data file.
@@ -455,10 +472,7 @@ Furthermore, certain edits can cause the Organ-izer to behave in unexpected ways
 </markdown>
 </box>
 
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
-
+<br><br><br>
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
@@ -478,7 +492,7 @@ _Details coming soon ..._
 **Q**: How do I add a recipient without a phone number, e.g. children?<br>
 **A**: Add the child recipient normally, but input his parent's phone number instead.
 --------------------------------------------------------------------------------------------------------------------
-
+<br>
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
@@ -486,7 +500,7 @@ _Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
-
+<br><br>
 ## Command summary
 
 #### Viewing Recipients
