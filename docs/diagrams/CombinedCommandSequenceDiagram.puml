@@ -1,25 +1,60 @@
 @startuml
-autonumber
+!include style.puml
+skinparam ArrowFontStyle plain
+title Detailed Sequence for CombinedCommand Execution
 
 actor User
-participant "LogicManager" as Logic
-participant "AddressBookParser" as ABP
-participant "CombinedCommandParser" as CCP
-participant "CombinedCommand" as CC
-participant "Model" as Model
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as Logic LOGIC_COLOR
+participant ":AddressBookParser" as ABP LOGIC_COLOR
+participant ":CombinedCommandParser" as CCP LOGIC_COLOR
+participant "c:CombinedCommand" as CC LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
 
 User -> Logic : execute("combined n/Alice o/kidney b/O+")
+activate Logic
+
+' --- Parse command ---
 Logic -> ABP : parseCommand(userInput)
+activate ABP
+
 ABP -> ABP : tokenize command word
+
 ABP -> CCP : parse(arguments)
-CCP -> CCP : build predicates (NameExact, OrganSubstring, RecipientCompatible)
+activate CCP
+
+CCP -> CCP : build predicates\n(NameExact, OrganSubstring,\nRecipientCompatible)
+
+' --- Create CombinedCommand ---
+create CC
 CCP -> CC : new CombinedCommand(predicate)
-ABP <-- CC : command
+
+CCP --> ABP : command
+deactivate CCP
+
+ABP --> Logic : command
+deactivate ABP
+
+' --- Execute command ---
 Logic -> CC : execute(model)
+activate CC
+
 CC -> Model : updateFilteredPersonList(predicate)
+activate Model
+
 Model --> CC : filtered list
+deactivate Model
+
 CC --> Logic : CommandResult
+deactivate CC
+
 Logic --> User : result text + list size
+deactivate Logic
 
 @enduml
 

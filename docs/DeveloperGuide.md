@@ -772,8 +772,8 @@ Main Success Scenario (MSS):
 3. Organ-izer displays success message.
    Use case ends. <br><br>
 
-**Use Case UC10: Redo previous command**
-1. Coodinator requests previous command.
+**Use Case UC10: Access previous command**
+1. Coordinator requests previous command.
 2. Organ-izer populates the command bar with the user's last command.
 
 
@@ -802,14 +802,14 @@ Main Success Scenario (MSS):
 - All data must be stored locally in a human-editable text file format.
 9. **Performance**
 - Must be able to hold up to 100 recipients without a noticeable sluggishness in performance for typical usage. 
-  The system must be able to respond to any command within 1 second under normal conditions
+  The system must be able to respond to any command within 1 second under normal conditions.
 10. **Reliability**
 - The application must not crash during normal operations and must recover gracefully from unexpected errors.
 11. **Usability**
-- The application must be easy to use for healthcare professionals without technical background. (<30 minutes)
+- The application must be easy to use for healthcare professionals without a technical background. (<30 minutes)
 12. **Internet Independence**
-- The application must be able to be used without an internet connection. Command summary must be provided in application so 
-  that user will not have to refer to online documentation for regular use.
+- The application must be able to be used without an internet connection. Command summary must be provided in the application so 
+  that users will not have to refer to online documentation for regular use.
 
 ### Glossary
 
@@ -1076,19 +1076,19 @@ These domain-specific requirements, coupled with maintaining AB3's architectural
 #### Challenges Faced
 
 * **Unexpected Bug Findings**: During development and testing, we encountered several edge cases that weren't initially anticipated. For instance, the blood type compatibility logic initially failed when users entered mixed-case inputs (e.g., "aB+" vs "AB+"), requiring us to implement comprehensive case-insensitive validation. These instances arose in separate occasions such as mixed-case input organ fields as well. Furthermore, overlooked components such as the `ResultDisplay` caused other bugs to surface such as edits to emergency contact fields not being shown in the result panel but are still displayed in the `PersonListPanel`.
-* **Lack of Experience in Medical Contexts**: None of our team members had prior experience with healthcare systems or organ transplant coordination workflows. This created a steep learning curve in combining our understanding of blood type compatibility rules with user friendly commands and functionalities. A balance between overly medical related logic and objective driven functionalities had to be struck before deciding on the scope of the project.
+* **Lack of Experience in Medical Contexts**: None of our team members had prior experience with healthcare systems or organ transplant coordination workflows. This created a steep learning curve in combining our understanding of blood type compatibility rules with user-friendly commands and functionalities. A balance between overly medical related logic and objective driven functionalities had to be struck before deciding on the scope of the project.
 * **Testing Complexity**: Achieving comprehensive test coverage for Organ-izer proved significantly more challenging than typical AB3 extensions. The blood compatibility matrix alone required testing 64 possible donor-recipient combinations (8 blood types x 8 blood types), while the CombinedCommand needed tests for all permutations of name, organ, and blood type filters. Creating realistic test data in `TypicalPersons` that covered edge cases, including different blood types, all priority levels, various organs, valid and invalid emergency contacts, required careful planning. Maintaining test maintainability while achieving ~80% coverage demanded disciplined use of test utilities and avoiding overly coupled tests that would break with implementation changes.
-* **Time Management**: Coordinating five team members, with external commitments, working on parallel features while meeting weekly milestones proved challenging. We faced several Git merge conflicts when multiple members simultaneously modified core files like JsonAdaptedPerson, AddressBookParser, and PersonBuilder. Feature dependencies (e.g., CompatibleCommand requiring blood type validation, CombinedCommand depending on existing filter predicates) meant some tasks blocked others, requiring careful task sequencing. Additionally, underestimating the complexity of certain features, particularly the edits needed to create new fields and commands, led to schedule adjustments. Balancing feature implementation with comprehensive testing and documentation within the project timeframe required prioritization decisions and sometimes deferring "nice-to-have" features to ensure core functionality was robust and well-tested.
+* **Time Management**: Coordinating five team members with external commitments, working on parallel features while meeting weekly milestones, proved challenging. We faced several Git merge conflicts when multiple members simultaneously modified core files like JsonAdaptedPerson, AddressBookParser, and PersonBuilder. Feature dependencies (e.g., CompatibleCommand requiring blood type validation, CombinedCommand depending on existing filter predicates) meant some tasks blocked others, requiring careful task sequencing. Additionally, underestimating the complexity of certain features, particularly the edits needed to create new fields and commands, led to schedule adjustments. Balancing feature implementation with comprehensive testing and documentation within the project timeframe required prioritization decisions and sometimes deferring "nice-to-have" features to ensure core functionality was robust and well-tested.
 
 #### Effort and Achievements
 
-Despite facing several challenges, our group was overcomeable to complete our Organ-izer
-* **Product Delivery**: Delivered a working product that satisfies key objectives of aiding Organ Transplant coordinators attain speed and accuracy in their work.
-* **Preservation of architecture**: Successfully extended AB3’s immutable model design while incorporating medical workflows such as filtering recipients by organ or blood type.
+Despite facing several challenges, our group was able to complete Organ-izer
+* **Product Delivery**: Delivered a working product that satisfies key objectives of aiding organ transplant coordinators in attaining speed and accuracy in their work.
+* **Preservation of Architecture**: Successfully extended AB3's immutable model design while incorporating medical workflows such as filtering recipients by organ or blood type.
 * **Utility and Functionality**: Added on functionalities to improve User Experience (UX) such as Tab key auto completions to provide ease in keying in commands, and commands for statistical summaries to give an overview over the recipients in the application database.
 * **Comprehensive Testing**: Ensured testing robustness with over 200+ unit and integration tests on the Organ-izer functionalities.  
   
-With these achievements, an effective and comprehensive application is developed to aid in organ transplant medical workflows.
+With these achievements, an effective and comprehensive application was developed to aid in organ transplant medical workflows.
 
 #### Reuse of Existing Components
 
@@ -1117,4 +1117,4 @@ Overall estimate: 40-50% development effort saved, allowing focus on domain-spec
 
 #### Summary
 
-The development of Organ-izer demonstrates that building a specialized medical application on top of AB3 requires a careful balance between leveraging existing infrastructure and implementing domain-specific innovations. While AB3's solid architectural foundation saved our team approximately **40-50% of development effort**, the remaining **50-60%** demanded significant original work to address the unique challenges of organ transplant coordination. Although several challenges were faced that may have hindered the development process and efficiency, the team has still provided a functional and effective product that covers the identified and targeted needs from organ transplant coordinators.
+The development of Organ-izer demonstrates that building a specialized medical application on top of AB3 requires a careful balance between leveraging existing infrastructure and implementing domain-specific innovations. While AB3's solid architectural foundation saved our team approximately **40-50% of development effort**, the remaining **50-60%** demanded significant original work to address the unique challenges of organ transplant coordination. Although several challenges were faced that hindered the development process and efficiency, the team has still provided a functional and effective product that covers the identified and targeted needs of organ transplant coordinators.
