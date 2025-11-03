@@ -129,14 +129,14 @@ If you wish to see a **brief explanation** of any command, simply click on the H
 * `PHONE` represents the recipient’s **phone number**.<br>
   Restrictions: It should contain only numbers, and be exactly 8 digits in length.
 
-* `EMAIL` should be of the format local-part@domain. and adhere to the following constraints:
-1. The local-part should only contain alphanumeric characters and these special characters, excluding the parentheses, (+_.-). The local-part may not start or end with any special characters.
-2. This is followed by a '@' and then a domain name. The domain name is made up of domain labels separated by periods.
-   The domain name must:
-    - end with a domain label at least 2 characters long
-    - have each domain label start and end with alphanumeric characters
-    - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.
-3. .com
+* `EMAIL` should be of the format **local-part@domain** and adhere to the following constraints:
+  1. The **local-part** should only contain alphanumeric characters and these special characters, excluding the parentheses, **(+_.-)**. The local-part may not start or end with any special characters.
+  2. This is followed by a **'@'** and then a **domain name**. The domain name is made up of domain labels separated by periods.
+     The domain name must:
+      - end with a domain label at least 2 characters long
+      - have each domain label start and end with alphanumeric characters
+      - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.
+  
 
 * `ORGAN` represents the **organ** that the recipient needs.<br>
   Restrictions : It should only contain alphabetical characters or spaces, with the first character being an alphabetical.
@@ -170,12 +170,12 @@ Restrictions: It should be a whole number from 1 to 5.
 * A new recipient with the **same name as an existing recipient** is **not** considered to be a duplicate entry, and can be added.
   </markdown>
   </box>
-
+  </markdown>
+  </box>
 --------------------------------------------------------------------------------------------------------------------
 
-</markdown>
-</box>
-###Features
+
+### Features
 ### Viewing help: `help`
 
 Shows a help page with brief command descriptions.<br><br>
@@ -221,8 +221,8 @@ Format: Type `add` ,then press the <kbd>tab</kbd> key
 
 Examples:
 * Typing `add` followed by pressing <kbd>tab</kbd> will populate the command box as such :<br><br>
-  ![TAB image](images/TAB.png) <br><br><br>
-  
+  ![TAB image](images/TAB.png)
+  <br><br><br>
 ### Editing a recipient : `edit`
 
 Edits an existing recipient in **Organ-izer**.
@@ -250,7 +250,7 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com en/Bobby ep/12345678` Edits the phone number and email address of the 1st recipient to be `91234567` and `johndoe@example.com` respectively. This also adds an emergency contact named “Bobby” with contact number “12345678” to the recipient’s details.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd recipient to be `Betsy Crower` and clears all existing tags.
 * `edit 1 en/ ep/` removes the emergency contact from the 1st recipient.
-* <br><br><br>
+<br><br><br>
 ### Listing all recipients : `list`
 
 Shows a list of all recipients in the Organ-izer.
@@ -366,20 +366,30 @@ Format: `combined [n/NAME] [o/ORGAN] [b/BLOOD_TYPE]`
 <box type="note" seamless>
 <markdown>
 **Note:** 
+
+</markdown>
+</box>
+
+<box type="info" seamless>
+<markdown>
 * **At least one** of the optional user inputs must be provided, which are `NAME`, `ORGAN`, or `BLOOD_TYPE`.
+If included,
+- `NAME` will find recipients with that **exact** **name**.
+- `ORGAN` will find recipients whose organ **contains** `ORGGAN`. 
+- `BLOOD_TYPE will find recipients who can **receive** from that **blood type**.
 </markdown>
 </box>
 
 <box type="tip" seamless>
 <markdown>
-**tip:** This command is for experienced users who want to combine search functionalities to create a more narrowed filter.
+**tip:** This command is for **advanced** users who want to **combine multiple search functionalities** to create a more powerful filter.
 </markdown>
 </box>
 
 Examples:
-* `combined n/Alice o/kidney b/O+` Find all recipients with name `Alice`, whose organ required contains the word “kidney”, and has blood type `O+`.
-* `combined n/Bob ` Find all recipients with name `Bob`,
-  `combined o/heart b/A+` Find all recipients whose organ required contains the word “heart” and has blood type `A+`.
+* `combined n/Alice o/kidney b/O+` Find all recipients with name `Alice`, whose organ required contains the word “kidne”, and has blood type `O+`.
+* `combined n/Bob ` Finds all recipients named`Bob`, but will not find `Bobby`.
+  `combined o/heart b/A+` Find all recipients whose organ required contains the word “heart” and can receive A+ blood.
 
 
 
@@ -407,8 +417,14 @@ Examples:
   <br><br><br>
 
 ### ⚠️Deleting all recipients : `clear`
-
-Deletes all recipients from **Organ-izer**.
+<box type="note" seamless>
+<markdown>
+**Note:** 
+* There is *no undo function*.
+* Double check before proceeding.
+</markdown>
+</box>
+Deletes *all* recipients from **Organ-izer**.
 
 Format: `clear`<br>
 
@@ -421,7 +437,7 @@ Displays a summary of how many recipients in **Organ-izer** require each type of
 Format: `summary`
 
 Examples:
-* Typing `summary` and pressing <kbd>Enter</kbd> can return the following:
+* Typing `summary` and pressing <kbd>Enter</kbd> will display a summary like the one below:
 ```
 Organ Requirements Summary:
 HEART           : 1 patient(s)
@@ -436,10 +452,10 @@ Total           : 3 patient(s)
 
 Populates command bar with the last command executed by user.
 
-Format: Press the >kbd>Up</kbd> arrow key. 
+Format: Press the <kbd>Up</kbd> arrow key. 
 
 ### Exiting the program : `exit`
-<br><br><br>
+
 Exits the application.
 
 Format: `exit`
@@ -451,11 +467,12 @@ After reopening the app, search results from the last search command will be sho
 <box type="note" seamless>
 <markdown>
 **Note:** 
-* This restoration only applies to the `search` command, and does not apply to other commands that narrow down the recipients such as `compatible` or `bloodtype`.
-* Calling `list` after `search KEYWORD` will restore the list of displayed recipients back to showing all entries, so closing and reopening the app will not restore the search result.
+* This restoration only applies to the `search` command, and does not apply to other commands that find recipients such as `compatible` or `bloodtype`.
+* Calling `list` after `search KEYWORD` will **undo the search filter**, so closing and reopening the app will **not* restore the search result.
 </markdown>
 </box>
 <br><br>
+
 ### Saving the data
 
 Organ-izer data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
@@ -472,7 +489,7 @@ Furthermore, certain edits can cause the Organ-izer to behave in unexpected ways
 </markdown>
 </box>
 
-<br><br><br>
+<br>
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
@@ -491,8 +508,9 @@ Furthermore, certain edits can cause the Organ-izer to behave in unexpected ways
 
 **Q**: How do I add a recipient without a phone number, e.g. children?<br>
 **A**: Add the child recipient normally, but input his parent's phone number instead.
+
 --------------------------------------------------------------------------------------------------------------------
-<br>
+
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
@@ -528,6 +546,6 @@ Action 	| Format, Examples
 #### Utility Functions
 Action 	| Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Access Last Command** | <kbd>Up</kbd> key
+**Access Last Command** | <kbd>Up</kbd> arrow key
 **Exit the application**   | `exit`
 **View help** | `help`
