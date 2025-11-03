@@ -586,7 +586,7 @@ Extensions :
 - 1b1. Organ-izer displays error message.
   Use case ends.<br>
 
-**Use Case UC03: Discharge recipient**
+**Use Case UC03: Delete recipient**
 Main Success Scenario (MSS):
 
 1. Coordinator requests to delete recipient.
@@ -641,62 +641,12 @@ Main Success Scenario (MSS):
    Use case ends. <br><br>
 
 **Use Case UC10: Redo previous command**
-1. Coodinator requests for previous command.
+1. Coodinator requests previous command.
 2. Organ-izer populates the command bar with the user's last command.
 
 
-**Use Case: Matching a donor to a patient**
 
-**MSS**
-1. Coordinator receives notification about a willing organ donor.
-2. Coordinator searches for patients which need that organ.
-3. Organ-iser returns a list of  suitable patients.
-4. The coordinator selects one patient to be matched to the donor.
-5. Coordinator uses the patient’s contact details stored in the app to contact the patient for transplant.
 
-   Use case ends.
-
-**Extensions**  
-
-1. Organ-iser returned an empty list.
-2. Coordinator notifies the organ donor that no patients match his donation, and no transplant is organised.  
-    
-
-**Use Case: Marking a recipient as urgent priority**  
-
-**MSS**
-1. Coordinator is notified that a patient is identified as urgently in need of the organ transplant.
-2. Coordinator edits the patient’s existing record to mark it as urgent.
-3. Organ-iser ranks patients by urgency when listing.  
-
-   Use case ends.  
-  
-**Use Case: A new patient requires organ transplant**    
-
-**MSS**
-1. Coordinator wants to add a new patient.
-2. Coordinator adds patient’s details to the Organ-iser.  
-
-   Use case ends.  
-
-**Extensions**
-* 2a. Organ-iser recognises duplicate entry and returns error.  
-  
-
-**Use Case: Patient no longer requires transplant**  
-
-**MSS**
-1. Coordinator removes the patient’s entry.
-2. Patient’s entry is deleted from Organ-iser.  
-
-   Use case ends.  
-
-**Extensions**
-* 1a. The patient still requires other organs.
-    * 1a1. The Coordinator removes only the organ no longer required by the patient.
-    * 1a2. Organ-iser deletes the organ.  
-
-*{More to be added}*
 
 ### Non-Functional Requirements
 
@@ -768,7 +718,27 @@ Main Success Scenario (MSS):
 * **ObservableList**: A list that allows UI components to automatically update when data changes.
 
 --------------------------------------------------------------------------------------------------------------------
+## **Appendix: Enhancements
 
+1. **Implement more extensive filter cache**. Currently, our program saves the filtered list of only the last `search` command executed by user.
+   We plan to store the resulting filtered lists of all our various filtering functions such that users can refer to previous filtered results easily through a key command.
+
+2. **Include tab completion for all commands templates.** Currently, our <kbd>tab</kbd> completion feature is only implemented for the `add` command.
+   We plan to implement tab completion feature for all relevant commands such as `combined`, `edit`, etc, such that users will not have to get caught up in remembering the syntax, and can simply press tab to quickly autofill all prefixes.
+
+3. **Combine all our various search commands into one function.** Currently, we have different commands like `bloodtype`, `compatible`, `organ` to search for
+   recipients using various filters. Our plan is to make a universal search function that will incorporate flags and 
+   allow users to filter by whichever fields and strictness (exact match, partial match, fuzzy search), they want to.
+
+4. **Extend the functionality of the last command feature.** Currently, users can press the <kbd>Up</kbd> arrow key to access the last executed command.
+   We intend to extend the feature to store more commands, such that pressing the <kbd>Up</kbd> arrow key multiple times, will allow users to navigate
+   all previous commands, saving time.
+
+5. **Provide a more comprehensive summary feature.** Currently, our summary feature only displays a statistic of how many recipients require each organ.
+   We plan to do a breakdown in terms of blood type as well as priority, making use of visual aids (charts, diagrams). This will allow an organ donor coordinator to easily visualize the distribution of
+   recipients by the various metrics to make more informed logistical and medical decisions.
+.
+6. 
 ## **Appendix: Instructions for manual testing**
 
 Given below are instructions to test the app manually.
@@ -832,7 +802,7 @@ Action  | Format, Examples
 **List all recipients**   | `list`
 **Summary of organs needed**   | `summary`
 **Filter recipients by blood type**   | `bloodtype BLOOD_TYPE [MORE_BLOOD_TYPES]...`, eg. `bloodtype A+ B+`
-**Filter recipients by organ**   | `organ KEYWORD`, eg. `organ liver`
+**Filter recipients by organ**   | `organ ORGAN`, eg. `organ liver`
 **Filter recipients by priority**   | `priority PRIORITY [MORE_PRIORITIES]...`, eg. `priority 1 2 3`
 **Search for a recipient by name**   | `search KEYWORD [MORE_KEYWORDS]...`, eg. `search John`
 **Combined search using name, organ, and/or blood type**   | `combined [n/NAME] [o/ORGAN] [b/BLOOD_TYPE]`, eg. `combined n/Alice o/kidney b/O+`
