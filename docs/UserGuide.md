@@ -454,6 +454,8 @@ Populates command bar with the last command executed by user.
 
 Format: Press the <kbd>Up</kbd> arrow key. 
 
+<br><br>
+
 ### Exiting the program : `exit`
 
 Exits the application.
@@ -476,7 +478,7 @@ After reopening the app, search results from the last search command will be sho
 ### Saving the data
 
 Organ-izer data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
-<br><
+<br>
 ### Editing the data file
 
 **Organ-izer** data is saved automatically as a JSON file `[JAR file location]/data/organ-izer.json`. Advanced users are welcome to update data directly by editing that data file.
@@ -490,7 +492,6 @@ Furthermore, certain edits can cause the Organ-izer to behave in unexpected ways
 </box>
 
 <br>
---------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
 
@@ -528,7 +529,7 @@ Action 	| Format, Examples
 **List all recipients**   | `list`
 **Summary of organs needed**   | `summary`
 **Filter recipients by blood type**   | `bloodtype BLOOD_TYPE [MORE_BLOOD_TYPES]...`, eg. `bloodtype A+ B+`
-**Filter recipients by organ**   | `organ KEYWORD`, eg. `organ liver`
+**Filter recipients by organ**   | `organ ORGAN`, eg. `organ liver`
 **Filter recipients by priority**   | `priority PRIORITY [MORE_PRIORITIES]...`, eg. `priority 1 2 3`
 **Search for a recipient by name**   | `search KEYWORD [MORE_KEYWORDS]...`, eg. `search John`
 **Combined search using name, organ, and/or blood type**   | `combined [n/NAME] [o/ORGAN] [b/BLOOD_TYPE]`, eg. `combined n/Alice o/kidney b/O+`

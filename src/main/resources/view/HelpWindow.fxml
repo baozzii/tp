@@ -22,7 +22,7 @@
 
   <scene>
     <Scene>
-      <ScrollPane fitToWidth="true" fitToHeight="true">
+      <ScrollPane minWidth="650.0" fitToWidth="true" fitToHeight="true">
         <content>
           <VBox spacing="10" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17"
                 xmlns:fx="http://javafx.com/fxml/1">
@@ -91,21 +91,21 @@
               <TitledPane text="bloodtype" expanded="false">
                 <VBox spacing="5">
                   <Label text="Finds and lists all recipients whose blood type matches the specified blood types." />
-                  <Label text="Format : bloodtype BLOODTYPE [BLOODTYPE]..." />
+                  <Label text="Format : bloodtype BLOODTYPE [MORE_BLOODTYPES]..." />
                 </VBox>
               </TitledPane>
 
               <TitledPane text="organ" expanded="false">
                 <VBox spacing="5">
-                  <Label text="Finds and lists all recipients whose organ contains the KEYWORD." />
-                  <Label text="Format: organ KEYWORD" />
+                  <Label text="Finds and lists all recipients whose organ contains the ORGAN." />
+                  <Label text="Format: organ ORGAN" />
                 </VBox>
               </TitledPane>
 
               <TitledPane text="priority" expanded="false">
                 <VBox spacing="5">
                   <Label text="Finds and lists all recipients whose priority matches the specified priorities." />
-                  <Label text="Format : priority PRIORITY [PRIORITY]..." />
+                  <Label text="Format : priority PRIORITY [MORE_PRIORITIES]..." />
                 </VBox>
               </TitledPane>
 
@@ -114,7 +114,7 @@
                   <Label text="Finds and lists all recipients whose name contains all of the KEYWORDS"/>
                   <Label text="Partial names will not be matched, eg. searching Joh will not match with John."/>
                   <Label text="Order of the keywords does not matter." />
-                  <Label text="Format : search KEYWORD [KEYWORD]" />
+                  <Label text="Format : search KEYWORD [MORE_KEYWORDS]..." />
                 </VBox>
               </TitledPane>
 
