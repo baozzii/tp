@@ -78,40 +78,41 @@ add n/Alice Pauline p/94351253 e/alice@example.com a/123, Jurong West Ave 6, #08
 <markdown>
 If you want to **quickly fill in the format of the `add` command**, you can press the `tab` key after typing `add` to make use of our **autofill** feature.
 
-If you **wish to see a brief explanation of any command**, simply click on the Help tab and and click `Help F1` or press <kbd>F1</kbd>.
+If you **wish to see a brief explanation of any command**, simply click on the Help tab and and click `Help F1` or simply press <kbd>F1</kbd>.
 </markdown>
 </box>
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Features
+## Notes About Features
 
 <box type="info" seamless>
 <markdown>
-**Notes about the command format:**<br>
+**Notes about Command Format:**<br>
 
 * Words in `UPPER_CASE` represent user inputs.<br>
   e.g. in `add n/NAME`, `NAME` is a user input, representing a recipient's **name**,<br>
   which the user can provide by entering `add n/John Doe`.
 
-* Words in square brackets represent optional inputs.<br>
-  To exclude an optional input, do not type the prefix of that input
+* Words in sqaure brackets, eg [t/TAG,] represent optional inputs.<br>
+  To exclude an optional input, do not type the prefix of that input.
   e.g. in `n/NAME [t/TAG]` the user may enter `n/John Doe t/friend`,<br>
-  or enter `n/John Doe`, if they don't wish to provide a **tag** input. The same applies for emergency contact fields.
+  or enter `n/John Doe`, if they don't wish to provide a **tag** input. <br>
+  The same applies for emergency contact fields.
 
-* Words followed by `…`​ after them, can be provided **multiple times**,<br>
+* Words followed by `…` after them, can be provided **multiple times**,<br>
   including **zero times**, if the user does not wish to provide an input.<br>
-  e.g. in `[t/TAG]…​` the user can :<br>
-  enter `  `, if the user does not wish to provide a tag,<br>
-  or enter `t/friend`, to provide 1 tag,<br>
-  or enter `t/friend t/family`, to provide 2 tags etc.
+  e.g. in `[t/TAG]...` the user can :<br>
+  1. enter `  `, if the user does not wish to provide a tag,<br>
+  2. or enter `t/friend`, to provide 1 tag,<br>
+  3. or enter `t/friend t/family`, to provide 2 tags etc.
 
 * Inputs can be supplied in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, users can either, <br>
   enter `n/John p/92316570` **or** `p/92316570 n/John`.
 
 * For commands that **don't need any user inputs** (such as `help`, `list`, `exit` and `clear`),<br>
-  any user inputs after the command will be **ignored.**<br>
+  any user inputs entered after the command will be **ignored.**<br>
   e.g. if the user entered `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
@@ -120,12 +121,12 @@ If you **wish to see a brief explanation of any command**, simply click on the H
 
 <box type="info" seamless>
 <markdown>
-**Notes about the user input:**<br>
+**Notes About User Input:**<br>
 
-* `NAME` represents the recipient’s name.
+* `NAME` represents the recipient’s **name**.<br>
   Restrictions: It should contain only alphanumeric characters and spaces, and it should not be blank.
 
-* `PHONE` represents the recipient’s phone number.
+* `PHONE` represents the recipient’s **phone number**.<br>
   Restrictions: It should contain only numbers, and be exactly 8 digits in length.
 
 * `EMAIL` should be of the format local-part@domain. and adhere to the following constraints:
@@ -137,36 +138,36 @@ If you **wish to see a brief explanation of any command**, simply click on the H
     - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.
 3. .com
 
-* `ORGAN` represents the organ that the recipient needs.
+* `ORGAN` represents the **organ** that the recipient needs.<br>
   Restrictions : It should only contain alphabetical characters or spaces, with the first character being an alphabetical.
 
-* `BLOOD_TYPE` represents the recipient’s or donor’s blood type.
+* `BLOOD_TYPE` represents the recipient’s or donor’s **blood type**.<br>
   Restriction : It must be one of A+, A-, B+, B-, AB+, AB-, O+, O- only.
 
-*`PRIORITY` represents the priority level of the recipient, with 1 being the highest priority and 5 being the lowest.
-Restrictions: It must be a whole number from 1 to 5.
+*`PRIORITY` represents the **priority** level of the recipient, with 1 being the highest priority and 5 being the lowest. <br>
+Restrictions: It should be a whole number from 1 to 5.
 
-* `EMERGENCY_NAME` represents the name of the recipient’s emergency contact.
-  Restrictions: It must only consist of alphanumeric characters and spaces.
+* `EMERGENCY_NAME` represents the **name** of the recipient’s **emergency contact**.<br>
+  Restrictions: It should only contain alphanumeric characters and spaces.
 
-* `EMERGENCY_PHONE` represents the phone number of the recipient’s emergency contact.
-  Restrictions: It must only consist of numbers, and is 8 digits long.
+* `EMERGENCY_PHONE` represents the **phone number** of the recipient’s **emergency contact**.<br>
+  Restrictions: It should only contain numbers, and be 8 digits long.
 
-* `EMERGENCY_RELATIONSHIP` represents the type of relationship that the recipient has to the emergency contact.
-  Restrictions: It should consist of alphanumeric characters and/or symbols.
+* `EMERGENCY_RELATIONSHIP` represents the type of **relationship** that the recipient has to the **emergency contact**.<br>
+  Restrictions: It should only contain alphanumeric characters and/or symbols.
 
-* `TAG` represents additional information about the recipient.
-  Restrictions: It should only consist of alphanumeric characters.
+* `TAG` represents **additional information** about the recipient. e.g. tagging a contact as wheelchair-bound.<br>
+  Restrictions: It should only contain alphanumeric characters.
   </markdown>
   </box>
 
 <box type="info" seamless>
 <markdown>
-**Duplicate Handling:**<br>
+**Notes about Duplicate Entries:**<br>
 
-* A new recipient with the same phone number as an existing recipient is considered to be a duplicate entry and cannot be added.
+* A new recipient with the **same phone number as an existing recipient** is considered to be a duplicate entry and cannot be added.
 
-* A new recipient with the same name as an existing recipient is not considered to be a duplicate entry, and can be added.
+* A new recipient with the **same name as an existing recipient** is **not** considered to be a duplicate entry, and can be added.
   </markdown>
   </box>
 
@@ -174,7 +175,7 @@ Restrictions: It must be a whole number from 1 to 5.
 
 </markdown>
 </box>
-
+##Features
 ### Viewing help: `help`
 
 Shows a help page.<br><br>
@@ -191,13 +192,13 @@ Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS o/ORGAN b/BLOOD_TYPE r/PRIORITY [e
 
 <box type="tip" seamless>
 <markdown>
-**Tip:** A recipient can have any number of tags (including 0)
+**Tip:** A recipient can have any number of **tags** (including 0)
 </markdown>
 </box>
 
 <box type="note" seamless>
 <markdown>
-**Note:** Though emergency contact fields are optional, if EMERGENCY_NAME is inputted, then EMERGENCY_PHONE must be inputted as well, and vice versa. This is because an emergency contact must have a name and phone number.
+**Note:** Though emergency contact fields are optional, if `EMERGENCY_NAME is inputted, then `EMERGENCY_PHONE` must be inputted as well, and vice versa. This is because an emergency contact must have a name and phone number.
 </markdown>
 </box>
 
@@ -217,107 +218,8 @@ Format: Type `add` ,then press the <kbd>tab</kbd> key
 </box>
 
 Examples:
-* Typing `add` followed by pressing <kbd>tab</kbd> will populate the command box :<br><br>
+* Typing `add` followed by pressing <kbd>tab</kbd> will populate the command box as such :<br><br>
   ![TAB image](images/TAB.png) <br><br>
-
-### Listing all recipients : `list`
-
-Shows a list of all recipients in the Organ-izer.
-
-Format: `list`
-
-### Finding compatible blood types: `compatible`
-
-Finds and lists all recipients with blood types that are **compatible** with `BLOOD_TYPE`.
-
-Format: `compatible BLOOD_TYPE`
-
-<box type="note" seamless>
-<markdown>
-**Note:** 
-* Compatibility refers to whether the recipient’s blood type is such that he can receive from
-  the provided `BLOOD_TYPE`. 
-</markdown>
-</box>
-
-Examples:
-* `compatible O-` Finds all recipients whose blood type is compatible with O-.
-
-### Finding recipients by organ : `organ`
-
-Finds and lists all recipients in **Organ-izer** whose required organ contains the ORGAN entered by the user.
-
-Format: `organ ORGAN`
-
-<box type="note" seamless>
-<markdown>
-**Note:** 
-* The search will include partial matches. For instance `kidne` will match kidney. Words are case insensitive.
-</markdown>
-</box>
-
-Examples:
-* `organ kidne` Finds all recipients in **Organ-izer** whose organ required contains the word “kidne”, such as recipients who require a kidney.
-* `organ large` Finds all recipients in **Organ-izer** whose organ required contains the word “large”, such as recipients who require a “large intestine”.
-
-### Finding recipients by blood type : `blood type`
-
-Finds and lists all recipients in **Organ-izer** whose blood type matches the specified blood types.
-
-Format: `bloodtype BLOOD_TYPE [MORE_BLOOD_TYPES]...`
-
-<box type="note" seamless>
-<markdown>
-**Note:** 
-* The blood type is to be written in all capital letters to match medical conventions.
-* This command can accept multiple blood type inputs to find recipients that match any of the given blood type inputs.
-</markdown>
-</box>
-
-Examples:
-* `bloodtype O+ A+` Finds all recipients in **Organ-izer** whose blood type is either `O+` or `A+`.
-* `bloodtype AB+` Finds all recipients in **Organ-izer** whose blood type is AB+.
-
-### Finding recipients by priority : `priority`
-
-Finds and lists all recipients in **Organ-izer** whose priority matches the specified priorities.
-
-Format: `priority PRIORITY [MORE_PRIORITIES]...`
-
-<box type="note" seamless>
-<markdown>
-**Note:** 
-* This command can accept multiple priority inputs to find recipients that match any of the given priority inputs.
-</markdown>
-</box>
-
-Examples:
-* `priority 1 2` Finds all recipients in **Organ-izer** whose priority is either `1` or `2`.
-* `priority 3` Finds all recipients in **Organ-izer** whose priority is 3.
-
-### Finding recipients by multiple criteria: `combined`
-
-Finds and lists all recipients in **Organ-izer** that match all specified criteria .
-
-Format: `combined [n/NAME] [o/ORGAN] [b/BLOOD_TYPE]`
-
-<box type="note" seamless>
-<markdown>
-**Note:** 
-* At least one of the optional user inputs must be provided, which are NAME, ORGAN, or BLOOD_TYPE.
-</markdown>
-</box>
-
-<box type="tip" seamless>
-<markdown>
-**tip:** This command is for experienced users who want to combine search functionalities to create a more narrowed filter.
-</markdown>
-</box>
-
-Examples:
-* `combined n/Alice o/kidney b/O+` Find all recipients with name `Alice`, whose organ required contains the word “kidney”, and has blood type `O+`.
-* `combined n/Bob ` Find all recipients with name `Bob`,
-  `combined o/heart b/A+` Find all recipients whose organ required contains the word “heart” and has blood type `A+`.
 
 ### Editing a recipient : `edit`
 
@@ -347,8 +249,12 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com en/Bobby ep/12345678` Edits the phone number and email address of the 1st recipient to be `91234567` and `johndoe@example.com` respectively. This also adds an emergency contact named “Bobby” with contact number “12345678” to the recipient’s details.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd recipient to be `Betsy Crower` and clears all existing tags.
 * `edit 1 en/ ep/` removes the emergency contact from the 1st recipient.
+### Listing all recipients : `list`
 
-### Locating recipients by name: `search`
+Shows a list of all recipients in the Organ-izer.
+
+Format: `list`
+### Finding recipients by name: `search`
 
 Finds recipients in **Organ-izer** whose names contain all of the given keywords, in any order.
 
@@ -367,7 +273,109 @@ Format: `search KEYWORD [MORE_KEYWORDS]...`
 
 Examples:
 * `search John` will match with and display recipients named `john` and `John Doe`
-* `search Doe John` will match with and display recipients named `John Doe`
+* `search Doe John` will match with and display recipients named `John Doe
+### Finding recipients by organ : `organ`
+
+Finds and lists all recipients in **Organ-izer** whose required organ contains the ORGAN entered by the user.
+
+Format: `organ ORGAN`
+
+<box type="note" seamless>
+<markdown>
+**Note:** 
+* The search will include partial matches. For instance `kidne` will match kidney. Words are case insensitive.
+</markdown>
+</box>
+
+Examples:
+* `organ kidne` Finds all recipients in **Organ-izer** whose organ required contains the word “kidne”, such as recipients who require a kidney.
+* `organ large` Finds all recipients in **Organ-izer** whose organ required contains the word “large”, such as recipients who require a “large intestine”.
+* 
+### Finding recipients by priority : `priority`
+
+Finds and lists all recipients in **Organ-izer** whose priority matches the specified priorities.
+
+Format: `priority PRIORITY [MORE_PRIORITIES]...`
+
+<box type="note" seamless>
+<markdown>
+**Note:** 
+* This command can accept multiple priority inputs to find recipients that match any of the given priority inputs.
+</markdown>
+</box>
+
+Examples:
+* `priority 1 2` Finds all recipients in **Organ-izer** whose priority is either `1` or `2`.
+* `priority 3` Finds all recipients in **Organ-izer** whose priority is 3.
+
+### Finding recipients by blood type : `blood type`
+
+Finds and lists all recipients in **Organ-izer** whose blood type matches the specified blood types.
+
+Format: `bloodtype BLOOD_TYPE [MORE_BLOOD_TYPES]...`
+
+<box type="note" seamless>
+<markdown>
+**Note:** 
+* The blood type is to be written in all capital letters to match medical conventions.
+* This command can accept multiple blood type inputs to find recipients that match any of the given blood type inputs.
+</markdown>
+</box>
+
+Examples:
+* `bloodtype O+ A+` Finds all recipients in **Organ-izer** whose blood type is either `O+` or `A+`.
+* `bloodtype AB+` Finds all recipients in **Organ-izer** whose blood type is AB+.
+* 
+### Finding recipients by compatible blood types: `compatible`
+
+Finds and lists all recipients with blood types that are **compatible** with `BLOOD_TYPE`.
+
+Format: `compatible BLOOD_TYPE`
+
+<box type="note" seamless>
+<markdown>
+**Note:** 
+* Compatibility refers to whether the recipient’s blood type is such that he can receive from
+  the provided donor `BLOOD_TYPE`, as illustrated below: <br><br>
+  ![TAB image](images/BLOODTYPECHART.jpg)<br><br>
+</markdown>
+</box>
+
+Examples:
+* `compatible O-` Finds all recipients whose blood type is compatible with O-.
+
+
+
+
+
+
+### Finding recipients by multiple criteria: `combined`
+
+Finds and lists all recipients in **Organ-izer** that match all specified criteria .
+
+Format: `combined [n/NAME] [o/ORGAN] [b/BLOOD_TYPE]`
+
+<box type="note" seamless>
+<markdown>
+**Note:** 
+* At least one of the optional user inputs must be provided, which are NAME, ORGAN, or BLOOD_TYPE.
+</markdown>
+</box>
+
+<box type="tip" seamless>
+<markdown>
+**tip:** This command is for experienced users who want to combine search functionalities to create a more narrowed filter.
+</markdown>
+</box>
+
+Examples:
+* `combined n/Alice o/kidney b/O+` Find all recipients with name `Alice`, whose organ required contains the word “kidney”, and has blood type `O+`.
+* `combined n/Bob ` Find all recipients with name `Bob`,
+  `combined o/heart b/A+` Find all recipients whose organ required contains the word “heart” and has blood type `A+`.
+
+
+
+`
 
 ### Deleting a recipient : `delete`
 
@@ -388,6 +396,12 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd recipient in **Organ-izer**.
 * `find Betsy` followed by `delete 1` deletes the 1st recipient in the results of the `find` command.
 
+### Deleting all recipients : `clear`
+
+Deletes all recipients from **Organ-izer**.
+
+Format: `clear`
+
 ### Statistic summary : `summary`
 
 Displays a summary of how many recipients in **Organ-izer** require each type of organ.
@@ -405,11 +419,7 @@ LUNG            : 1 patient(s)
 Total           : 3 patient(s)
 ```
 
-### Clearing all entries : `clear`
 
-Deletes all recipients from **Organ-izer**.
-
-Format: `clear`
 
 ### Exiting the program : `exit`
 
@@ -456,9 +466,17 @@ _Details coming soon ..._
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Organ-izer home folder.
 
-**Q**: Why are phone numbers with more or less than 8 digits not allowed?
+**Q**: Why are phone numbers with more or less than 8 digits not allowed?<br>
 **A**: The application is based in Singapore, where phone number formats are only 8 digits. Although other countries may have 8 digit phone numbers as well, such as Thailand, the app is still only used by individuals who are currently in Singapore. The 8 digit rule is to prevent mishaps by users such as double pressing a digit or skipping past a digit accidentally.
 
+**Q**: Must a recipient have an associated emergency contact?<br>
+**A**: No, generally a recipient need not have an associated emergency contact, although ideally it would be good to have.
+
+**Q**: If the help page provides command descriptions, what is the point off the user guide?<br>
+**A**: The help page provides brief descriptions of features and their command syntax. Users are advised to refer to the user guide for a more comprehensive and nuanced explanation of features.
+
+**Q**: How do I add a recipient without a phone number, e.g. children?<br>
+**A**: Add the child recipient normally, but input his parent's phone number instead.
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
@@ -468,20 +486,34 @@ _Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
+
 ## Command summary
+
+#### Viewing Recipients
 
 Action 	| Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add a recipient**	   | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear all recipients**  | `clear`
-**Delete a recipient** | `delete INDEX`<br> e.g., `delete 3`
-**Edit a recipient’s details**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **List all recipients**   | `list`
 **Summary of organs needed**   | `summary`
-**Filter recipients by blood type**   | `bloodtype BLOOD_TYPE [BLOOD_TYPE]...`
-**Filter recipients by organ**   | `organ KEYWORD`
-**Filter recipients by priority**   | `priority PRIORITY [PRIORITY]...`
-**Search for a recipient by name**   | `search KEYWORD [KEYWORD]`
-**Combined search using name, organ, and/or blood type**   | `combined [n/NAME] [o/ORGAN] [b/BLOOD_TYPE]`
-**Find recipients compatible with a blood type**   | `compatible BLOOD_TYPE`
+**Filter recipients by blood type**   | `bloodtype BLOOD_TYPE [MORE_BLOOD_TYPES]...`, eg. `bloodtype A+ B+`
+**Filter recipients by organ**   | `organ KEYWORD`, eg. `organ liver`
+**Filter recipients by priority**   | `priority PRIORITY [MORE_PRIORITIES]...`, eg. `priority 1 2 3`
+**Search for a recipient by name**   | `search KEYWORD [MORE_KEYWORDS]...`, eg. `search John`
+**Combined search using name, organ, and/or blood type**   | `combined [n/NAME] [o/ORGAN] [b/BLOOD_TYPE]`, eg. `combined n/Alice o/kidney b/O+`
+**Find recipients compatible with a blood type**   | `compatible BLOOD_TYPE`, eg. `compatible O-`
+
+#### Modifying Recipients
+
+Action 	| Format, Examples
+-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Add a recipient**   	| `add n/NAME p/PHONE e/EMAIL a/ADDRESS o/ORGAN b/BLOOD_TYPE r/PRIORITY [en/EMERGENCY_NAME] [ep/EMERGENCY_PHONE] [er/EMERGENCY_RELATION] [t/TAG]...` <br> e.g., `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 o/kidney b/O+ r/1 en/Jane Doe ep/91234567 er/spouse t/wife t/owesMoney`
+**Delete a recipient** | `delete INDEX`<br> e.g., `delete 3`
+**Edit a recipient’s details**   | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [o/ORGAN] [b/BLOOD TYPE] [r/PRIORITY] [en/EMERGENCY_NAME] [ep/EMERGENCY_PHONE] [er/EMERGENCY_RELATION] [t/TAG]...`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+⚠️ **Clear all recipients**  | `clear` Note: **this will clear all recipients in the application.**
+
+#### Utility Functions
+Action 	| Format, Examples
+-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Access Last Command** | <kbd>Up</kbd> key
 **Exit the application**   | `exit`
+**View help** | `help`
