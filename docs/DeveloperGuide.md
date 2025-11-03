@@ -429,7 +429,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 This feature allows users to **bulk-import contact and organ donor data from an Excel (.xlsx) file** into the application’s address book. It aims to streamline data entry workflows for organizations that maintain donor information in spreadsheet form, such as hospitals or medical coordinators.
 
-<puml src="diagrams/ImportExcelSequenceDiagram.puml" width="700" />  
+<puml src="diagrams/ImportExcelObjectDiagram.puml" width="700" />  
 
 The import process involves reading Excel sheets, validating their contents, and converting rows into `Person` objects that the `Model` can store.
 
