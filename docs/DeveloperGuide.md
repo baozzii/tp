@@ -959,3 +959,59 @@ Action  | Format, Examples
 **Access Last Command** | <kbd>Up</kbd> key
 **Exit the application**   | `exit`
 **View help** | `help`
+
+### Appendix: Effort
+
+#### Difficulty Level
+
+While Organ-izer builds upon the AddressBook Level 3 (AB3) foundation, which provided a systematic MVC architecture and basic CRUD operations, the application required substantial extensions to meet the specialized needs of organ transplant coordination.  
+  
+The core challenge lay in implementing **domain-specific medical logic** that AB3 was not originally designed to handle. Unlike a simple contact management system, Organ-izer required implementing complex **blood type compatibility matrices** (8x8 donor-recipient mappings) with case-insensitive validation, **multi-criteria filtering** through composite predicates that combine name, organ, and blood type matching with AND semantics, and **priority-based urgency rankings** for time-critical medical decisions. Additionally, the application needed to maintain **referential integrity** for emergency contacts while preventing self-referencing (a recipient cannot be their own emergency contact), validate medical data against strict domain constraints (valid organs, blood types, phone formats), and handle **nested predicate composition** for the combined search feature. The UI also required several enhancements beyond AB3's basic list display, such as the **horizontally scrollable** cards for long medical records, or the dropdown-style **help window** to reduce clutter.  
+  
+These domain-specific requirements, coupled with maintaining AB3's architectural principles (separation of concerns, defensive programming, comprehensive testing), made Organ-izer substantially more complex than a typical AB3 extension, requiring a deep understanding of both software design patterns and healthcare coordination workflows.  
+  
+#### Challenges Faced
+
+* **Unexpected Bug Findings**: During development and testing, we encountered several edge cases that weren't initially anticipated. For instance, the blood type compatibility logic initially failed when users entered mixed-case inputs (e.g., "aB+" vs "AB+"), requiring us to implement comprehensive case-insensitive validation. These instances arose in separate occasions such as mixed-case input organ fields as well. Furthermore, overlooked components such as the `ResultDisplay` caused other bugs to surface such as edits to emergency contact fields not being shown in the result panel but are still displayed in the `PersonListPanel`.
+* **Lack of Experience in Medical Contexts**: None of our team members had prior experience with healthcare systems or organ transplant coordination workflows. This created a steep learning curve in combining our understanding of blood type compatibility rules with user friendly commands and functionalities. A balance between overly medical related logic and objective driven functionalities had to be struck before deciding on the scope of the project.
+* **Testing Complexity**: Achieving comprehensive test coverage for Organ-izer proved significantly more challenging than typical AB3 extensions. The blood compatibility matrix alone required testing 64 possible donor-recipient combinations (8 blood types x 8 blood types), while the CombinedCommand needed tests for all permutations of name, organ, and blood type filters. Creating realistic test data in `TypicalPersons` that covered edge cases, including different blood types, all priority levels, various organs, valid and invalid emergency contacts, required careful planning. Maintaining test maintainability while achieving ~80% coverage demanded disciplined use of test utilities and avoiding overly coupled tests that would break with implementation changes.
+* **Time Management**: Coordinating five team members, with external commitments, working on parallel features while meeting weekly milestones proved challenging. We faced several Git merge conflicts when multiple members simultaneously modified core files like JsonAdaptedPerson, AddressBookParser, and PersonBuilder. Feature dependencies (e.g., CompatibleCommand requiring blood type validation, CombinedCommand depending on existing filter predicates) meant some tasks blocked others, requiring careful task sequencing. Additionally, underestimating the complexity of certain features, particularly the edits needed to create new fields and commands, led to schedule adjustments. Balancing feature implementation with comprehensive testing and documentation within the project timeframe required prioritization decisions and sometimes deferring "nice-to-have" features to ensure core functionality was robust and well-tested.
+
+#### Effort and Achievements
+
+Despite facing several challenges, our group was overcomeable to complete our Organ-izer
+* **Product Delivery**: Delivered a working product that satisfies key objectives of aiding Organ Transplant coordinators attain speed and accuracy in their work.
+* **Preservation of architecture**: Successfully extended AB3’s immutable model design while incorporating medical workflows such as filtering recipients by organ or blood type.
+* **Utility and Functionality**: Added on functionalities to improve User Experience (UX) such as Tab key auto completions to provide ease in keying in commands, and commands for statistical summaries to give an overview over the recipients in the application database.
+* **Comprehensive Testing**: Ensured testing robustness with over 200+ unit and integration tests on the Organ-izer functionalities.  
+  
+With these achievements, an effective and comprehensive application is developed to aid in organ transplant medical workflows.
+
+#### Reuse of Existing Components
+
+Organ-izer benefited significantly from reusing AddressBook Level 3's foundational architecture, which reduced development effort by approximately 40-50%.  
+  
+The core infrastructure components were largely retained with minimal modifications:  
+* The Storage layer (JSON serialization/deserialization framework, file I/O utilities) required only extensions for new fields like emergency contacts and blood types.
+* The UI framework (JavaFX setup, FXML structure, UiManager, UiPart, status bar) was reused entirely with only component-level customizations to PersonCard and addition of HistoryNavigator.
+* The Model architecture (ModelManager, AddressBook, observer patterns) provided the foundation for extending person attributes without redesigning core data management.
+* Commons utilities (StringUtil, CollectionUtil, JsonUtil, configuration management) were used as-is for validation and data manipulation.
+* The Logic layer structure (command pattern, parser architecture, LogicManager) was preserved, allowing us to focus on implementing domain-specific commands (CompatibleCommand, CombinedCommand, OrganCommand) rather than building command execution infrastructure from scratch.
+* The testing framework (JUnit setup, test utilities, integration test patterns) and build configuration (Gradle, CI/CD, checkstyle) were inherited directly, saving substantial setup time.  
+  
+This reuse allowed the development team to concentrate effort on the challenging 50-60%: implementing medical domain logic (blood compatibility algorithms, emergency contact validation, priority systems), designing complex multi-criteria search predicates, creating enhanced UI components for medical data display, and ensuring data integrity for healthcare workflows—rather than reinventing basic CRUD operations and application infrastructure.  
+  
+Breakdown of effort saved:
+* **Storage layer**: ~80% reused (only extended JsonAdaptedPerson for new fields)
+* **UI framework**: ~70% reused (kept MainWindow, UiManager, FXML structure, but customized PersonListCard and HelpWindow)
+* **Model architecture**: ~60% reused (kept ModelManager, observer pattern; extended Person class)
+* **Logic structure**: ~50% reused (kept command/parser framework; added new commands)
+* **Commons/Utils**: ~95% reused (validation, JSON, configuration utilities used as-is)
+* **Testing framework**: ~85% reused (test structure, utilities; added domain-specific tests)
+* **Build/CI**: ~100% reused (Gradle, GitHub Actions, checkstyle configuration)  
+  
+Overall estimate: 40-50% development effort saved, allowing focus on domain-specific medical logic and user experience enhancements.
+
+#### Summary
+
+The development of Organ-izer demonstrates that building a specialized medical application on top of AB3 requires a careful balance between leveraging existing infrastructure and implementing domain-specific innovations. While AB3's solid architectural foundation saved our team approximately **40-50% of development effort**, the remaining **50-60%** demanded significant original work to address the unique challenges of organ transplant coordination. Although several challenges were faced that may have hindered the development process and efficiency, the team has still provided a functional and effective product that covers the identified and targeted needs from organ transplant coordinators.
