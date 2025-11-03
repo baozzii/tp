@@ -10,7 +10,7 @@ end box
 box IO
 participant "eR:ExcelReader" as ExcelReader MODEL_COLOR
 participant "eP:ExcelParser" as ExcelParser MODEL_COLOR
-endbox
+end box
 
 box Model MODEL_COLOR_T1
 participant "m:Model" as Model MODEL_COLOR
@@ -19,36 +19,41 @@ end box
 -> ImportCommand : execute(m)
 activate ImportCommand
 
-' Create and use ExcelReader
+' --- Create and use ExcelReader ---
 create ExcelReader
 ImportCommand -> ExcelReader : readExcelFile(filePath)
 activate ExcelReader
 
-' Create and use ExcelParser
+' --- Create and use ExcelParser ---
 create ExcelParser
 ExcelReader -> ExcelParser : parseRows(workbook)
 activate ExcelParser
 
 ExcelParser --> ExcelReader : List<Person>
 deactivate ExcelParser
+ExcelParser -[hidden]-> ExcelReader
 destroy ExcelParser
 
 ExcelReader --> ImportCommand : List<Person>
 deactivate ExcelReader
+ExcelReader -[hidden]-> ImportCommand
 destroy ExcelReader
 
-ImportCommand -> Model : addPerson(person)
-activate Model
-
+' --- Loop through persons and add each to model ---
 loop for each person
-    Model -> Model : validate and add
+    ImportCommand -> Model : addPerson(person)
+    activate Model
+    Model --> ImportCommand
+    deactivate Model
 end
 
+' --- Save address book after all additions ---
 ImportCommand -> Model : saveAddressBook()
+activate Model
 Model --> ImportCommand : success
 deactivate Model
 
-[<--ImportCommand
+[<-- ImportCommand
 deactivate ImportCommand
 
 @enduml
