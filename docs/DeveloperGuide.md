@@ -524,6 +524,55 @@ Each skipped row produces a corresponding warning in the log:
 * **Partial rollback** — implement atomic batch imports (commit all or none).
 * **GUI integration** — allow file selection via a graphical file chooser.
 
+### \[Proposed\] Organ Swap Systems
+
+An **organ donation swap** is a program that helps **recipients** who need an organ transplant but have a willing **donor** who **isn’t a suitable** match for them.
+Here’s how it works:
+Suppose **Person A** needs a kidney, and **Donor A** wants to donate to them—but their blood types are **non-compatible**.
+
+
+Meanwhile,**Person B** also needs a kidney, and **Donor B** wants to donate to them but their blood types are also **non-compatible**.
+
+
+However, **Donor A** is a match for **Person B**, and **Donor B** is a match for **Person A**.
+
+
+So, the donors **swap.** **Donor A** gives a kidney to **Person B**, and **Donor B** gives a kidney to **Person A**.This way, **both patients** receive **compatible** kidneys, even though their original donors couldn’t directly help them.
+Our proposed feature would process such **swaps** between 2 donor-recipient pairs, 3-way swaps and other variations of n-way swaps.
+Each **pair** consists of a **donor** and a **recipient.**
+If the algorithm manages to find a **swap**, then a `Swap` object is created.
+The diagram below illustrates the relationships between the various objects involved in a 3-way kidney exchange.
+<br><br>
+![iobjectdiagram](OrganSwapCycleObjectDiagram.puml)
+<br><br>
+
+
+
+
+The organ swap process involves adding donor-recipient pairs, evaluating blood type and organ compatibility, generating possible exchange chains.
+
+**Key operations:**
+
+* `LogicManager#execute(String)`: handles parsing the user command to begin adding the new recipient-donor pair.
+* `Model#addPair(Recipient, Donor)`: stores the input pair in memory and persists via storage.
+* `CompatibilityEngine#findSwap()`: computes all possible swap chains based on compatibility rules and retrieved pairs from the model.
+* `Model#getPairs()`: retrieves all registered pairs for matching.
+
+
+#### Data model
+
+Each `DonorRecipientPair` contains:
+
+| Attribute | Description |
+|-----------|-------------|
+| Donor | Reference to `Donor` object |
+| Recipient | Reference to `Recipient` object |
+| Donor.bloodType | Blood type of donor |
+| Donor.willingOrgan | Organ available for donation |
+| Recipient.bloodType | Blood type of recipient |
+| Recipient.requiredOrgan | Organ required |
+| Recipient.priority | Priority for organ allocation |
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
