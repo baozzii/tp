@@ -780,49 +780,209 @@ testers are expected to do more *exploratory* testing.
 
 </box>
 
-### Launch and shutdown
+### Launching
 
 1. Initial launch
+   
+  1. Test case: Download the jar file and copy into an empty folder. Double click the jar file.<br>
+     Expected: Shows the GUI with a set of sample patients. The window size may not be optimum.
+     
+3. Saving window preferences
+   
+  1. Test case: Resize the window to be optimum. Move the window to a different location. Reopen the app.<br>
+     Expected: The most recent windown size and location is retained.
 
-   1. Download the jar file and copy into an empty folder.
+### Shutting down
 
-   2. Double-click the jar file.<br>
-      Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+1. Shutting down
+   
+   1. Prerequisites: Open the app. Maybe executed a few commands.
+   2. Test case: Shutdown the app by the `exit` command.<br>
+      Expected: The app shuts down.
+   3. Test case: Shutdown the app by clicking the red cross at the top right corner of the GUI.<br>
+      Expected: The app shuts down.
 
-2. Saving window preferences
+### Adding a person
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
-
-   2. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
-
-1. _{ more test cases …​ }_
+1. Adding a person.
+   
+   1. Prerequisites: Open the app. Maybe executed a few commands.
+   2. Test case: Add a sample person by `add n/Alice p/12345678 e/alice@gmail.com a/alice road o/liver b/O- r/5`.<br>
+      Expected: Successfully added `Alice` into the addressbook. A message `New person added: ...` shown in the status bar.
+   3. Test case: Add a sample person with errors in `name` by `add n/alice_ p/12345678 e/alice@gmail.com a/alice road o/liver b/O- r/5`.<br>
+      Expected: Error message `Names should only contain alphanumeric characters and spaces, and it should not be blank` shown in the status bar.
+   4. Test case: Add a sample person with errors in `phone` by `add n/alice p/x12345678 e/alice@gmail.com a/alice road o/liver b/O- r/5`.<br>
+      Expected: Error message `Phone numbers should only contain numbers, and it should be 8 digits long` shown in the status bar.
+   5. Test case: Add a sample person with errors in `email` by `add n/alice p/12345678 e/alice.gmail.com a/alice road o/liver b/O- r/5`.<br>
+      Expected: Error message `Emails should be of the format local-part@domain and adhere to the following constraints: ...` shown in the status bar.
+   6. Test case: Add a sample person with errors in `address` by `add n/alice p/12345678 e/alice@gmail.com a/ o/liver b/O- r/5`.<br>
+      Expected: Error message `Addresses can take any values, and it should not be blank` shown in the status bar.
+   7. Test case: Add a sample person with errors in `organ` by `add n/alice p/12345678 e/alice@gmail.com a/alice road o/liver1 b/O- r/5`.<br>
+      Expected: Error message `Organs should only contain alphabetical characters and spaces, and it should not be blank` shown in the status bar.
+   8. Test case: Add a sample person with errors in `priority` by `add n/alice p/12345678 e/alice@gmail.com a/alice road o/liver b/O- r/6`.<br>
+      Expected: Error message `Priority should be an integer between 1 and 5, where 1 being the highest priority and 5 being the lowest` shown in the status bar.
 
 ### Deleting a person
 
-1. Deleting a person while all persons are being shown
+1. Deleting a person from a non-empty addressbook.
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   1. Prerequisites: The addressbook list is non-empty. 
+   2. Test Case: Delete the first person by `delete 1`.<br>
+      Expected: Successfully deleted the first person in the list. A message `Deleted Person: ...` shown in the status bar.
+   3. Test case: Execute `delete` with no index parameter.<br>
+      Expected: Error message `Invalid command format! delete: Deletes the person identified by the index number used in the displayed person list. Parameters: INDEX (must be a positive integer)` shown in the status bar.
+   4. Test case: Execute `delete 0`.<br>
+      Expected: Error message `Invalid command format! delete: Deletes the person identified by the index number used in the displayed person list. Parameters: INDEX (must be a positive integer)` shown in the status bar.
+   5. Test case: Execute `delete x` where `x` is larger than the length of the list.<br>
+      Expected: Error message `The person index provided is invalid` shown in the status bar.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+2. Deleting a person from a empty addressbook.
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+   1. Prerequisites: The addressbook list is empty.
+   2. Test case: Execute `delete 1`.<br>
+      Expected: Error message `The person index provided is invalid` shown in the status bar.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+### Editing a person
 
-1. _{ more test cases …​ }_
+1. Editing a person in a non-empty addressbook.
 
-### Saving data
+   1. Prerequisites: The addressbook list is non-empty.
+   2. Test case: Edit the first person by `edit 1 n/Bob`.<br>
+      Expected: The first person's name changes to `Bob`. A message `Edited Person: Bob ...` shown in the status bar.
+   3. Test case: Execute `edit 1` with no parameters.<br>
+      Expected: Error message `At least one field to edit must be provided` shown in the status bar.
+   4. Test case: Execute `edit 0 n/Bob`.<br>
+      Expected: Error message `Invalid command format! edit: Edits the details of the person identified by the index number used in the displayed person list. Existing values will be overwritten by the input values.` shown in the status bar.
+   5. Test case: Execute `edit x n/Bob` where `x` is larger than the length of the list.<br>
+      Expected: Error message `The person index provided is invalid` shown in the status bar.
 
-1. Dealing with missing/corrupted data files
+2. Editing a person in a empty addressbook.
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. Prerequisites: The addressbook list is empty.
+   2. Test case: Execute `edit 1 n/Bob`.<br>
+      Expected: Error message `The person index provided is invalid` shown in the status bar.
 
-1. _{ more test cases …​ }_
+### Listing all persons
 
+1. Listing all persons:
+
+   1. Prerequisites: The app is open.
+   2. Test case: List all persons by `list`.<br>
+      Expected: Shows the list of all persons in the addressbook, sorted by their priority. In case of same priority, they are sorted lexicographically by their names. A message `Listed all persons` shown in the status bar.
+   3. Test case: Execute `list 1234567890 _abc`.<br>
+      Expected: All input after `list` is ignored. Behaves the exact same way as previous test case.
+
+
+### Summarising all organs and patients
+
+1. Summarising all organs and patients:
+
+   1. Prerequisites: The app is open.
+   2. Test case: Show the summary by `summary`.<br>
+      Expected: In the status bar, the number of patients requiring each organ is shown. The total number of patients is shown.
+   3. Test case: Execute `summary 1234567890 _abc`.<br>
+      Expected: All input after `summary` is ignored. Behaves the exact same way as previous test case.
+
+### Clearing the addressbook
+
+1. Clearing the addressbook:
+
+   1. Prerequisites: The app is open.
+   2. Test case: Clear the addressbook by `clear`.<br>
+      Expected: All entries in the addressbook is cleared. A message `Address book has been cleared!` shown in the status bar.
+   3. Test case: Execute `clear 1234567890 _abc`.<br>
+      Expected: All input after `clear` is ignored. Behaves the exact same way as previous test case.
+
+### Finding all persons by name
+
+1. Finding all persons by name
+
+   1. Prerequisites: Multiple persons present in the addressbook, perhaps with same names.
+   2. Test case: Find all persons named `alice` by `search alice`.<br>
+      Expected: Listed all persons named `alice`. A message `x persons listed!` shown in the status bar, where `x` is the number of persons found.
+   3. Test case: Find all persons named `alice` or `bob` by `search alice bob`.<br>
+      Expected: Listed all persons named `alice` or `bob`. A message `x persons listed!` shown in the status bar, where `x` is the number of persons found.
+   4. Test case: Find all persons named `NAME` by `search NAME`, where `NAME` is any name not present in the addressbook.<br>
+      Expected: No persons listed. A message `NAME does not exist in directory` shown in the status bar.
+   5. Test case: Execute `search` with no parameters.<br>
+      Expected: Error message `Invalid command format! search: Searches for all persons whose names contain any of the specified keywords (case-insensitive) and displays them as a list with index numbers.` shown in the status bar.
+
+### Finding all persons by blood type
+
+1. Finding all persons by blood type
+
+   1. Prerequisites: Multiple persons present in the addressbook, perhaps with same blood types.
+   2. Test case: Find all persons with blood type `O+` by `bloodtype O+`.<br>
+      Expected: Listed all persons with blood type `O+`. A message `x persons listed!` shown in the status bar, where `x` is the number of persons found.
+   3. Test case: Find all persons with blood type `O+` or `AB-` by `bloodtype O+ AB-`.<br>
+      Expected: Listed all persons with blood type `O+` or `AB-`. A message `x persons listed!` shown in the status bar, where `x` is the number of persons found.
+   4. Test case: Find all persons with blood type `TYPE` by `bloodtype TYPE`, where `TYPE` is any blood type not present in the addressbook.<br>
+      Expected: No persons listed. A message `TYPE does not exist in directory` shown in the status bar.
+   5. Test case: Execute `bloodtype` with no parameters.<br>
+      Expected: Error message `Invalid command format! bloodtype: Finds all persons whose organ contains the specified blood types and displays them as a list with index numbers. The blood types entered must be one of A+, A- B+, B- AB+, AB-, O+ or O- only.` shown in the status bar.
+
+### Finding all persons by organ
+
+1. Finding all persons by organ
+
+   1. Prerequisites: Multiple persons present in the addressbook, perhaps with same organs.
+   2. Test case: Find all persons whose organ contains the substring `liver` by `organ liver`.<br>
+      Expected: Listed all persons whose organ contains the substring `liver`. A message `x persons listed!` shown in the status bar, where `x` is the number of persons found.
+   3. Test case: Find all persons whose organ contains the substring `liver` or `kidney` by `organ liver kidney`.<br>
+      Expected: Listed all persons whose organ contains the substring `liver` or `kidney`. A message `x persons listed!` shown in the status bar, where `x` is the number of persons found.
+   4. Test case: Find all persons whose organ contains the substring `ORGAN`, where `ORGAN` is any organ not present in the addressbook.<br>
+      Expected: No persons listed. A message `ORGAN does not exist in directory` shown in the status bar.
+   5. Test case: Execute `organ` with no parameters.<br>
+      Expected: Error message `Invalid command format! organ: Finds all persons whose organ contains the specified substring (case-insensitive) and displays them as a list with index numbers.` shown in the status bar.
+
+### Finding all persons by priority
+
+1. Finding all persons by priority
+
+   1. Prerequisites: Multiple persons present in the addressbook, perhaps with same priorities.
+   2. Test case: Find all persons whose priority is `1` by `priority 1`.<br>
+      Expected: Listed all persons whose priority is `1`. A message `x persons listed!` shown in the status bar, where `x` is the number of persons found.
+   3. Test case: Find all persons whose priority is `1` or `3` by `priority 1 3`.<br>
+      Expected: Listed all persons whose priority is `1` or `3`. A message `x persons listed!` shown in the status bar, where `x` is the number of persons found.
+   4. Test case: Find all persons with priority `x`, where `x` is any priority not present in the addressbook.<br>
+      Expected: No persons listed. A message `No recipients could be found for the following list of priorities: [x]` shown in the status bar.
+   5. Test case: Execute `priority` with no parameters.<br>
+      Expected: Error message `Invalid command format! priority: Finds all persons whose priority matches the specified priorities and displays them as a list with index numbers.` shown in the status bar.
+   6. Test case: Execute `priority 6`.<br>
+      Expected: Error message `Invalid command format! priority: Finds all persons whose priority matches the specified priorities and displays them as a list with index numbers. Priority should be an integer between 1 and 5, where 1 being the highest priority and 5 being the lowest` shown in the status bar.
+
+### Finding all persons compatible
+
+1. Finding all persons compatible
+
+   1. Prerequisites: Multiple persons present in the addressbook, perhaps with same blood types.
+   2. Test case: Find all persons compatible with `O-` by `compatible O-`.<br>
+      Expected: Listed all persons compatible with `O-`. A message `x persons listed!` shown in the status bar, where `x` is the number of persons found.
+   3. Test case: Execute `compatible O- AB+`.<br>
+      Expected: Error message `Invalid command format! Parameters: BLOOD_TYPE (must be one of: A+, A-, B+, B-, AB+, AB-, O+, O-)` shown in status bar.
+   4. Test case: Execute `compatible` with no parameters.<br>
+      Expected: Error message `Invalid command format! compatible: Finds all persons whose blood type can receive from the specified donor blood type and displays them as a list with index numbers.` shown in the status bar.
+   4. Test case: Execute `compatible TYPE`, where `TYPE` is an invalid blood type.<br>
+      Expected: Error message `Invalid command format! compatible: Finds all persons whose blood type can receive from the specified donor blood type and displays them as a list with index numbers. Parameters: BLOOD_TYPE (must be one of: A+, A-, B+, B-, AB+, AB-, O+, O-)` shown in the status bar.
+
+### Finding all persons satisfying multiple criteria
+
+1. Finding all persons satisfying multiple criteria
+
+   1. Prerequisites: Multiple persons present in the addressbook.
+   2. Test case: Find all persons with name `Alice` or `Bob`, with blood type `A+` or `B-`, having `kidney` as a substring in their organ by `combined n/Alice Bob b/A+ B- o/kidney`.<br>
+      Expected: Listed all persons satisfying all criteria. A message `x persons listed!` shown in the status bar, where `x` is the number of persons found.
+   3. Test case. Execute `combined` with no parameters.<br>
+      Expected: Error message `Invalid command format! combined: Finds all persons matching ALL specified criteria (case-insensitive) and displays them as a list with index numbers. At least one parameter must be provided.` shown in the status bar.
+
+### Help
+
+1. Opening the help page:
+
+   1. Prerequisites: The app is open.
+   2. Test case: open the help page by `help`.<br>
+      Expected: The help page is automatically opened as another window. Clicking on any of the drop-downs reveals the documentation of the corresponding command.
+      
 ## Command summary
 
 #### Viewing Recipients
