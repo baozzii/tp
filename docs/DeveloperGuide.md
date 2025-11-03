@@ -573,6 +573,58 @@ Each `DonorRecipientPair` contains:
 | Recipient.requiredOrgan | Organ required |
 | Recipient.priority | Priority for organ allocation |
 
+**Donors and recipients may be incompatible individually**, necessitating multi-way swaps to achieve successful matches.  
+
+#### Activity workflow  
+
+<puml src="diagrams/OrganSwapCycleActivityDiagram.puml" width="700" />  
+
+The workflow involves:  
+
+1. Adding donor-recipient pairs.  
+2. Storing them in the Model.  
+3. Running the Compatibility Engine to generate potential exchange chains.  
+4. Reviewing chains for approval.  
+
+#### Sequence of interactions  
+
+<puml src="diagrams/OrganSwapCycleSequenceDiagram.puml" width="700" />  
+
+1. The Coordinator interacts with the UI to register pairs.  
+2. UI delegates actions to `LogicManager`.  
+3. `LogicManager` saves data via the `Model`.  
+4. `LogicManager` calls `CompatibilityEngine#findSwap()`.  
+5. `CompatibilityEngine` retrieves pair data from `StorageManager` via `Model`, evaluates compatibility, and returns potential chains to `LogicManager`.  
+6. `LogicManager` updates the UI with the results for the Coordinator.  
+
+#### Design considerations  
+
+**Aspect: Matching algorithm**  
+
+* **Current choice:** Use graph-based cycle detection to find all possible multi-way exchanges.  
+* Pros: Can detect complex n-way swaps, maximizes donor-recipient matches.  
+* Cons: Computationally heavier for very large datasets.  
+
+* **Alternative:** Greedy 2-way swaps only.  
+* Pros: Simple and fast.  
+* Cons: Less optimal; some recipients may remain unmatched.  
+
+**Aspect: Chain approval**  
+
+* **Current choice:** Coordinator reviews suggested chains before approval.  
+* Pros: Human oversight reduces risk of errors.  
+* Cons: Requires manual intervention.  
+
+* **Alternative:** Auto-approve chains based on compatibility rules.  
+* Pros: Fully automated.  
+* Cons: Risk of mistakes in complex edge cases.
+
+#### Future extensions  
+
+* **Multi-organ swaps** — extend system to handle simultaneous swaps of multiple organ types.    
+* **Priority-based optimization** — factor in recipient priority scores to maximize urgency-based matching.  
+* **GUI visualization** — display swap cycles graphically for easy review by coordinators.  
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -978,7 +1030,7 @@ testers are expected to do more *exploratory* testing.
    2. Test case: open the help page by `help`.<br>
       Expected: The help page is automatically opened as another window. Clicking on any of the drop-downs reveals the documentation of the corresponding command.
       
-## Command summary
+### Command summary
 
 #### Viewing Recipients
 
@@ -1009,7 +1061,7 @@ Action  | Format, Examples
 **Exit the application**   | `exit`
 **View help** | `help`
 
-### Appendix: Effort
+## Appendix: Effort
 
 #### Difficulty Level
 
