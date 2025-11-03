@@ -850,7 +850,7 @@ Main Success Scenario (MSS):
 * **ObservableList**: A list that allows UI components to automatically update when data changes.
 
 --------------------------------------------------------------------------------------------------------------------
-## **Appendix: Enhancements
+## Appendix: Enhancements
 
 1. **Implement more extensive filter cache**. Currently, our program saves the filtered list of only the last `search` command executed by user.
    We plan to store the resulting filtered lists of all our various filtering functions such that users can refer to previous filtered results easily through a key command.
@@ -859,18 +859,20 @@ Main Success Scenario (MSS):
    We plan to implement tab completion feature for all relevant commands such as `combined`, `edit`, etc, such that users will not have to get caught up in remembering the syntax, and can simply press tab to quickly autofill all prefixes.
 
 3. **Combine all our various search commands into one function.** Currently, we have different commands like `bloodtype`, `compatible`, `organ` to search for
-   recipients using various filters. Our plan is to make a universal search function that will incorporate flags and 
-   allow users to filter by whichever fields and strictness (exact match, partial match, fuzzy search), they want to.
+   recipients using various filters.  
+   We plan to make a universal search function that will incorporate flags and allow users to filter by whichever fields and strictness (exact match, partial match, fuzzy search) they want to.
 
-4. **Extend the functionality of the last command feature.** Currently, users can press the <kbd>Up</kbd> arrow key to access the last executed command.
+4. **Extend the functionality of the last command feature.** Currently, users can press the <kbd>Up</kbd> arrow key to access the last executed command.  
    We intend to extend the feature to store more commands, such that pressing the <kbd>Up</kbd> arrow key multiple times, will allow users to navigate
    all previous commands, saving time.
 
-5. **Provide a more comprehensive summary feature.** Currently, our summary feature only displays a statistic of how many recipients require each organ.
+5. **Provide a more comprehensive summary feature.** Currently, our summary feature only displays a statistic of how many recipients require each organ.  
    We plan to do a breakdown in terms of blood type as well as priority, making use of visual aids (charts, diagrams). This will allow an organ donor coordinator to easily visualize the distribution of
    recipients by the various metrics to make more informed logistical and medical decisions.
 .
-6. 
+6. **New Window for summary view.** Currently, our summary feature displays the overview of how many recipients require each organ in the `ResultDisplay` panel. New commands will repopulate the panel and cause the summary to disappear.  
+   We plan to instead have this displayed in a new window so that it can be shown side by side along their other browser tools, rather than the small and confined `ResultDisplay` panel. This will also allow
+   for a better view over all the recipients and in a more versatile way that can be treated as its own window to be placed alongside the Organ-izer application, and prevent new commands from causing the summary to disappear.
 ## **Appendix: Instructions for manual testing**
 
 Given below are instructions to test the app manually.
